@@ -4,6 +4,9 @@
  */
 package com.mycompany.tatamimanager;
 
+import com.mycompany.tatamimanager.Alumnos.Panel_AddAlumnos;
+import java.awt.BorderLayout;
+
 /**
  *
  * @author diana
@@ -13,11 +16,19 @@ public class Inicio extends javax.swing.JFrame {
     
     /**
      * Creates new form Inicio
-     */
-    
+     */ 
     public Inicio() {
         initComponents();
-        //fdhdh
+        
+        /*
+         // Cargar la imagen desde el classpath
+        try {
+            ImageIcon icon = new ImageIcon(Inicio.class.getResource("/images/retrato.png"));
+            jMenu_icono.setIcon(icon);
+        } catch (NullPointerException e) {
+            System.err.println("No se pudo cargar la imagen: " + e.getMessage());
+        }
+        */
     }
 
     /**
@@ -31,15 +42,28 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu_icono = new javax.swing.JMenu();
+        jMenuColegios = new javax.swing.JMenu();
+        jMenuItem_VerColes = new javax.swing.JMenuItem();
+        jMenuItem_AddCole = new javax.swing.JMenuItem();
+        jMenuProfesores = new javax.swing.JMenu();
+        jMenuItem_VerProfes = new javax.swing.JMenuItem();
+        jMenuItem_AddProfes = new javax.swing.JMenuItem();
+        jMenuAlumnos = new javax.swing.JMenu();
+        jMenuItem_VerAlumnos = new javax.swing.JMenuItem();
+        jMenuItem_AddAlumno = new javax.swing.JMenuItem();
+        jMenuClases = new javax.swing.JMenu();
+        jMenuItem_VerClases = new javax.swing.JMenuItem();
+        jMenuItem_AddClase = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem_AsignarAlumnos = new javax.swing.JMenuItem();
+        jMenuEventos = new javax.swing.JMenu();
+        jMenuItem_AddEvento = new javax.swing.JMenuItem();
+        jMenuCalendario = new javax.swing.JMenu();
+        jMenuItem_VerCalendario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tatami Manager");
-        setPreferredSize(new java.awt.Dimension(600, 400));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -52,24 +76,85 @@ public class Inicio extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 377, Short.MAX_VALUE)
+            .addGap(0, 378, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("icono");
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
-        jMenu2.setText("Edit");
+        jMenu_icono.setBackground(new java.awt.Color(0, 102, 255));
+        jMenu_icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/retrato.png"))); // NOI18N
+        jMenuBar1.add(jMenu_icono);
 
-        jMenuItem1.setText("jMenuItem1");
-        jMenu2.add(jMenuItem1);
+        jMenuColegios.setBackground(new java.awt.Color(0, 102, 255));
+        jMenuColegios.setText("Colegios");
+        jMenuColegios.setActionCommand("Colegios");
 
-        jMenuBar1.add(jMenu2);
+        jMenuItem_VerColes.setText("Ver colegios");
+        jMenuColegios.add(jMenuItem_VerColes);
 
-        jMenu3.setText("jMenu3");
-        jMenuBar1.add(jMenu3);
+        jMenuItem_AddCole.setText("añadir colegios");
+        jMenuColegios.add(jMenuItem_AddCole);
 
-        jMenu4.setText("jMenu4");
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMenuColegios);
+
+        jMenuProfesores.setBackground(new java.awt.Color(0, 102, 255));
+        jMenuProfesores.setText("Profesores");
+
+        jMenuItem_VerProfes.setText("Ver profesores");
+        jMenuProfesores.add(jMenuItem_VerProfes);
+
+        jMenuItem_AddProfes.setText("Añadir profesores");
+        jMenuProfesores.add(jMenuItem_AddProfes);
+
+        jMenuBar1.add(jMenuProfesores);
+
+        jMenuAlumnos.setBackground(new java.awt.Color(0, 102, 255));
+        jMenuAlumnos.setText("Alumnos");
+
+        jMenuItem_VerAlumnos.setText("Ver alumnos");
+        jMenuItem_VerAlumnos.setToolTipText("");
+        jMenuAlumnos.add(jMenuItem_VerAlumnos);
+
+        jMenuItem_AddAlumno.setText("Añadir alumno");
+        jMenuItem_AddAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AddAlumnoActionPerformed(evt);
+            }
+        });
+        jMenuAlumnos.add(jMenuItem_AddAlumno);
+
+        jMenuBar1.add(jMenuAlumnos);
+
+        jMenuClases.setBackground(new java.awt.Color(0, 102, 255));
+        jMenuClases.setText("Clases");
+
+        jMenuItem_VerClases.setText("Ver clases");
+        jMenuClases.add(jMenuItem_VerClases);
+
+        jMenuItem_AddClase.setText("Añadir clase");
+        jMenuClases.add(jMenuItem_AddClase);
+        jMenuClases.add(jSeparator1);
+
+        jMenuItem_AsignarAlumnos.setText("Asignar Alumnos");
+        jMenuClases.add(jMenuItem_AsignarAlumnos);
+
+        jMenuBar1.add(jMenuClases);
+
+        jMenuEventos.setBackground(new java.awt.Color(0, 102, 255));
+        jMenuEventos.setText("Eventos");
+
+        jMenuItem_AddEvento.setText("Añadir evento");
+        jMenuEventos.add(jMenuItem_AddEvento);
+
+        jMenuBar1.add(jMenuEventos);
+
+        jMenuCalendario.setBackground(new java.awt.Color(0, 102, 255));
+        jMenuCalendario.setText("Calendario");
+
+        jMenuItem_VerCalendario.setText("Ver calendario");
+        jMenuCalendario.add(jMenuItem_VerCalendario);
+
+        jMenuBar1.add(jMenuCalendario);
 
         setJMenuBar(jMenuBar1);
 
@@ -86,6 +171,14 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem_AddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddAlumnoActionPerformed
+        this.removeAll();
+        Panel_AddAlumnos panel_Alumnos = new Panel_AddAlumnos();
+        this.add(panel_Alumnos, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }//GEN-LAST:event_jMenuItem_AddAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,12 +216,26 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenuAlumnos;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu jMenuCalendario;
+    private javax.swing.JMenu jMenuClases;
+    private javax.swing.JMenu jMenuColegios;
+    private javax.swing.JMenu jMenuEventos;
+    private javax.swing.JMenuItem jMenuItem_AddAlumno;
+    private javax.swing.JMenuItem jMenuItem_AddClase;
+    private javax.swing.JMenuItem jMenuItem_AddCole;
+    private javax.swing.JMenuItem jMenuItem_AddEvento;
+    private javax.swing.JMenuItem jMenuItem_AddProfes;
+    private javax.swing.JMenuItem jMenuItem_AsignarAlumnos;
+    private javax.swing.JMenuItem jMenuItem_VerAlumnos;
+    private javax.swing.JMenuItem jMenuItem_VerCalendario;
+    private javax.swing.JMenuItem jMenuItem_VerClases;
+    private javax.swing.JMenuItem jMenuItem_VerColes;
+    private javax.swing.JMenuItem jMenuItem_VerProfes;
+    private javax.swing.JMenu jMenuProfesores;
+    private javax.swing.JMenu jMenu_icono;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
