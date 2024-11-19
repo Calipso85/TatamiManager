@@ -45,6 +45,7 @@ public class Panel_AddAlumnos extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(750, 550));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Añadir Alumnos");
@@ -68,6 +69,11 @@ public class Panel_AddAlumnos extends javax.swing.JPanel {
         btn_GuardarAlumno.setBackground(new java.awt.Color(0, 102, 204));
         btn_GuardarAlumno.setForeground(new java.awt.Color(255, 255, 255));
         btn_GuardarAlumno.setText("Registrar Alumno");
+        btn_GuardarAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GuardarAlumnoActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("foto alumno");
 
@@ -101,7 +107,7 @@ public class Panel_AddAlumnos extends javax.swing.JPanel {
                             .addComponent(cb_colegios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(106, 106, 106)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btn_GuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -147,9 +153,13 @@ public class Panel_AddAlumnos extends javax.swing.JPanel {
                     .addComponent(jLabel6))
                 .addGap(43, 43, 43)
                 .addComponent(btn_GuardarAlumno)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_GuardarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarAlumnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_GuardarAlumnoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

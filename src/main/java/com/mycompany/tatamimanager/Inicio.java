@@ -13,6 +13,8 @@ import java.awt.BorderLayout;
  */
 public class Inicio extends javax.swing.JFrame {
 
+    Panel_AddAlumnos panel_Alumnos = new Panel_AddAlumnos();
+    
     
     /**
      * Creates new form Inicio
@@ -40,7 +42,6 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_icono = new javax.swing.JMenu();
         jMenuColegios = new javax.swing.JMenu();
@@ -64,20 +65,7 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tatami Manager");
-        setResizable(false);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
-        );
+        setPreferredSize(new java.awt.Dimension(750, 550));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -87,7 +75,6 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuColegios.setBackground(new java.awt.Color(0, 102, 255));
         jMenuColegios.setText("Colegios");
-        jMenuColegios.setActionCommand("Colegios");
 
         jMenuItem_VerColes.setText("Ver colegios");
         jMenuColegios.add(jMenuItem_VerColes);
@@ -162,22 +149,25 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 686, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 424, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem_AddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddAlumnoActionPerformed
-        this.removeAll();
-        Panel_AddAlumnos panel_Alumnos = new Panel_AddAlumnos();
-        this.add(panel_Alumnos, BorderLayout.CENTER);
+        
+        //CAmbiar el panel
+        this.getContentPane().add(panel_Alumnos);  //Añade el objeto al Panel de contenido. 
+        panel_Alumnos.setBounds(0, 0, 750, 550); 
         this.revalidate();
         this.repaint();
+        
+       
     }//GEN-LAST:event_jMenuItem_AddAlumnoActionPerformed
 
     /**
@@ -235,7 +225,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_VerProfes;
     private javax.swing.JMenu jMenuProfesores;
     private javax.swing.JMenu jMenu_icono;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
