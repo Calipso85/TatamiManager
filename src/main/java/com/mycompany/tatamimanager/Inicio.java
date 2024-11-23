@@ -4,7 +4,9 @@
  */
 package com.mycompany.tatamimanager;
 
-import com.mycompany.tatamimanager.Alumnos.Panel_AddAlumnos;
+import com.mycompany.tatamimanager.Alumnos.*;
+import com.mycompany.tatamimanager.Profesores.*;
+import com.mycompany.tatamimanager.colegios.*;
 import java.awt.BorderLayout;
 
 /**
@@ -13,9 +15,10 @@ import java.awt.BorderLayout;
  */
 public class Inicio extends javax.swing.JFrame {
 
-    Panel_AddAlumnos panel_Alumnos = new Panel_AddAlumnos();
-    
-    
+    AddAlumnos panel_AddAlumnos = new AddAlumnos();
+    ListaAlumnos panel_listaAlumnos = new ListaAlumnos();
+    AddColegios panel_AddColegios = new AddColegios();
+    ListaColegios panel_listaColegios = new ListaColegios();
     /**
      * Creates new form Inicio
      */ 
@@ -65,7 +68,7 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tatami Manager");
-        setPreferredSize(new java.awt.Dimension(750, 550));
+        setPreferredSize(new java.awt.Dimension(760, 550));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -77,9 +80,19 @@ public class Inicio extends javax.swing.JFrame {
         jMenuColegios.setText("Colegios");
 
         jMenuItem_VerColes.setText("Ver colegios");
+        jMenuItem_VerColes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_VerColesActionPerformed(evt);
+            }
+        });
         jMenuColegios.add(jMenuItem_VerColes);
 
         jMenuItem_AddCole.setText("añadir colegios");
+        jMenuItem_AddCole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AddColeActionPerformed(evt);
+            }
+        });
         jMenuColegios.add(jMenuItem_AddCole);
 
         jMenuBar1.add(jMenuColegios);
@@ -100,6 +113,11 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem_VerAlumnos.setText("Ver alumnos");
         jMenuItem_VerAlumnos.setToolTipText("");
+        jMenuItem_VerAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_VerAlumnosActionPerformed(evt);
+            }
+        });
         jMenuAlumnos.add(jMenuItem_VerAlumnos);
 
         jMenuItem_AddAlumno.setText("Añadir alumno");
@@ -160,15 +178,40 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem_AddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddAlumnoActionPerformed
-        
-        //CAmbiar el panel
-        this.getContentPane().add(panel_Alumnos);  //Añade el objeto al Panel de contenido. 
-        panel_Alumnos.setBounds(0, 0, 750, 550); 
+        //Cambiar el panel
+        this.getContentPane().removeAll();
+        this.getContentPane().add(panel_AddAlumnos);  //Añade el objeto al Panel de contenido. 
+        panel_AddAlumnos.setBounds(0, 0, 750, 550); 
         this.revalidate();
         this.repaint();
-        
-       
     }//GEN-LAST:event_jMenuItem_AddAlumnoActionPerformed
+
+    private void jMenuItem_VerAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerAlumnosActionPerformed
+        //Cambiar el panel
+        this.getContentPane().removeAll();
+        this.getContentPane().add(panel_listaAlumnos);  //Añade el objeto al Panel de contenido. 
+        panel_listaAlumnos.setBounds(0, 0, 750, 550); 
+        this.revalidate();
+        this.repaint();
+    }//GEN-LAST:event_jMenuItem_VerAlumnosActionPerformed
+
+    private void jMenuItem_VerColesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerColesActionPerformed
+        //Cambiar el panel
+        this.getContentPane().removeAll();
+        this.getContentPane().add(panel_listaColegios);  //Añade el objeto al Panel de contenido. 
+        panel_listaColegios.setBounds(0, 0, 750, 550); 
+        this.revalidate();
+        this.repaint();
+    }//GEN-LAST:event_jMenuItem_VerColesActionPerformed
+
+    private void jMenuItem_AddColeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddColeActionPerformed
+        //Cambiar el panel
+        this.getContentPane().removeAll();
+        this.getContentPane().add(panel_AddColegios);  //Añade el objeto al Panel de contenido. 
+        panel_AddColegios.setBounds(0, 0, 750, 550); 
+        this.revalidate();
+        this.repaint();
+    }//GEN-LAST:event_jMenuItem_AddColeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,6 +228,7 @@ public class Inicio extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
+                
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
