@@ -30,20 +30,20 @@
                       <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jLabel4" min="-2" pref="140" max="-2" attributes="0"/>
+                              <Component id="lb_anyo" min="-2" pref="140" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="txt_Anyo" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="txt_anyo" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lb_apell" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="lb_nombreAlumno" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <Component id="jLabel6" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="lb_nombre" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="lb_curso" min="-2" pref="110" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txt_Nombre" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="txt_Apell" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txt_nombre" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txt_apell" min="-2" pref="200" max="-2" attributes="0"/>
                                   <Component id="txt_curso" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="98" pref="98" max="-2" attributes="0"/>
@@ -51,17 +51,17 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lb_cole" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lb_tutor" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lb_telf" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lb_correo" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txt_Tutor" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="cb_colegios" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="txt_telf1" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txt_tutor" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="comboBox_colegios" min="-2" pref="200" max="-2" attributes="0"/>
                                   <Component id="txt_telf" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txt_correo" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -72,7 +72,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lb_titulo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="16" max="32767" attributes="0"/>
@@ -83,52 +83,52 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="lb_titulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel7" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_Nombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lb_nombreAlumno" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lb_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_Apell" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_apell" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lb_apell" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txt_curso" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lb_curso" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_Anyo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_anyo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lb_anyo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="cb_colegios" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboBox_colegios" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_cole" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txt_Tutor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txt_telf1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txt_tutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_tutor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txt_telf" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_telf" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txt_correo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_correo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="btn_GuardarAlumno" min="-2" max="-2" attributes="0"/>
@@ -138,7 +138,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lb_titulo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>
@@ -146,7 +146,7 @@
         <Property name="text" type="java.lang.String" value="A&#xf1;adir Alumno"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lb_nombreAlumno">
+    <Component class="javax.swing.JLabel" name="lb_nombre">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre:"/>
       </Properties>
@@ -156,43 +156,44 @@
         <Property name="text" type="java.lang.String" value="Apellidos:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="lb_tutor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre padre/madre/tutor:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_Apell">
+    <Component class="javax.swing.JTextField" name="txt_apell">
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_Nombre">
+    <Component class="javax.swing.JTextField" name="txt_nombre">
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_Tutor">
+    <Component class="javax.swing.JTextField" name="txt_tutor">
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_telf">
+    <Component class="javax.swing.JTextField" name="txt_correo">
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_Anyo">
+    <Component class="javax.swing.JTextField" name="txt_anyo">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="lb_telf">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tel&#xe9;fono de contacto:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="lb_anyo">
       <Properties>
         <Property name="text" type="java.lang.String" value="A&#xf1;o de nacimiento:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="lb_cole">
       <Properties>
         <Property name="text" type="java.lang.String" value="Colegio:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_curso">
     </Component>
-    <Component class="javax.swing.JComboBox" name="cb_colegios">
+    <Component class="javax.swing.JComboBox" name="comboBox_colegios">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
+          <StringArray count="2">
             <StringItem index="0" value="Seleccione un colegio"/>
+            <StringItem index="1" value="cole 1"/>
           </StringArray>
         </Property>
       </Properties>
@@ -200,7 +201,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
+    <Component class="javax.swing.JLabel" name="lb_curso">
       <Properties>
         <Property name="text" type="java.lang.String" value="Curso:"/>
       </Properties>
@@ -224,12 +225,12 @@
         <Property name="text" type="java.lang.String" value="foto alumno"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
+    <Component class="javax.swing.JLabel" name="lb_correo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Correo electr&#xf3;nico:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_telf1">
+    <Component class="javax.swing.JTextField" name="txt_telf">
     </Component>
   </SubComponents>
 </Form>

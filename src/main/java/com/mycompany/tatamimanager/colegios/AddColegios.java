@@ -4,7 +4,16 @@
  */
 package com.mycompany.tatamimanager.colegios;
 
+import com.mycompany.tatamimanager.Inicio;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException; 
 
 /**
  *
@@ -12,11 +21,11 @@ import javax.swing.JOptionPane;
  */
 public class AddColegios extends javax.swing.JPanel {
 
-        private String nombreCole;
-        private String direccionCole;
-        private int telefonoCole; 
-        private String barrioCole;
-        private int cpCole; 
+    private String nombreCole;
+    private String direccionCole;
+    private int telefonoCole; 
+    private String barrioCole;
+    private int cpCole; 
         
         
     /**
@@ -36,40 +45,40 @@ public class AddColegios extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
+        lb_barrio = new javax.swing.JLabel();
         txt_telf = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lb_telf = new javax.swing.JLabel();
+        lb_titulo = new javax.swing.JLabel();
         lb_nombreAlumno = new javax.swing.JLabel();
-        lb_apell = new javax.swing.JLabel();
+        lb_dir = new javax.swing.JLabel();
         txt_direccion = new javax.swing.JTextField();
         txt_nombre = new javax.swing.JTextField();
         txt_barrio = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lb_cp = new javax.swing.JLabel();
         txt_cp = new javax.swing.JTextField();
-        btn_GuardarAlumno = new javax.swing.JButton();
+        btn_GuardarColegio = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setText("Barrio:");
+        lb_barrio.setText("Barrio:");
 
-        jLabel6.setText("Teléfono:");
+        lb_telf.setText("Teléfono:");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Añadir Colegio");
+        lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lb_titulo.setText("Añadir Colegio");
 
         lb_nombreAlumno.setText("Nombre:");
 
-        lb_apell.setText("Dirección:");
+        lb_dir.setText("Dirección:");
 
-        jLabel2.setText("Código Postal:");
+        lb_cp.setText("Código Postal:");
 
-        btn_GuardarAlumno.setBackground(new java.awt.Color(0, 102, 204));
-        btn_GuardarAlumno.setForeground(new java.awt.Color(255, 255, 255));
-        btn_GuardarAlumno.setText("Guardar Colegio");
-        btn_GuardarAlumno.addActionListener(new java.awt.event.ActionListener() {
+        btn_GuardarColegio.setBackground(new java.awt.Color(0, 102, 204));
+        btn_GuardarColegio.setForeground(new java.awt.Color(255, 255, 255));
+        btn_GuardarColegio.setText("Guardar Colegio");
+        btn_GuardarColegio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_GuardarAlumnoActionPerformed(evt);
+                btn_GuardarColegioActionPerformed(evt);
             }
         });
 
@@ -84,9 +93,9 @@ public class AddColegios extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lb_apell, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lb_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lb_nombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lb_telf, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -94,25 +103,25 @@ public class AddColegios extends javax.swing.JPanel {
                                     .addComponent(txt_telf, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
+                                    .addComponent(lb_barrio, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lb_cp))
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txt_cp)
                                     .addComponent(txt_barrio, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(204, 204, 204)
-                        .addComponent(btn_GuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_GuardarColegio, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(187, 187, 187)
-                        .addComponent(jLabel1)))
+                        .addComponent(lb_titulo)))
                 .addContainerGap(229, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
-                .addComponent(jLabel1)
+                .addComponent(lb_titulo)
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -120,26 +129,26 @@ public class AddColegios extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_apell))
+                    .addComponent(lb_dir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_telf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(lb_telf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_barrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(lb_barrio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_cp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(lb_cp))
                 .addGap(30, 30, 30)
-                .addComponent(btn_GuardarAlumno)
+                .addComponent(btn_GuardarColegio)
                 .addContainerGap(146, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_GuardarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarAlumnoActionPerformed
+    private void btn_GuardarColegioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarColegioActionPerformed
         
         // Verificar si los campos están vacíos
     if (txt_nombre.getText().trim().isEmpty() || txt_direccion.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
@@ -149,54 +158,50 @@ public class AddColegios extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Por favor, rellena todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
 
     } else {
-        try {
         // Validar y asignar los valores
-            nombreCole = txt_nombre.getText().trim();
-            direccionCole = txt_direccion.getText().trim();
-            barrioCole = txt_barrio.getText().trim();
+        nombreCole = txt_nombre.getText().trim();
+        direccionCole = txt_direccion.getText().trim();
+        barrioCole = txt_barrio.getText().trim();
 
-            String telefono = txt_telf.getText().trim();
-            if (telefono.matches("\\d{9}") || telefono.matches("\\+\\d{11}")) {
-                JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos o un número internacional con '+' seguido de 11 dígitos.", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
-                return; // Salir del método si la validación falla
-            } 
-            telefonoCole = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
-            
-            // Validar que el CP sea un número y tenga 5 dígitos
-            String cpTexto = txt_cp.getText().trim(); 
-            if ( !cpTexto.matches("\\d{5}")) { //nuemeroo de 5 digitos
-                JOptionPane.showMessageDialog(null, "El código postal debe ser un número de 5 dígitos.", "Error en el Código Postal", JOptionPane.ERROR_MESSAGE);
-                return; // Salir del método si la validación falla
-            }
-            cpCole = Integer.parseInt(cpTexto); // asignar cp
+        // Validar que el telefono sea un número y tenga 9 dígitos
+        String telefono = txt_telf.getText().trim();
+        if (!telefono.matches("\\d{9}")) {
+            JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si la validación falla
+        } 
+        telefonoCole = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
 
-            // Mensaje de éxito
-            JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El teléfono debe ser un número válido.", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
+        // Validar que el CP sea un número y tenga 5 dígitos
+        String cpTexto = txt_cp.getText().trim(); 
+        if ( !cpTexto.matches("\\d{5}")) { 
+            JOptionPane.showMessageDialog(null, "El código postal debe ser un número de 5 dígitos.", "Error en el Código Postal", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si la validación falla
         }
+        cpCole = Integer.parseInt(cpTexto); // asignar cp
+
+        // Mensaje de éxito
+        JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
-        
         //guardar en la bbdd
         
         
         //cambiar panel a listaColegios
-        //this.setVisible(false);
-
-
-    }//GEN-LAST:event_btn_GuardarAlumnoActionPerformed
+        JFrame frameInicio = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (frameInicio instanceof Inicio) {
+            ((Inicio) frameInicio).cambiarPanel(new ListaColegios());
+        }
+    }//GEN-LAST:event_btn_GuardarColegioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_GuardarAlumno;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel lb_apell;
+    private javax.swing.JButton btn_GuardarColegio;
+    private javax.swing.JLabel lb_barrio;
+    private javax.swing.JLabel lb_cp;
+    private javax.swing.JLabel lb_dir;
     private javax.swing.JLabel lb_nombreAlumno;
+    private javax.swing.JLabel lb_telf;
+    private javax.swing.JLabel lb_titulo;
     private javax.swing.JTextField txt_barrio;
     private javax.swing.JTextField txt_cp;
     private javax.swing.JTextField txt_direccion;

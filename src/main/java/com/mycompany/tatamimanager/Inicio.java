@@ -8,6 +8,7 @@ import com.mycompany.tatamimanager.Alumnos.*;
 import com.mycompany.tatamimanager.Profesores.*;
 import com.mycompany.tatamimanager.colegios.*;
 import java.awt.BorderLayout;
+import javax.swing.JPanel;
 
 /**
  *
@@ -15,15 +16,22 @@ import java.awt.BorderLayout;
  */
 public class Inicio extends javax.swing.JFrame {
 
-    AddAlumnos panel_AddAlumnos = new AddAlumnos();
-    ListaAlumnos panel_listaAlumnos = new ListaAlumnos();
-    AddColegios panel_AddColegios = new AddColegios();
-    ListaColegios panel_listaColegios = new ListaColegios();
+    AddAlumnos panel_AddAlumnos;
+    ListaAlumnos panel_listaAlumnos;
+    AddColegios panel_AddColegios;
+    ListaColegios panel_listaColegios;
     /**
      * Creates new form Inicio
      */ 
     public Inicio() {
         initComponents();
+        
+        
+        
+        panel_AddAlumnos = new AddAlumnos();
+        panel_listaAlumnos = new ListaAlumnos();
+        panel_AddColegios = new AddColegios();
+        panel_listaColegios = new ListaColegios();
         
         /*
          // Cargar la imagen desde el classpath
@@ -34,6 +42,16 @@ public class Inicio extends javax.swing.JFrame {
             System.err.println("No se pudo cargar la imagen: " + e.getMessage());
         }
         */
+        
+    }
+    
+    // Método para cambiar panel
+    public void cambiarPanel(JPanel nuevoPanel) {
+        this.getContentPane().removeAll();
+        this.getContentPane().add(nuevoPanel);
+        nuevoPanel.setBounds(0, 0, 750, 550);
+        this.revalidate();
+        this.repaint();
     }
 
     /**
@@ -178,39 +196,19 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem_AddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddAlumnoActionPerformed
-        //Cambiar el panel
-        this.getContentPane().removeAll();
-        this.getContentPane().add(panel_AddAlumnos);  //Añade el objeto al Panel de contenido. 
-        panel_AddAlumnos.setBounds(0, 0, 750, 550); 
-        this.revalidate();
-        this.repaint();
+        cambiarPanel(panel_AddAlumnos);
     }//GEN-LAST:event_jMenuItem_AddAlumnoActionPerformed
 
     private void jMenuItem_VerAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerAlumnosActionPerformed
-        //Cambiar el panel
-        this.getContentPane().removeAll();
-        this.getContentPane().add(panel_listaAlumnos);  //Añade el objeto al Panel de contenido. 
-        panel_listaAlumnos.setBounds(0, 0, 750, 550); 
-        this.revalidate();
-        this.repaint();
+        cambiarPanel(panel_listaAlumnos);
     }//GEN-LAST:event_jMenuItem_VerAlumnosActionPerformed
 
     private void jMenuItem_VerColesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerColesActionPerformed
-        //Cambiar el panel
-        this.getContentPane().removeAll();
-        this.getContentPane().add(panel_listaColegios);  //Añade el objeto al Panel de contenido. 
-        panel_listaColegios.setBounds(0, 0, 750, 550); 
-        this.revalidate();
-        this.repaint();
+        cambiarPanel(panel_listaColegios);
     }//GEN-LAST:event_jMenuItem_VerColesActionPerformed
 
     private void jMenuItem_AddColeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddColeActionPerformed
-        //Cambiar el panel
-        this.getContentPane().removeAll();
-        this.getContentPane().add(panel_AddColegios);  //Añade el objeto al Panel de contenido. 
-        panel_AddColegios.setBounds(0, 0, 750, 550); 
-        this.revalidate();
-        this.repaint();
+        cambiarPanel(panel_AddColegios);
     }//GEN-LAST:event_jMenuItem_AddColeActionPerformed
 
     /**
