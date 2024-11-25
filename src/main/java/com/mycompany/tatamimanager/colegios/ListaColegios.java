@@ -4,6 +4,9 @@
  */
 package com.mycompany.tatamimanager.colegios;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +16,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -25,6 +32,8 @@ public class ListaColegios extends javax.swing.JPanel {
     
     DefaultTableModel modelo;
     Connection conn;
+    ResultSet resultado;
+
             
     /**
      * Creates new form ListaColegios
@@ -35,15 +44,73 @@ public class ListaColegios extends javax.swing.JPanel {
         modelo = (DefaultTableModel) this.tablaColegios.getModel();
         
         try {   
-            String url = "jdbc:sqlite:club_judo.db";
-            conn = DriverManager.getConnection(url);
-            if(conn != null){
-                JOptionPane.showMessageDialog(null,"Conectado");
+            
+            // Cargar la bbdd de recursos/database desde el classpath
+            URL resourceUrl = getClass().getClassLoader().getResource("database/club_judo.db");
+            if (resourceUrl == null) {
+                throw new IllegalStateException("No se encontró la base de datos en src/main/resources/database/club_judo.db");
             }
+            String dbPath = new File(resourceUrl.toURI()).getAbsolutePath();
+            String url = "jdbc:sqlite:" + dbPath; //url bbdd
+            
+            //conexión a la bbdd
+            conn = DriverManager.getConnection(url);
+            if (conn!= null) {
+                System.out.println("Connection created successfully");
+            }else{
+                System.out.println("Problem with creating connection");
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error al conectar a la bbdd.");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
+        
+        //sentencias
+        modelo.setRowCount(0);
+        resultado = null;
+        try{
+            PreparedStatement st = conn.prepareStatement("SELECT nombre, direccion, telefono, barrio, cod_postal FROM colegios");
+            resultado = st.executeQuery();
+            
+            while(resultado.next()){
+                modelo.addRow(new Object[]{resultado.getString("nombre"), resultado.getString("direccion"),resultado.getInt("telefono"),
+                    resultado.getString("barrio"),resultado.getInt("cod_postal")});
+            }
+            
+        }catch(Exception e){
+            System.out.println(e.getMessage().toString());
+        }
+        
+        /*
+        //ajustar tamaño columnas 
+        tablaColegios.getColumnModel().getColumn(0).setPreferredWidth(70);
+        tablaColegios.getColumnModel().getColumn(1).setPreferredWidth(70);
+        tablaColegios.getColumnModel().getColumn(2).setPreferredWidth(5);
+        tablaColegios.getColumnModel().getColumn(3).setPreferredWidth(30);
+        tablaColegios.getColumnModel().getColumn(4).setPreferredWidth(10);
+        */
+        //tablaColegios.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        // Aplica el renderer solo a columnas Integer
+        for (int col = 0; col < tablaColegios.getColumnCount(); col++) {
+            if (tablaColegios.getColumnClass(col) == Integer.class) {
+                tablaColegios.getColumnModel().getColumn(col).setCellRenderer(rightRenderer);
+            }
+        }
+        
+        //cierre de la conexión a la bbdd
+        try { 
+            conn.close();    
+        } catch (SQLException ex) { 
+            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, ex);; 
+        } 
     }
     
     
@@ -59,43 +126,78 @@ public class ListaColegios extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaColegios = new javax.swing.JTable();
+        lb_titulo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         tablaColegios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Dirección", "Teléfono", "Barrio", "Código Postal"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaColegios.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaColegios);
+        if (tablaColegios.getColumnModel().getColumnCount() > 0) {
+            tablaColegios.getColumnModel().getColumn(0).setPreferredWidth(60);
+            tablaColegios.getColumnModel().getColumn(1).setPreferredWidth(60);
+            tablaColegios.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tablaColegios.getColumnModel().getColumn(3).setPreferredWidth(30);
+            tablaColegios.getColumnModel().getColumn(4).setPreferredWidth(20);
+        }
+
+        lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lb_titulo.setText("Listado de Colegios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(lb_titulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(lb_titulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_titulo;
     private javax.swing.JTable tablaColegios;
     // End of variables declaration//GEN-END:variables
 }
