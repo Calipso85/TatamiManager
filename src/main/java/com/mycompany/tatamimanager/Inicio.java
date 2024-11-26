@@ -49,7 +49,7 @@ public class Inicio extends javax.swing.JFrame {
     public void cambiarPanel(JPanel nuevoPanel) {
         this.getContentPane().removeAll();
         this.getContentPane().add(nuevoPanel);
-        nuevoPanel.setBounds(0, 0, 750, 550);
+        nuevoPanel.setBounds(0, 0, 850, 550);
         this.revalidate();
         this.repaint();
     }
@@ -86,7 +86,7 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tatami Manager");
-        setPreferredSize(new java.awt.Dimension(760, 550));
+        setPreferredSize(new java.awt.Dimension(900, 550));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -185,11 +185,11 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 686, Short.MAX_VALUE)
+            .addGap(0, 856, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
+            .addGap(0, 426, Short.MAX_VALUE)
         );
 
         pack();

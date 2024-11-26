@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListaColegios extends javax.swing.JPanel {
 
-    
+    Object[] cabecera;
     DefaultTableModel modelo;
 
     /**
@@ -31,27 +32,48 @@ public class ListaColegios extends javax.swing.JPanel {
     public ListaColegios() {
         initComponents();
             
-        modelo = (DefaultTableModel) this.tablaColegios.getModel();
+        cabecera = new Object [] {"Nombre", "Dirección", "Teléfono", "Barrio", "Código Postal", "Editar", "Eliminar"};
+        
+        modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                switch(columnIndex){
+                    case 2: return Integer.class;
+                    case 4: return Integer.class;
+                    case 5: return ImageIcon.class;
+                    case 6: return ImageIcon.class;
+                    default:return String.class;
+                }
+            }
+        };
+        tablaColegios.setModel(modelo);
         
         try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
-            System.out.println("Connection created successfully");
-
-            // Sentencias
+            // Sentencia sql
             modelo.setRowCount(0);
             PreparedStatement st = conn.prepareStatement(
                 "SELECT nombre, direccion, telefono, barrio, cod_postal FROM colegios"
             );
             ResultSet resultado = st.executeQuery();
 
+            // Cargar los iconos desde el classpath
+            ImageIcon iconEditar = new ImageIcon(ListaColegios.class.getResource("/images/lapiz.png"));
+            ImageIcon iconEliminar = new ImageIcon(ListaColegios.class.getResource("/images/basura.png"));
+
             while (resultado.next()) {
+                // Agregar una nueva fila con los datos y los iconos
                 modelo.addRow(new Object[] {
                     resultado.getString("nombre"), 
                     resultado.getString("direccion"),
                     resultado.getInt("telefono"),
                     resultado.getString("barrio"),
-                    resultado.getInt("cod_postal")
+                    resultado.getInt("cod_postal"),
+                    iconEditar,  // Icono para la columna "Editar"
+                    iconEliminar // Icono para la columna "Eliminar"
                 });
             }
+            DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
+            
         } catch (SQLException e) {
             Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
@@ -60,31 +82,32 @@ public class ListaColegios extends javax.swing.JPanel {
             System.out.println("Error inesperado: " + e.getMessage());
         }
         
-        /*
+        //colocar iconos
+        try {
+            ImageIcon icon = new ImageIcon(ListaColegios.class.getResource("/images/retrato.png"));
+            // .setIcon(icon);
+        } catch (NullPointerException e) {
+            System.err.println("No se pudo cargar la imagen: " + e.getMessage());
+        }
+        
         //ajustar tamaño columnas 
-        tablaColegios.getColumnModel().getColumn(0).setPreferredWidth(70);
-        tablaColegios.getColumnModel().getColumn(1).setPreferredWidth(70);
+        tablaColegios.getColumnModel().getColumn(0).setPreferredWidth(120);
+        tablaColegios.getColumnModel().getColumn(1).setPreferredWidth(120);
         tablaColegios.getColumnModel().getColumn(2).setPreferredWidth(5);
         tablaColegios.getColumnModel().getColumn(3).setPreferredWidth(30);
         tablaColegios.getColumnModel().getColumn(4).setPreferredWidth(10);
-        */
-        //tablaColegios.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        tablaColegios.getColumnModel().getColumn(5).setPreferredWidth(5);
+        tablaColegios.getColumnModel().getColumn(6).setPreferredWidth(5);
         
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-
+        /*
         // Aplica el renderer solo a columnas Integer
         for (int col = 0; col < tablaColegios.getColumnCount(); col++) {
             if (tablaColegios.getColumnClass(col) == Integer.class) {
                 tablaColegios.getColumnModel().getColumn(col).setCellRenderer(rightRenderer);
             }
         }
-        
-        //cierre de la conexión a la bbdd
-        DatabaseManager.closeConnection();
+        */
     }
-    
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,31 +126,22 @@ public class ListaColegios extends javax.swing.JPanel {
 
         tablaColegios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Nombre", "Dirección", "Teléfono", "Barrio", "Código Postal"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        ));
+        tablaColegios.setEnabled(false);
+        tablaColegios.getTableHeader().setReorderingAllowed(false);
+        tablaColegios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaColegiosMouseClicked(evt);
             }
         });
-        tablaColegios.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaColegios);
         if (tablaColegios.getColumnModel().getColumnCount() > 0) {
             tablaColegios.getColumnModel().getColumn(0).setPreferredWidth(60);
@@ -145,14 +159,13 @@ public class ListaColegios extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(lb_titulo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(166, 166, 166)
+                .addComponent(lb_titulo)
+                .addContainerGap(487, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,6 +177,56 @@ public class ListaColegios extends javax.swing.JPanel {
                 .addContainerGap(54, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tablaColegiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaColegiosMouseClicked
+        // Verificar si se hizo doble clic
+        if (evt.getClickCount() == 2) {
+            // Obtener la fila y columna donde ocurrió el clic
+            int fila = tablaColegios.rowAtPoint(evt.getPoint());
+            int columna = tablaColegios.columnAtPoint(evt.getPoint());
+
+            // Verificar si se hizo clic en la columna "Editar" (columna 5)
+            if (columna == 5) { 
+                // Obtener el valor de la columna "nombre" (columna 0) de la fila seleccionada
+                String nombreColegio = modelo.getValueAt(fila, 0).toString();
+                
+                try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión                //---- AQUI
+                    // Sentencia sql para obtener el id del colegio 
+                    PreparedStatement st = conn.prepareStatement( 
+                            "SELECT id_colegio FROM colegios WHERE nombre = ?" 
+                    ); 
+                    st.setString(1, nombreColegio); // Establece el valor del parámetro 
+                    ResultSet resultado = st.executeQuery();
+                    
+                    System.out.println("SELECT id_colegio FROM colegios WHERE nombre="+nombreColegio);          //---- AQUI
+
+                    if (resultado.next()) { 
+                        int idColegio = resultado.getInt("id_colegio");
+                    
+                        // Sentencia sql para obtener la dirección del colegio 
+                        PreparedStatement stDireccion = conn.prepareStatement( 
+                            "SELECT * FROM colegios WHERE id_colegio = ?" 
+                            ); 
+                        stDireccion.setInt(1, idColegio); // Establece el valor del parámetro 
+                        ResultSet resultadoDireccion = stDireccion.executeQuery(); 
+
+                        if (resultadoDireccion.next()) { 
+                            String direccionColegio = resultadoDireccion.getString("direccion"); 
+                            System.out.println("Dirección del colegio: " + direccionColegio); 
+                        } 
+                    }
+                } catch (SQLException e) {
+                    Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+                    System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+                } catch (Exception e) {
+                    Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+                    System.out.println("Error inesperado: " + e.getMessage());
+                }
+            }else if(columna == 6) { 
+                
+            }
+        }
+    }//GEN-LAST:event_tablaColegiosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
