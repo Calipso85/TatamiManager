@@ -4,21 +4,14 @@
  */
 package com.mycompany.tatamimanager.colegios;
 
-import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
+import com.mycompany.tatamimanager.DatabaseManager;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,10 +24,7 @@ public class ListaColegios extends javax.swing.JPanel {
 
     
     DefaultTableModel modelo;
-    Connection conn;
-    ResultSet resultado;
 
-            
     /**
      * Creates new form ListaColegios
      */
@@ -43,46 +33,31 @@ public class ListaColegios extends javax.swing.JPanel {
             
         modelo = (DefaultTableModel) this.tablaColegios.getModel();
         
-        try {   
-            
-            // Cargar la bbdd de recursos/database desde el classpath
-            URL resourceUrl = getClass().getClassLoader().getResource("database/club_judo.db");
-            if (resourceUrl == null) {
-                throw new IllegalStateException("No se encontró la base de datos en src/main/resources/database/club_judo.db");
+        try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
+            System.out.println("Connection created successfully");
+
+            // Sentencias
+            modelo.setRowCount(0);
+            PreparedStatement st = conn.prepareStatement(
+                "SELECT nombre, direccion, telefono, barrio, cod_postal FROM colegios"
+            );
+            ResultSet resultado = st.executeQuery();
+
+            while (resultado.next()) {
+                modelo.addRow(new Object[] {
+                    resultado.getString("nombre"), 
+                    resultado.getString("direccion"),
+                    resultado.getInt("telefono"),
+                    resultado.getString("barrio"),
+                    resultado.getInt("cod_postal")
+                });
             }
-            String dbPath = new File(resourceUrl.toURI()).getAbsolutePath();
-            String url = "jdbc:sqlite:" + dbPath; //url bbdd
-            
-            //conexión a la bbdd
-            conn = DriverManager.getConnection(url);
-            if (conn!= null) {
-                System.out.println("Connection created successfully");
-            }else{
-                System.out.println("Problem with creating connection");
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al conectar a la bbdd.");
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
-        }
-        
-        //sentencias
-        modelo.setRowCount(0);
-        resultado = null;
-        try{
-            PreparedStatement st = conn.prepareStatement("SELECT nombre, direccion, telefono, barrio, cod_postal FROM colegios");
-            resultado = st.executeQuery();
-            
-            while(resultado.next()){
-                modelo.addRow(new Object[]{resultado.getString("nombre"), resultado.getString("direccion"),resultado.getInt("telefono"),
-                    resultado.getString("barrio"),resultado.getInt("cod_postal")});
-            }
-            
-        }catch(Exception e){
-            System.out.println(e.getMessage().toString());
+        } catch (SQLException e) {
+            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+        } catch (Exception e) {
+            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error inesperado: " + e.getMessage());
         }
         
         /*
@@ -106,11 +81,7 @@ public class ListaColegios extends javax.swing.JPanel {
         }
         
         //cierre de la conexión a la bbdd
-        try { 
-            conn.close();    
-        } catch (SQLException ex) { 
-            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, ex);; 
-        } 
+        DatabaseManager.closeConnection();
     }
     
     
