@@ -188,7 +188,8 @@ public class AddColegios extends javax.swing.JPanel {
         //guardar en la bbdd
         try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
         
-             String query = "INSERT INTO colegios (nombre, direccion, telefono, barrio, cod_postal) VALUES (?, ?, ?, ?, ?)";
+             String query = "INSERT INTO colegios (nombre, direccion, telefono, barrio, cod_postal) "
+                     + "VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement st = conn.prepareStatement(query)) {
                 st.setString(1, nombreCole);
                 st.setString(2, direccionCole);

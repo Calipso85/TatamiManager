@@ -4,7 +4,10 @@
  */
 package com.mycompany.tatamimanager.Alumnos;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -20,24 +23,56 @@ public class AddAlumnos extends javax.swing.JPanel {
     private String nombreTutor;
     private int telf;
     private String correo;
+
+     /**
+     * Creates new form Panel_AddAlumnos
+     */
+    public JButton getBtn_GuardarAlumno() {
+        return btn_GuardarAlumno;
+    }
+
+    public JComboBox<String> getComboBox_colegios() {
+        return comboBox_colegios;
+    }
+
+    public JTextField getTxt_anyo() {
+        return txt_anyo;
+    }
+
+    public JTextField getTxt_apell() {
+        return txt_apell;
+    }
+
+    public JTextField getTxt_correo() {
+        return txt_correo;
+    }
+
+    public JTextField getTxt_curso() {
+        return txt_curso;
+    }
+
+    public JTextField getTxt_nombre() {
+        return txt_nombre;
+    }
+
+    public JTextField getTxt_telf() {
+        return txt_telf;
+    }
+
+    public JTextField getTxt_tutor() {
+        return txt_tutor;
+    }
+
     
     /**
      * Creates new form Panel_AddAlumnos
      */
     public AddAlumnos() {
         initComponents();
-        /*
-        nombreAlumno;
-        apellidos;
-        curso; 
-        anyo; 
-        colegio;
-        nombreTutor;
-        telf;
-        correo;
-        */
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -196,15 +231,19 @@ public class AddAlumnos extends javax.swing.JPanel {
 
     private void btn_GuardarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarAlumnoActionPerformed
         // Verificar si los campos están vacíos
-    if (txt_nombre.getText().trim().isEmpty() || txt_apell.getText().trim().isEmpty() || txt_curso.getText().trim().isEmpty() || 
-        txt_anyo.getText().trim().isEmpty() || txt_tutor.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
+    if (txt_nombre.getText().trim().isEmpty() || txt_apell.getText().trim().isEmpty() 
+            || txt_curso.getText().trim().isEmpty() || 
+        txt_anyo.getText().trim().isEmpty() || txt_tutor.getText().trim().isEmpty() 
+            || txt_telf.getText().trim().isEmpty() || 
         txt_correo.getText().trim().isEmpty() ) {
 
         // Mostrar mensaje de advertencia
-        JOptionPane.showMessageDialog(null, "Por favor, rellena todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Por favor, rellena todos los campos.",
+                "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
 
     }else if(comboBox_colegios.getSelectedIndex()==0){
-        JOptionPane.showMessageDialog(null, "Por favor, selecciona un colegio.", "Colegio sin seleccionar", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Por favor, selecciona un colegio.", 
+                "Colegio sin seleccionar", JOptionPane.WARNING_MESSAGE);
     } else {
         // Validar y asignar los valores
         nombreAlumno = txt_nombre.getText().trim();
@@ -214,25 +253,29 @@ public class AddAlumnos extends javax.swing.JPanel {
         // Validar que el año sea un número y tenga 4 dígitos
         String anyoTexto = txt_anyo.getText().trim(); 
         if ( !anyoTexto.matches("\\d{4}")) { 
-            JOptionPane.showMessageDialog(null, "El año de nacimiento debe ser un número de 4 dígitos.", "Error en el Año", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El año de nacimiento debe ser un número de 4 dígitos.", 
+                    "Error en el Año", JOptionPane.ERROR_MESSAGE);
             return; // Salir del método si la validación falla
         }
         anyo = Integer.parseInt(anyoTexto); // asignar cp
         // Validar que el año esté en el rango permitido (entre 2010 y 2017)
         if (anyo < 2010 || anyo > 2017) {
-            JOptionPane.showMessageDialog(null, "El año es incorrecto, asegurese de introducir el año bien.", "Error en el Año", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El año es incorrecto, asegurese de introducir el año bien.", 
+                    "Error en el Año", JOptionPane.ERROR_MESSAGE);
             return; // Salir del método si la validación falla
         }
         // Validar que el telefono sea un número y tenga 9 dígitos
         String telefono = txt_telf.getText().trim();
         if (!telefono.matches("\\d{9}")) {
-            JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos", 
+                    "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
             return; // Salir del método si la validación falla
         } 
         telf = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
         
         // Mensaje de éxito
-        JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", 
+                "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
 
