@@ -20,6 +20,8 @@ public class Inicio extends javax.swing.JFrame {
     ListaAlumnos panel_listaAlumnos;
     AddColegios panel_AddColegios;
     ListaColegios panel_listaColegios;
+    AddProfesores panel_AddProfesores;
+    
     /**
      * Creates new form Inicio
      */ 
@@ -27,21 +29,12 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         
         
-        
         panel_AddAlumnos = new AddAlumnos();
         panel_listaAlumnos = new ListaAlumnos();
         panel_AddColegios = new AddColegios();
         panel_listaColegios = new ListaColegios();
+        panel_AddProfesores = new AddProfesores();
         
-        /*
-         // Cargar la imagen desde el classpath
-        try {
-            ImageIcon icon = new ImageIcon(Inicio.class.getResource("/images/retrato.png"));
-            jMenu_icono.setIcon(icon);
-        } catch (NullPointerException e) {
-            System.err.println("No se pudo cargar la imagen: " + e.getMessage());
-        }
-        */
         
     }
     
@@ -63,6 +56,7 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_icono = new javax.swing.JMenu();
         jMenuColegios = new javax.swing.JMenu();
@@ -86,7 +80,21 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tatami Manager");
-        setPreferredSize(new java.awt.Dimension(900, 550));
+        setLocation(new java.awt.Point(500, 500));
+        setPreferredSize(new java.awt.Dimension(905, 550));
+
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 856, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 426, Short.MAX_VALUE)
+        );
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -119,9 +127,19 @@ public class Inicio extends javax.swing.JFrame {
         jMenuProfesores.setText("Profesores");
 
         jMenuItem_VerProfes.setText("Ver profesores");
+        jMenuItem_VerProfes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_VerProfesActionPerformed(evt);
+            }
+        });
         jMenuProfesores.add(jMenuItem_VerProfes);
 
         jMenuItem_AddProfes.setText("Añadir profesores");
+        jMenuItem_AddProfes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AddProfesActionPerformed(evt);
+            }
+        });
         jMenuProfesores.add(jMenuItem_AddProfes);
 
         jMenuBar1.add(jMenuProfesores);
@@ -185,14 +203,15 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 856, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem_AddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddAlumnoActionPerformed
@@ -210,6 +229,14 @@ public class Inicio extends javax.swing.JFrame {
     private void jMenuItem_AddColeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddColeActionPerformed
         cambiarPanel(panel_AddColegios);
     }//GEN-LAST:event_jMenuItem_AddColeActionPerformed
+
+    private void jMenuItem_AddProfesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddProfesActionPerformed
+        cambiarPanel(panel_AddProfesores);
+    }//GEN-LAST:event_jMenuItem_AddProfesActionPerformed
+
+    private void jMenuItem_VerProfesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerProfesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem_VerProfesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,6 +294,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_VerProfes;
     private javax.swing.JMenu jMenuProfesores;
     private javax.swing.JMenu jMenu_icono;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,7 @@
  */
 package com.mycompany.tatamimanager.colegios;
 
-import com.mycompany.tatamimanager.DatabaseManager;
+import com.mycompany.tatamimanager.BBDD.DatabaseManager;
 import com.mycompany.tatamimanager.Inicio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -132,7 +132,7 @@ public class ListaColegios extends javax.swing.JPanel {
         tablaColegios = new javax.swing.JTable();
         lb_titulo = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 255));
 
         tablaColegios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

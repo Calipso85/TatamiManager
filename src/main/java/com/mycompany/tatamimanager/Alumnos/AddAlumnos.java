@@ -102,7 +102,7 @@ public class AddAlumnos extends javax.swing.JPanel {
         lb_correo = new javax.swing.JLabel();
         txt_telf = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 255));
         setPreferredSize(new java.awt.Dimension(750, 550));
 
         lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

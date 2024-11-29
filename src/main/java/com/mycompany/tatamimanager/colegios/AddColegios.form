@@ -3,7 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+      <Color blue="ff" green="ff" red="cc" type="rgb"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -23,42 +23,31 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lb_dir" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="lb_nombreAlumno" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <Component id="lb_telf" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txt_nombre" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="txt_direccion" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="txt_telf" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lb_barrio" min="-2" pref="140" max="-2" attributes="0"/>
-                                  <Component id="lb_cp" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txt_cp" max="32767" attributes="0"/>
-                                  <Component id="txt_barrio" pref="200" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="250" pref="250" max="-2" attributes="0"/>
+                      <Component id="lb_titulo" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="204" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="254" max="-2" attributes="0"/>
                       <Component id="btn_GuardarColegio" min="-2" pref="179" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-                      <Component id="lb_titulo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lb_nombreAlumno" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="lb_cp" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lb_telf" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="lb_dir" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="lb_barrio" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txt_nombre" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="txt_barrio" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="txt_telf" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="txt_cp" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="txt_direccion" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace pref="229" max="32767" attributes="0"/>
@@ -67,15 +56,15 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="60" pref="60" max="-2" attributes="0"/>
               <Component id="lb_titulo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txt_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lb_nombreAlumno" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="35" pref="35" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lb_nombreAlumno" min="-2" max="-2" attributes="0"/>
+                  <Component id="txt_nombre" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txt_direccion" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lb_dir" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -95,9 +84,9 @@
                   <Component id="txt_cp" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lb_cp" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Component id="btn_GuardarColegio" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="146" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -152,7 +141,7 @@
     <Component class="javax.swing.JButton" name="btn_GuardarColegio">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="66" red="0" type="rgb"/>
+          <Color blue="99" green="66" red="0" type="rgb"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>

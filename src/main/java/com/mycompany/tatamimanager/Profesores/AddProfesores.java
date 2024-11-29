@@ -4,12 +4,32 @@
  */
 package com.mycompany.tatamimanager.Profesores;
 
+
+import com.mycompany.tatamimanager.BBDD.DatabaseManager;
+import com.mycompany.tatamimanager.Inicio;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 /**
  *
  * @author diana
  */
 public class AddProfesores extends javax.swing.JPanel {
 
+    private String nombreProfe;
+    private String apellidos;
+    private String dni; 
+    private int telefonoProfe; 
+    private String correo;
+    public boolean isUpdate = false;
+    
     /**
      * Creates new form AddProfesores
      */
@@ -17,6 +37,37 @@ public class AddProfesores extends javax.swing.JPanel {
         initComponents();
     }
 
+     public boolean validarDatos(){
+        // Verificar si los campos están vacíos
+        if (txt_nombre.getText().trim().isEmpty() || txt_apellidos.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
+            txt_dni.getText().trim().isEmpty() || txt_correo.getText().trim().isEmpty()) {
+
+            // Mostrar mensaje de advertencia
+            JOptionPane.showMessageDialog(null, "Por favor, rellena todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+            
+            return false;
+
+        } else {
+            // Validar y asignar los valores
+            nombreProfe = txt_nombre.getText().trim();
+            apellidos = txt_apellidos.getText().trim();
+            dni = txt_dni.getText().trim();
+            correo = txt_correo.getText().trim();
+
+            // Validar que el telefono sea un número y tenga 9 dígitos
+            String telefono = txt_telf.getText().trim();
+            if (!telefono.matches("\\d{9}")) {
+                JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos.", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            telefonoProfe = Integer.parseInt(txt_telf.getText().trim()); //asignar telf
+
+            // Mensaje de éxito
+            JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return true;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,13 +77,42 @@ public class AddProfesores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txt_ = new javax.swing.JTextField();
+        lb_nombre = new javax.swing.JLabel();
+        lb_apellidos = new javax.swing.JLabel();
+        txt_apellidos = new javax.swing.JTextField();
+        lb_titulo = new javax.swing.JLabel();
+        btn_guardarProfesor = new javax.swing.JButton();
+        txt_nombre = new javax.swing.JTextField();
+        txt_dni = new javax.swing.JTextField();
+        txt_telf = new javax.swing.JTextField();
+        lb_dni = new javax.swing.JLabel();
+        txt_correo = new javax.swing.JTextField();
+        lb_telf = new javax.swing.JLabel();
+        lb_correo = new javax.swing.JLabel();
 
-        jLabel1.setText("jLabel1");
+        setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel2.setText("jLabel2");
+        lb_nombre.setText("Nombre");
+
+        lb_apellidos.setText("Apellidos:");
+
+        lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lb_titulo.setText("Añadir Profesor");
+
+        btn_guardarProfesor.setBackground(new java.awt.Color(0, 102, 153));
+        btn_guardarProfesor.setForeground(new java.awt.Color(255, 255, 255));
+        btn_guardarProfesor.setText("Guardar Profesor");
+        btn_guardarProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardarProfesorActionPerformed(evt);
+            }
+        });
+
+        lb_dni.setText("DNI / NIF:");
+
+        lb_telf.setText("Teléfono:");
+
+        lb_correo.setText("Correo electrónico:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -41,32 +121,82 @@ public class AddProfesores extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jLabel1))
+                        .addGap(186, 186, 186)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_nombre)
+                            .addComponent(lb_apellidos)
+                            .addComponent(lb_dni)
+                            .addComponent(lb_telf)
+                            .addComponent(lb_correo))
+                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_dni)
+                            .addComponent(txt_apellidos)
+                            .addComponent(txt_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txt_telf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txt_correo, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabel2)
-                        .addGap(113, 113, 113)
-                        .addComponent(txt_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(325, Short.MAX_VALUE))
+                        .addGap(252, 252, 252)
+                        .addComponent(btn_guardarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addComponent(lb_titulo)))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jLabel1)
-                .addGap(36, 36, 36)
+                .addGap(71, 71, 71)
+                .addComponent(lb_titulo)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(329, Short.MAX_VALUE))
+                    .addComponent(lb_nombre)
+                    .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_apellidos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_dni))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_telf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_telf))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_correo))
+                .addGap(36, 36, 36)
+                .addComponent(btn_guardarProfesor)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_guardarProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarProfesorActionPerformed
+        
+        if (!validarDatos()) {
+            return; // Si alguna validación falla, detener la ejecución
+        }
+        
+        
+        
+    }//GEN-LAST:event_btn_guardarProfesorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txt_;
+    private javax.swing.JButton btn_guardarProfesor;
+    private javax.swing.JLabel lb_apellidos;
+    private javax.swing.JLabel lb_correo;
+    private javax.swing.JLabel lb_dni;
+    private javax.swing.JLabel lb_nombre;
+    private javax.swing.JLabel lb_telf;
+    private javax.swing.JLabel lb_titulo;
+    private javax.swing.JTextField txt_apellidos;
+    private javax.swing.JTextField txt_correo;
+    private javax.swing.JTextField txt_dni;
+    private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_telf;
     // End of variables declaration//GEN-END:variables
 }
