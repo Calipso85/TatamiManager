@@ -26,6 +26,7 @@ public class AddColegios extends javax.swing.JPanel {
     private int telefonoCole; 
     private String barrioCole;
     private int cpCole; 
+    private int id; 
     public boolean isUpdate = false;
         
     /**
@@ -36,15 +37,52 @@ public class AddColegios extends javax.swing.JPanel {
 
     }
 
-     // Método para actualizar los datos
-    public void actualizarDatos(String nombre, String direccion, int telefono, String barrio, int codpostal) {
+     // Método para modificar(actualizar) los datos
+    public void actualizarDatos(int idColegio, String nombre, String direccion, int telefono, String barrio, int codpostal) {
         isUpdate = true;
+        id = idColegio;
         lb_titulo.setText("Modificar Colegio");
         txt_nombre.setText(nombre);
         txt_direccion.setText(direccion);
         txt_telf.setText(Integer.toString(telefono));
         txt_barrio.setText(barrio);
         txt_cp.setText(Integer.toString(codpostal));
+        btn_GuardarColegio.setText("Modificar Colegio");
+    }
+    
+    public void validarDatos(){
+        // Verificar si los campos están vacíos
+        if (txt_nombre.getText().trim().isEmpty() || txt_direccion.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
+            txt_barrio.getText().trim().isEmpty() || txt_cp.getText().trim().isEmpty()) {
+
+            // Mostrar mensaje de advertencia
+            JOptionPane.showMessageDialog(null, "Por favor, rellena todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+
+        } else {
+            // Validar y asignar los valores
+            nombreCole = txt_nombre.getText().trim();
+            direccionCole = txt_direccion.getText().trim();
+            barrioCole = txt_barrio.getText().trim();
+
+            // Validar que el telefono sea un número y tenga 9 dígitos
+            String telefono = txt_telf.getText().trim();
+            if (!telefono.matches("\\d{9}")) {
+                JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
+                return; // Salir del método si la validación falla
+            } 
+            telefonoCole = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
+
+            // Validar que el CP sea un número y tenga 5 dígitos
+            String cpTexto = txt_cp.getText().trim(); 
+            if ( !cpTexto.matches("\\d{5}")) { 
+                JOptionPane.showMessageDialog(null, "El código postal debe ser un número de 5 dígitos.", "Error en el Código Postal", JOptionPane.ERROR_MESSAGE);
+                return; // Salir del método si la validación falla
+            }
+            cpCole = Integer.parseInt(cpTexto); // asignar cp
+
+            // Mensaje de éxito
+            //JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     /**
@@ -163,70 +201,72 @@ public class AddColegios extends javax.swing.JPanel {
 
     private void btn_GuardarColegioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarColegioActionPerformed
         
-        // Verificar si los campos están vacíos
-        if (txt_nombre.getText().trim().isEmpty() || txt_direccion.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
-            txt_barrio.getText().trim().isEmpty() || txt_cp.getText().trim().isEmpty()) {
-
-            // Mostrar mensaje de advertencia
-            JOptionPane.showMessageDialog(null, "Por favor, rellena todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
-
-        } else {
-            // Validar y asignar los valores
-            nombreCole = txt_nombre.getText().trim();
-            direccionCole = txt_direccion.getText().trim();
-            barrioCole = txt_barrio.getText().trim();
-
-            // Validar que el telefono sea un número y tenga 9 dígitos
-            String telefono = txt_telf.getText().trim();
-            if (!telefono.matches("\\d{9}")) {
-                JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
-                return; // Salir del método si la validación falla
-            } 
-            telefonoCole = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
-
-            // Validar que el CP sea un número y tenga 5 dígitos
-            String cpTexto = txt_cp.getText().trim(); 
-            if ( !cpTexto.matches("\\d{5}")) { 
-                JOptionPane.showMessageDialog(null, "El código postal debe ser un número de 5 dígitos.", "Error en el Código Postal", JOptionPane.ERROR_MESSAGE);
-                return; // Salir del método si la validación falla
-            }
-            cpCole = Integer.parseInt(cpTexto); // asignar cp
-
-            // Mensaje de éxito
-            //JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        }
-
-        //guardar en la bbdd
-        try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
+        validarDatos();
         
-             String query = "INSERT INTO colegios (nombre, direccion, telefono, barrio, cod_postal) "
-                     + "VALUES (?, ?, ?, ?, ?)";
-            try (PreparedStatement st = conn.prepareStatement(query)) {
+        if(!isUpdate){
+            //guardar en la bbdd (insert)
+            try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
+
+                 String query = "INSERT INTO colegios (nombre, direccion, telefono, barrio, cod_postal) "
+                         + "VALUES (?, ?, ?, ?, ?)";
+                try (PreparedStatement st = conn.prepareStatement(query)) {
+                    st.setString(1, nombreCole);
+                    st.setString(2, direccionCole);
+                    st.setInt(3, telefonoCole);
+                    st.setString(4, barrioCole);
+                    st.setInt(5, cpCole);
+
+                    // Ejecutar el INSERT
+                    int filasInsertadas = st.executeUpdate();
+                    if (filasInsertadas > 0) {
+                        Logger.getLogger(ListaColegios.class.getName()).log(Level.INFO, "Datos guardados correctamente en la tabla colegios: {0}, {1}, {2}, {3}, {4}", 
+                        new Object[]{nombreCole, direccionCole, telefonoCole, barrioCole, cpCole});
+                    } else {
+                        Logger.getLogger(ListaColegios.class.getName()).log(Level.WARNING, "No se pudieron guardar los datos en la tabla colegios.");
+                    }
+                }
+
+                DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
+
+            } catch (SQLException e) {
+                Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+                System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+            } catch (Exception e) {
+                Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+                System.out.println("Error inesperado: " + e.getMessage());
+            }
+        }else{  //update
+            try (Connection conn = DatabaseManager.getConnection()) {
+                
+                String query = "UPDATE colegios SET nombre = ?, direccion = ?, telefono = ?, barrio = ?, cod_postal = ? "
+                             + "WHERE id_colegio = ?";
+                PreparedStatement st = conn.prepareStatement(query);
+
+                // Asignar los valores de los campos de texto a la consulta
                 st.setString(1, nombreCole);
                 st.setString(2, direccionCole);
                 st.setInt(3, telefonoCole);
                 st.setString(4, barrioCole);
                 st.setInt(5, cpCole);
+                st.setInt(6, id); // id es el identificador del colegio que se está editando
 
-                // Ejecutar el INSERT
-                int filasInsertadas = st.executeUpdate();
-                if (filasInsertadas > 0) {
-                    Logger.getLogger(ListaColegios.class.getName()).log(Level.INFO, "Datos guardados correctamente en la tabla colegios: {0}, {1}, {2}, {3}, {4}", 
-                    new Object[]{nombreCole, direccionCole, telefonoCole, barrioCole, cpCole});
+                // Ejecutar la consulta
+                int rowsUpdated = st.executeUpdate();
+
+                // Verificar si se realizó el cambio
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(this, "El colegio ha sido actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    Logger.getLogger(ListaColegios.class.getName()).log(Level.WARNING, "No se pudieron guardar los datos en la tabla colegios.");
+                    JOptionPane.showMessageDialog(this, "No se pudo actualizar el colegio.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error al actualizar el colegio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                Logger.getLogger(AddColegios.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-            DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
-            
-        } catch (SQLException e) {
-            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
-            System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
-        } catch (Exception e) {
-            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
-            System.out.println("Error inesperado: " + e.getMessage());
         }
+        
+        
         //cambiar panel a listaColegios
         JFrame frameInicio = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (frameInicio instanceof Inicio) {

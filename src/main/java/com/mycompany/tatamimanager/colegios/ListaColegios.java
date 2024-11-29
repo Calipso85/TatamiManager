@@ -212,7 +212,7 @@ public class ListaColegios extends javax.swing.JPanel {
 
                         // Cambiar al panel AddColegios y pasarle los datos
                         AddColegios panelAddColegios = new AddColegios();
-                        panelAddColegios.actualizarDatos(nombreColegio, direccionColegio, telefonoColegio, barrioColegio, codPostal);
+                        panelAddColegios.actualizarDatos(idColegio, nombreColegio, direccionColegio, telefonoColegio, barrioColegio, codPostal);
 
                         JFrame inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         if (inicioFrame instanceof Inicio) {
