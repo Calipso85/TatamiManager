@@ -26,7 +26,7 @@ public class AddColegios extends javax.swing.JPanel {
     private int telefonoCole; 
     private String barrioCole;
     private int cpCole; 
-        
+    public boolean isUpdate = false;
         
     /**
      * Creates new form AddColegio
@@ -36,6 +36,17 @@ public class AddColegios extends javax.swing.JPanel {
 
     }
 
+     // Método para actualizar los datos
+    public void actualizarDatos(String nombre, String direccion, int telefono, String barrio, int codpostal) {
+        isUpdate = true;
+        lb_titulo.setText("Modificar Colegio");
+        txt_nombre.setText(nombre);
+        txt_direccion.setText(direccion);
+        txt_telf.setText(Integer.toString(telefono));
+        txt_barrio.setText(barrio);
+        txt_cp.setText(Integer.toString(codpostal));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

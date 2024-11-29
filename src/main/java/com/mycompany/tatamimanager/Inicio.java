@@ -49,7 +49,7 @@ public class Inicio extends javax.swing.JFrame {
     public void cambiarPanel(JPanel nuevoPanel) {
         this.getContentPane().removeAll();
         this.getContentPane().add(nuevoPanel);
-        nuevoPanel.setBounds(0, 0, 850, 550);
+        nuevoPanel.setBounds(0, 0, 890, 550);
         this.revalidate();
         this.repaint();
     }
