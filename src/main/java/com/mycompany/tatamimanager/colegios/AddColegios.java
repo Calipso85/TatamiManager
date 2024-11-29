@@ -202,38 +202,12 @@ public class AddColegios extends javax.swing.JPanel {
             return; // Si alguna validación falla, detener la ejecución
         }
         
-        if(!isUpdate){
+        if(!isUpdate){ 
+            //si estoy añadiendo colegio
             DataBaseControlColegios.guardarColegio(nombreCole, direccionCole, telefonoCole, barrioCole, cpCole);
-            
-        }else{  //update
-            try (Connection conn = DatabaseManager.getConnection()) {
-                
-                String query = "UPDATE colegios SET nombre = ?, direccion = ?, telefono = ?, barrio = ?, cod_postal = ? "
-                             + "WHERE id_colegio = ?";
-                PreparedStatement st = conn.prepareStatement(query);
-
-                // Asignar los valores de los campos de texto a la consulta
-                st.setString(1, nombreCole);
-                st.setString(2, direccionCole);
-                st.setInt(3, telefonoCole);
-                st.setString(4, barrioCole);
-                st.setInt(5, cpCole);
-                st.setInt(6, id); // id es el identificador del colegio que se está editando
-
-                // Ejecutar la consulta
-                int rowsUpdated = st.executeUpdate();
-
-                // Verificar si se realizó el cambio
-                if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "El colegio ha sido actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "No se pudo actualizar el colegio.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error al actualizar el colegio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception ex) {
-                Logger.getLogger(AddColegios.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }else{  
+            //si estoy modificando
+            DataBaseControlColegios.editarColegio(nombreCole, direccionCole, telefonoCole, barrioCole, cpCole, id);
         }
         
         isUpdate = false; //volvemoa a establecer isUpdate como false

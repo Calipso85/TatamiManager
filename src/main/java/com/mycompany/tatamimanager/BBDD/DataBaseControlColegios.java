@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-
-import com.mycompany.tatamimanager.colegios.ListaColegios;
+import com.mycompany.tatamimanager.colegios.*;
+import javax.swing.JOptionPane;
 
 public class DataBaseControlColegios {
-    //guardar en la bbdd
+    
     public static void guardarColegio(String nombreCole, String direccionCole, int telefonoCole, String barrioCole, int cpCole) {
         try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
         
@@ -26,20 +26,20 @@ public class DataBaseControlColegios {
                 // Ejecutar el INSERT
                 int filasInsertadas = st.executeUpdate();
                 if (filasInsertadas > 0) {
-                    Logger.getLogger(ListaColegios.class.getName()).log(Level.INFO, "Datos guardados correctamente en la tabla colegios: {0}, {1}, {2}, {3}, {4}", 
+                    Logger.getLogger(AddColegios.class.getName()).log(Level.INFO, "Datos guardados correctamente en la tabla colegios: {0}, {1}, {2}, {3}, {4}", 
                     new Object[]{nombreCole, direccionCole, telefonoCole, barrioCole, cpCole});
                 } else {
-                    Logger.getLogger(ListaColegios.class.getName()).log(Level.WARNING, "No se pudieron guardar los datos en la tabla colegios.");
+                    Logger.getLogger(AddColegios.class.getName()).log(Level.WARNING, "No se pudieron guardar los datos en la tabla colegios.");
                 }
             }
         
             DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
             
         } catch (SQLException e) {
-            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(AddColegios.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
         } catch (Exception e) {
-            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(AddColegios.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
@@ -72,7 +72,34 @@ public class DataBaseControlColegios {
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
-    public static void editatColegio(){
-        
+    public static void editarColegio(String nombreCole, String direccionCole, int telefonoCole, String barrioCole, int cpCole, int id){
+        try (Connection conn = DatabaseManager.getConnection()) {
+                
+            String query = "UPDATE colegios SET nombre = ?, direccion = ?, telefono = ?, barrio = ?, cod_postal = ? "
+                         + "WHERE id_colegio = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+
+            // Asignar los valores de los campos de texto a la consulta
+            st.setString(1, nombreCole);
+            st.setString(2, direccionCole);
+            st.setInt(3, telefonoCole);
+            st.setString(4, barrioCole);
+            st.setInt(5, cpCole);
+            st.setInt(6, id); // id es el identificador del colegio que se está editando
+
+            // Ejecutar la consulta
+            int rowsUpdated = st.executeUpdate();
+
+            // Verificar si se realizó el cambio
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null , "El colegio ha sido actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null , "No se pudo actualizar el colegio.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null , "Error al actualizar el colegio: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(AddColegios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
