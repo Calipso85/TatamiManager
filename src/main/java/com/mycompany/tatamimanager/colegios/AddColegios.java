@@ -34,7 +34,6 @@ public class AddColegios extends javax.swing.JPanel {
      */
     public AddColegios() {
         initComponents();
-
     }
 
      // Método para modificar(actualizar) los datos
@@ -266,6 +265,7 @@ public class AddColegios extends javax.swing.JPanel {
             }
         }
         
+        isUpdate = false; //volvemoa a establecer isUpdate como false
         
         //cambiar panel a listaColegios
         JFrame frameInicio = (JFrame) SwingUtilities.getWindowAncestor(this);

@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,7 +34,14 @@ public class ListaColegios extends javax.swing.JPanel {
      */
     public ListaColegios() {
         initComponents();
-            
+        iniTabla();
+    }
+    
+    /**
+     * Metodo para inicializar la tabla
+     */
+    public void iniTabla(){
+        
         cabecera = new Object [] {"id","Nombre", "Dirección", "Teléfono", "Barrio", "Código Postal", "Editar", "Eliminar"};
         
         modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
@@ -110,8 +118,7 @@ public class ListaColegios extends javax.swing.JPanel {
             }
         }
         */
-    }
-    
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -165,7 +172,7 @@ public class ListaColegios extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(166, 166, 166)
                 .addComponent(lb_titulo)
-                .addContainerGap(487, Short.MAX_VALUE))
+                .addContainerGap(482, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -188,20 +195,20 @@ public class ListaColegios extends javax.swing.JPanel {
             // Obtener la fila y columna donde ocurrió el clic
             int fila = tablaColegios.rowAtPoint(evt.getPoint());
             int columna = tablaColegios.columnAtPoint(evt.getPoint());
-
-            // Verificar si se hizo clic en la columna "Editar" (columna 6)
-            if (columna == 6) { 
                 // Obtener el id_colegio desde la tabla (columna oculta)
                 idColegio = (int) modelo.getValueAt(fila, 0);
+
+            if (columna == 6) { //editar
                 
-                try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión                //---- AQUI cojo id desde el nombre
+                try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión               
                     // Sentencia sql para obtener el id del colegio 
                     PreparedStatement st = conn.prepareStatement( 
                             "SELECT * FROM colegios WHERE id_colegio = ?" 
                     ); 
                     st.setInt(1, idColegio); // Establece el valor del parámetro 
                     ResultSet resultado = st.executeQuery();
-                    System.out.println("SELECT * FROM colegios WHERE id_colegio ="+idColegio);          //---- AQUI
+                    
+                    System.out.println("id_colegio ="+idColegio);         
 
                      if (resultado.next()) {
                         String nombreColegio = resultado.getString("nombre");
@@ -227,12 +234,48 @@ public class ListaColegios extends javax.swing.JPanel {
                     Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
                     System.out.println("Error inesperado: " + e.getMessage());
                 }
-            }else if(columna == 7) { 
+            }else if(columna == 7) {  //eliminar
+                int confirm = JOptionPane.showConfirmDialog(null, 
+                    "¿Estás seguro de que deseas eliminar este colegio?", 
+                    "Confirmar eliminación", 
+                    JOptionPane.YES_NO_OPTION);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    try (Connection conn = DatabaseManager.getConnection()) {
+                        // Sentencia SQL para eliminar
+                        PreparedStatement st = conn.prepareStatement(
+                            "DELETE FROM colegios WHERE id_colegio = ?"
+                        );
+                        st.setInt(1, idColegio);
+                        int filasEliminadas = st.executeUpdate();
+                        System.out.println("id_colegio ="+idColegio);   
+                        
+                        // Verificar si se eliminó algo
+                        if (filasEliminadas > 0) {
+                            JOptionPane.showMessageDialog(null, 
+                                "El colegio ha sido eliminado correctamente.", 
+                                "Eliminación exitosa", 
+                                JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(null, 
+                                "No se encontró un colegio con ese ID. No se realizó ninguna eliminación.", 
+                                "Error", 
+                                JOptionPane.WARNING_MESSAGE);
+                        } 
                 
+                    } catch (SQLException e) {
+                        Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+                        System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+                    } catch (Exception e) {
+                        Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+                        System.out.println("Error inesperado: " + e.getMessage());
+                    }
+                }
+                iniTabla();
             }
         }
     }//GEN-LAST:event_tablaColegiosMouseClicked
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
