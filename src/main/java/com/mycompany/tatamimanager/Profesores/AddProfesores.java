@@ -6,17 +6,10 @@ package com.mycompany.tatamimanager.Profesores;
 
 
 import com.mycompany.tatamimanager.BBDD.DatabaseControlProfesores;
-import com.mycompany.tatamimanager.BBDD.DatabaseManager;
 import com.mycompany.tatamimanager.Inicio;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -30,6 +23,7 @@ public class AddProfesores extends javax.swing.JPanel {
     private String dni; 
     private int telefono; 
     private String correo;
+    private int id; 
     public boolean isUpdate = false;
     
     /**
@@ -43,27 +37,29 @@ public class AddProfesores extends javax.swing.JPanel {
         // Verificar si los campos están vacíos
         if (txt_nombre.getText().trim().isEmpty() || txt_apellidos.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
             txt_dni.getText().trim().isEmpty() || txt_correo.getText().trim().isEmpty()) {
-
             // Mostrar mensaje de advertencia
             JOptionPane.showMessageDialog(null, "Por favor, rellena todos los campos.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
-            
             return false;
-
+            
         } else {
             // Validar y asignar los valores
             nombreProfe = txt_nombre.getText().trim();
             apellidos = txt_apellidos.getText().trim();
-            
+              
             // Comprobación del DNI en la base de datos
             dni = txt_dni.getText().trim();
             if (!isDniCorrecto(dni)) {
                 JOptionPane.showMessageDialog(null, "El DNI no es válido. Indroducelo de nuevo.", "Error en el DNI", JOptionPane.ERROR_MESSAGE);
                 return false; // Detener el flujo si el DNI no es válido
             }
-            DatabaseControlProfesores.comprobarDni(dni); //comprobar que es unico en la bbdd
+            if(!isUpdate){
+                DatabaseControlProfesores.comprobarDni(dni); //comprobar que es unico en la bbdd
+            }
             
             correo = txt_correo.getText().trim();
-            DatabaseControlProfesores.comprobarCorreo(correo); //comprobar que es unico en la bbdd
+            if(!isUpdate){
+                DatabaseControlProfesores.comprobarCorreo(correo); //comprobar que es unico en la bbdd
+            }
             
             // Validar que el telefono sea un número y tenga 9 dígitos
             String telef = txt_telf.getText().trim();
@@ -73,8 +69,10 @@ public class AddProfesores extends javax.swing.JPanel {
             }
             telefono = Integer.parseInt(txt_telf.getText().trim()); //asignar telf
 
-            // Mensaje de éxito
-            JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            if(!isUpdate){
+                // Mensaje de éxito
+                JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
         return true;
     }
@@ -94,6 +92,18 @@ public class AddProfesores extends javax.swing.JPanel {
         return letra == letraCorrecta; //true
     }
 
+     // Método para modificar(actualizar) los datos
+    public void actualizarDatos(int idProfe, String nombre, String apellidos, String dni, int telefono, String correo) {
+        isUpdate = true;
+        id = idProfe;
+        lb_titulo.setText("Modificar Profesor");
+        txt_nombre.setText(nombre);
+        txt_apellidos.setText(apellidos);
+        txt_dni.setText(dni);
+        txt_telf.setText(Integer.toString(telefono));
+        txt_correo.setText(correo);
+        //btn_GuardarProfesor.setText("Modificar profesor");
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -209,42 +219,11 @@ public class AddProfesores extends javax.swing.JPanel {
         
         if(!isUpdate){ 
             //si estoy añadiendo colegio
-            
-            try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
-        
-                String query = "INSERT INTO profesores (nombre, apellidos, dni, telefono, correo) VALUES (?, ?, ?, ?, ?)";
-                try (PreparedStatement st = conn.prepareStatement(query)) {
-                    st.setString(1, nombreProfe);
-                    st.setString(2, apellidos);
-                    st.setString(3, dni);
-                    st.setInt(4, telefono);
-                    st.setString(5, correo);
-
-                    // Ejecutar el INSERT
-                    int filasInsertadas = st.executeUpdate();
-                    if (filasInsertadas > 0) {
-                        Logger.getLogger(AddProfesores.class.getName()).log(Level.INFO, "Datos guardados correctamente en la tabla profesores: {0}, {1}, {2}, {3}, {4}", 
-                        new Object[]{nombreProfe, apellidos, dni, telefono, correo});
-                    } else {
-                        Logger.getLogger(AddProfesores.class.getName()).log(Level.WARNING, "No se pudieron guardar los datos en la tabla colegios.");
-                    }
-                }
-
-                DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
-            
-            } catch (SQLException e) {
-                Logger.getLogger(AddProfesores.class.getName()).log(Level.SEVERE, null, e);
-                System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
-            } catch (Exception e) {
-                Logger.getLogger(AddProfesores.class.getName()).log(Level.SEVERE, null, e);
-                System.out.println("Error inesperado: " + e.getMessage());
-            }
-
-                //DataBaseControlProfesores.guardarProfesor(nombreCole, direccionCole, telefonoCole, barrioCole, cpCole);
-            }else{  
-                //si estoy modificando
-                //DataBaseControlProfesores.editarProfesor(nombreCole, direccionCole, telefonoCole, barrioCole, cpCole, id);
-            }
+            DatabaseControlProfesores.guardarProfesor(nombreProfe, apellidos, dni, telefono, correo);
+        }else{  
+            //si estoy modificando
+            DatabaseControlProfesores.editarProfesor(nombreProfe, apellidos, dni, telefono, correo, id);
+        }
         
         isUpdate = false; //volvemoa a establecer isUpdate como false
         

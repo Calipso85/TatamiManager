@@ -5,6 +5,7 @@
 package com.mycompany.tatamimanager.colegios;
 
 import com.mycompany.tatamimanager.BBDD.DatabaseManager;
+import com.mycompany.tatamimanager.BBDD.DataBaseControlColegios;
 import com.mycompany.tatamimanager.Inicio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -190,17 +191,15 @@ public class ListaColegios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaColegiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaColegiosMouseClicked
-        // Verificar si se hizo doble clic 
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() == 1 || evt.getClickCount() == 2) {
             // Obtener la fila y columna donde ocurrió el clic
             int fila = tablaColegios.rowAtPoint(evt.getPoint());
             int columna = tablaColegios.columnAtPoint(evt.getPoint());
                 // Obtener el id_colegio desde la tabla (columna oculta)
                 idColegio = (int) modelo.getValueAt(fila, 0);
 
-            if (columna == 6) { //editar
-                
-                try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión               
+            if (columna == 6) { //si le doy a editar
+                try (Connection conn = DatabaseManager.getConnection()) {               
                     // Sentencia sql para obtener el id del colegio 
                     PreparedStatement st = conn.prepareStatement( 
                             "SELECT * FROM colegios WHERE id_colegio = ?" 
@@ -241,35 +240,7 @@ public class ListaColegios extends javax.swing.JPanel {
                     JOptionPane.YES_NO_OPTION);
 
                 if (confirm == JOptionPane.YES_OPTION) {
-                    try (Connection conn = DatabaseManager.getConnection()) {
-                        // Sentencia SQL para eliminar
-                        PreparedStatement st = conn.prepareStatement(
-                            "DELETE FROM colegios WHERE id_colegio = ?"
-                        );
-                        st.setInt(1, idColegio);
-                        int filasEliminadas = st.executeUpdate();
-                        System.out.println("id_colegio ="+idColegio);   
-                        
-                        // Verificar si se eliminó algo
-                        if (filasEliminadas > 0) {
-                            JOptionPane.showMessageDialog(null, 
-                                "El colegio ha sido eliminado correctamente.", 
-                                "Eliminación exitosa", 
-                                JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(null, 
-                                "No se encontró un colegio con ese ID. No se realizó ninguna eliminación.", 
-                                "Error", 
-                                JOptionPane.WARNING_MESSAGE);
-                        } 
-                
-                    } catch (SQLException e) {
-                        Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
-                        System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
-                    } catch (Exception e) {
-                        Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
-                        System.out.println("Error inesperado: " + e.getMessage());
-                    }
+                    DataBaseControlColegios.eliminarColegio(idColegio);
                 }
                 iniTabla();
             }

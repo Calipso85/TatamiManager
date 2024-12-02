@@ -21,6 +21,7 @@ public class Inicio extends javax.swing.JFrame {
     AddColegios panel_AddColegios;
     ListaColegios panel_listaColegios;
     AddProfesores panel_AddProfesores;
+    ListaProfesores panel_ListaProfesores;
     
     /**
      * Creates new form Inicio
@@ -28,12 +29,12 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
         initComponents();
         
-        
         panel_AddAlumnos = new AddAlumnos();
         panel_listaAlumnos = new ListaAlumnos();
         panel_AddColegios = new AddColegios();
         panel_listaColegios = new ListaColegios();
         panel_AddProfesores = new AddProfesores();
+        panel_ListaProfesores = new ListaProfesores();
         
         
     }
@@ -235,7 +236,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_AddProfesActionPerformed
 
     private void jMenuItem_VerProfesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerProfesActionPerformed
-        // TODO add your handling code here:
+        cambiarPanel(panel_ListaProfesores);
     }//GEN-LAST:event_jMenuItem_VerProfesActionPerformed
 
     /**

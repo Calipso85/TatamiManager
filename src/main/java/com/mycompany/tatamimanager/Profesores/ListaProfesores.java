@@ -4,19 +4,110 @@
  */
 package com.mycompany.tatamimanager.Profesores;
 
+import com.mycompany.tatamimanager.BBDD.DatabaseControlProfesores;
+import com.mycompany.tatamimanager.BBDD.DatabaseManager;
+import com.mycompany.tatamimanager.Inicio;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author diana
  */
 public class ListaProfesores extends javax.swing.JPanel {
 
+    Object[] cabecera;
+    DefaultTableModel modelo;
+    public int idProfesor;
+    
     /**
      * Creates new form ListaProfesores
      */
     public ListaProfesores() {
         initComponents();
+        iniTabla();
     }
 
+    /**
+     * Metodo para inicializar la tabla
+     */
+    public void iniTabla(){
+        
+        cabecera = new Object [] {"id","Nombre", "Apellidos", "DNI", "Teléfono", "Correo electrónico", "Editar", "Eliminar"};
+        
+        modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                switch(columnIndex){
+                    case 4: return Integer.class;
+                    case 6: return ImageIcon.class;
+                    case 7: return ImageIcon.class;
+                    default:return String.class;
+                }
+            }
+        };
+        tablaProfesores.setModel(modelo);
+        
+        try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
+            modelo.setRowCount(0); // Limpiar las filas anteriores
+            
+            // Sentencia sql
+            modelo.setRowCount(0);
+            PreparedStatement st = conn.prepareStatement(
+                "SELECT * FROM profesores"
+            );
+            ResultSet resultado = st.executeQuery();
+
+            // Cargar los iconos desde el classpath
+            ImageIcon iconEditar = new ImageIcon(ListaProfesores.class.getResource("/images/lapiz.png"));
+            ImageIcon iconEliminar = new ImageIcon(ListaProfesores.class.getResource("/images/basura.png"));
+
+            while (resultado.next()) {
+                // Agregar una nueva fila con los datos y los iconos
+                modelo.addRow(new Object[] {
+                    resultado.getInt("id_profesor"),  // Columna oculta
+                    resultado.getString("nombre"), 
+                    resultado.getString("apellidos"),
+                    resultado.getString("dni"),
+                    resultado.getInt("telefono"),
+                    resultado.getString("correo"),
+                    iconEditar,  // Icono para la columna "Editar"
+                    iconEliminar // Icono para la columna "Eliminar"
+                });
+            }
+            
+            // Ocultar la columna id_profesor
+            tablaProfesores.getColumnModel().getColumn(0).setMinWidth(0);
+            tablaProfesores.getColumnModel().getColumn(0).setMaxWidth(0);
+            tablaProfesores.getColumnModel().getColumn(0).setPreferredWidth(0);
+            
+            DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
+            
+        } catch (SQLException e) {
+            Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+        } catch (Exception e) {
+            Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error inesperado: " + e.getMessage());
+        }
+        
+        //ajustar tamaño columnas 
+        tablaProfesores.getColumnModel().getColumn(1).setPreferredWidth(30);
+        tablaProfesores.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tablaProfesores.getColumnModel().getColumn(3).setPreferredWidth(5);
+        tablaProfesores.getColumnModel().getColumn(4).setPreferredWidth(30);
+        tablaProfesores.getColumnModel().getColumn(5).setPreferredWidth(80);
+        tablaProfesores.getColumnModel().getColumn(6).setPreferredWidth(5);
+        tablaProfesores.getColumnModel().getColumn(7).setPreferredWidth(5);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +117,124 @@ public class ListaProfesores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaProfesores = new javax.swing.JTable();
+        lb_titulo = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(204, 255, 255));
+
+        tablaProfesores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tablaProfesores.setEnabled(false);
+        tablaProfesores.setRowSelectionAllowed(false);
+        tablaProfesores.getTableHeader().setReorderingAllowed(false);
+        tablaProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaProfesoresMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaProfesores);
+
+        lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lb_titulo.setText("Listado de Profesores");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(166, 166, 166)
+                .addComponent(lb_titulo)
+                .addContainerGap(570, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lb_titulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(141, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tablaProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProfesoresMouseClicked
+        if (evt.getClickCount() == 1 || evt.getClickCount() == 2) {
+            // Obtener la fila y columna donde ocurrió el click
+            int fila = tablaProfesores.rowAtPoint(evt.getPoint());
+            int columna = tablaProfesores.columnAtPoint(evt.getPoint());
+            // Obtener el id_profesor desde la tabla (columna oculta)
+            idProfesor = (int) modelo.getValueAt(fila, 0);
+
+            if (columna == 6) { //editar
+                //DatabaseControlProfesores.ObtenerIdProfesorSeleccionado(idProfesor);
+                try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
+                    // Sentencia sql para obtener el id del profesor
+                    PreparedStatement st = conn.prepareStatement(
+                        "SELECT * FROM profesores WHERE id_profesor = ?"
+                    );
+                    st.setInt(1, idProfesor); // Establece el valor del parámetro
+                    ResultSet resultado = st.executeQuery();
+
+                    System.out.println("id_profesor ="+idProfesor);
+
+                    if (resultado.next()) {
+                        String nombreProfesor = resultado.getString("nombre");
+                        String apellProfesor = resultado.getString("apellidos");
+                        String dniProfesor = resultado.getString("dni");
+                        int telefonoProfesor = resultado.getInt("telefono");
+                        String correoProfesor = resultado.getString("correo");
+
+                        // Cambiar al panel AddColegios y pasarle los datos
+                        AddProfesores panelAddProfesores = new AddProfesores();
+                        panelAddProfesores.actualizarDatos(idProfesor, nombreProfesor, apellProfesor, dniProfesor, telefonoProfesor, correoProfesor);
+
+                        JFrame inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                        if (inicioFrame instanceof Inicio) {
+                            ((Inicio) inicioFrame).cambiarPanel(panelAddProfesores);
+                        }
+                        /*Inicio inicioFrame = new Inicio();
+                        inicioFrame.cambiarPanel(panelAddProfesores); */
+                    }
+
+                } catch (SQLException e) {
+                    Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+                    System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+                } catch (Exception e) {
+                    Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+                    System.out.println("Error inesperado: " + e.getMessage());
+                }
+            }else if(columna == 7) {  //eliminar
+                int confirm = JOptionPane.showConfirmDialog(null,
+                    "¿Estás seguro de que deseas eliminar este profesor?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    DatabaseControlProfesores.eliminaProfesor(idProfesor);
+                }
+                iniTabla();
+            }
+        }
+    }//GEN-LAST:event_tablaProfesoresMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_titulo;
+    private javax.swing.JTable tablaProfesores;
     // End of variables declaration//GEN-END:variables
 }

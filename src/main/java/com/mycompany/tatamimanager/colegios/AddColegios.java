@@ -4,17 +4,11 @@
  */
 package com.mycompany.tatamimanager.colegios;
 
-import com.mycompany.tatamimanager.BBDD.DatabaseManager;
 import com.mycompany.tatamimanager.BBDD.DataBaseControlColegios;
 import com.mycompany.tatamimanager.Inicio;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -69,8 +63,10 @@ public class AddColegios extends javax.swing.JPanel {
             }
             cpCole = Integer.parseInt(cpTexto); // asignar cp
 
-            // Mensaje de éxito
-            //JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            if(!isUpdate){
+                // Mensaje de éxito
+                JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
         return true;
     }

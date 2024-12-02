@@ -102,4 +102,37 @@ public class DataBaseControlColegios {
             Logger.getLogger(AddColegios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static void eliminarColegio(int idColegio){
+        try (Connection conn = DatabaseManager.getConnection()) {
+            // Sentencia SQL para eliminar
+            PreparedStatement st = conn.prepareStatement(
+                "DELETE FROM colegios WHERE id_colegio = ?"
+            );
+            st.setInt(1, idColegio);
+            int filasEliminadas = st.executeUpdate();
+            System.out.println("id_colegio ="+idColegio);   
+
+            // Verificar si se eliminó algo
+            if (filasEliminadas > 0) {
+                JOptionPane.showMessageDialog(null, 
+                    "El colegio ha sido eliminado correctamente.", 
+                    "Eliminación exitosa", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                    "No se encontró un colegio con ese ID. No se realizó ninguna eliminación.", 
+                    "Error", 
+                    JOptionPane.WARNING_MESSAGE);
+            } 
+
+        } catch (SQLException e) {
+            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+        } catch (Exception e) {
+            Logger.getLogger(ListaColegios.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error inesperado: " + e.getMessage());
+        }
+    }
+    
 }
