@@ -33,7 +33,15 @@ public class AddProfesores extends javax.swing.JPanel {
         initComponents();
     }
 
-     public boolean validarDatos(){
+    public void vaciarCampos(){
+        txt_nombre.setText("");
+        txt_apellidos.setText("");
+        txt_dni.setText("");
+        txt_telf.setText("");
+        txt_correo.setText("");
+    }
+    
+    public boolean validarDatos(){
         // Verificar si los campos están vacíos
         if (txt_nombre.getText().trim().isEmpty() || txt_apellidos.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
             txt_dni.getText().trim().isEmpty() || txt_correo.getText().trim().isEmpty()) {

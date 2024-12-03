@@ -7,8 +7,8 @@ package com.mycompany.tatamimanager;
 import com.mycompany.tatamimanager.Alumnos.*;
 import com.mycompany.tatamimanager.Profesores.*;
 import com.mycompany.tatamimanager.colegios.*;
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -28,6 +28,9 @@ public class Inicio extends javax.swing.JFrame {
      */ 
     public Inicio() {
         initComponents();
+         
+        setIconImage(new ImageIcon(getClass().getResource("/images/Logo_1.png")).getImage());
+        //setIconImage(new ImageIcon(getClass().getResource("/images/16 x16.png")).getImage());
         
         panel_AddAlumnos = new AddAlumnos();
         panel_listaAlumnos = new ListaAlumnos();
@@ -58,6 +61,9 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_icono = new javax.swing.JMenu();
         jMenuColegios = new javax.swing.JMenu();
@@ -84,17 +90,40 @@ public class Inicio extends javax.swing.JFrame {
         setLocation(new java.awt.Point(500, 500));
         setPreferredSize(new java.awt.Dimension(905, 550));
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo_1.png"))); // NOI18N
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clase2.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 856, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel1)))
+                .addGap(149, 149, 149)
+                .addComponent(jLabel3)
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(655, 655, 655))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
@@ -208,7 +237,7 @@ public class Inicio extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -224,18 +253,22 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_VerAlumnosActionPerformed
 
     private void jMenuItem_VerColesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerColesActionPerformed
+        panel_listaColegios.iniTabla();
         cambiarPanel(panel_listaColegios);
     }//GEN-LAST:event_jMenuItem_VerColesActionPerformed
 
     private void jMenuItem_AddColeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddColeActionPerformed
+        panel_AddColegios.vaciarCampos();
         cambiarPanel(panel_AddColegios);
     }//GEN-LAST:event_jMenuItem_AddColeActionPerformed
 
     private void jMenuItem_AddProfesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddProfesActionPerformed
+        panel_AddProfesores.vaciarCampos();
         cambiarPanel(panel_AddProfesores);
     }//GEN-LAST:event_jMenuItem_AddProfesActionPerformed
 
     private void jMenuItem_VerProfesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerProfesActionPerformed
+        panel_ListaProfesores.iniTabla();
         cambiarPanel(panel_ListaProfesores);
     }//GEN-LAST:event_jMenuItem_VerProfesActionPerformed
 
@@ -276,6 +309,9 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenuAlumnos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCalendario;

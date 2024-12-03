@@ -31,6 +31,14 @@ public class AddColegios extends javax.swing.JPanel {
         initComponents();
     }
     
+    public void vaciarCampos(){
+        txt_nombre.setText("");
+        txt_direccion.setText("");
+        txt_telf.setText("");
+        txt_barrio.setText("");
+        txt_cp.setText("");
+    }
+    
     public boolean validarDatos(){
         // Verificar si los campos están vacíos
         if (txt_nombre.getText().trim().isEmpty() || txt_direccion.getText().trim().isEmpty() || txt_telf.getText().trim().isEmpty() || 
