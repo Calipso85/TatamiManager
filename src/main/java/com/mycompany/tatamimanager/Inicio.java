@@ -7,6 +7,7 @@ package com.mycompany.tatamimanager;
 import com.mycompany.tatamimanager.Alumnos.*;
 import com.mycompany.tatamimanager.Profesores.*;
 import com.mycompany.tatamimanager.colegios.*;
+import com.mycompany.tatamimanager.Calendario.VerCalendario;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 
@@ -22,6 +23,7 @@ public class Inicio extends javax.swing.JFrame {
     ListaColegios panel_listaColegios;
     AddProfesores panel_AddProfesores;
     ListaProfesores panel_ListaProfesores;
+    VerCalendario panel_Calendar;
     
     /**
      * Creates new form Inicio
@@ -223,6 +225,11 @@ public class Inicio extends javax.swing.JFrame {
         jMenuCalendario.setText("Calendario");
 
         jMenuItem_VerCalendario.setText("Ver calendario");
+        jMenuItem_VerCalendario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_VerCalendarioActionPerformed(evt);
+            }
+        });
         jMenuCalendario.add(jMenuItem_VerCalendario);
 
         jMenuBar1.add(jMenuCalendario);
@@ -271,6 +278,10 @@ public class Inicio extends javax.swing.JFrame {
         panel_ListaProfesores.iniTabla();
         cambiarPanel(panel_ListaProfesores);
     }//GEN-LAST:event_jMenuItem_VerProfesActionPerformed
+
+    private void jMenuItem_VerCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerCalendarioActionPerformed
+        cambiarPanel(panel_Calendar);
+    }//GEN-LAST:event_jMenuItem_VerCalendarioActionPerformed
 
     /**
      * @param args the command line arguments

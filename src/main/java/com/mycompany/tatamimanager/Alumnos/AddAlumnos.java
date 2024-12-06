@@ -4,6 +4,14 @@
  */
 package com.mycompany.tatamimanager.Alumnos;
 
+import com.mycompany.tatamimanager.BBDD.DatabaseControlAlumnos;
+import com.mycompany.tatamimanager.BBDD.DatabaseManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -69,9 +77,51 @@ public class AddAlumnos extends javax.swing.JPanel {
      */
     public AddAlumnos() {
         initComponents();
+        
+        mostrarColegios(comboBox_colegios);
     }
 
-    
+    public static Object[][] mostrarColegios(JComboBox comboBox_colegios){
+        comboBox_colegios.removeAllItems();
+
+        String query = "SELECT id_colegio, nombre FROM colegios";
+        Object[][] colegiosArray = null;
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            // Mover el cursor al final para contar filas
+            rs.last();
+            int numRows = rs.getRow();
+            rs.beforeFirst(); // Volver al inicio
+
+            // Inicializar el array bidimensional
+            colegiosArray = new Object[numRows][2];
+
+            int index = 0;
+            while (rs.next()) {
+                int idColegio = rs.getInt("id_colegio");
+                String nombreColegio = rs.getString("nombre");
+
+                // Llenar el array con ID y Nombre
+                colegiosArray[index][0] = idColegio;
+                colegiosArray[index][1] = nombreColegio;
+                index++;
+
+                // Agregar solo el nombre al JComboBox
+                comboBox_colegios.addItem(nombreColegio);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(null, "Error al cargar los colegios: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(AddAlumnos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return colegiosArray; // Retorna el array con IDs y nombres
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
