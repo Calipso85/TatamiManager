@@ -71,7 +71,7 @@ public class ListaColegios extends javax.swing.JPanel {
 
             // Cargar los iconos desde el classpath
             ImageIcon iconEditar = new ImageIcon(ListaColegios.class.getResource("/images/lapiz.png"));
-            ImageIcon iconEliminar = new ImageIcon(ListaColegios.class.getResource("/images/basura.png"));
+            ImageIcon iconEliminar = new ImageIcon(ListaColegios.class.getResource("/images/papelera.png"));
 
             while (resultado.next()) {
                 // Agregar una nueva fila con los datos y los iconos

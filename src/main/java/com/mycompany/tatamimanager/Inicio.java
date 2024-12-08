@@ -63,9 +63,9 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        Titulo = new javax.swing.JLabel();
+        frase = new javax.swing.JLabel();
+        imagen = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_icono = new javax.swing.JMenu();
         jMenuColegios = new javax.swing.JMenu();
@@ -93,40 +93,18 @@ public class Inicio extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(905, 550));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo_1.png"))); // NOI18N
+        Titulo.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
+        Titulo.setText("Tatami Manager");
+        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 410, 60));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clase2.jpg"))); // NOI18N
+        frase.setFont(new java.awt.Font("Source Sans Pro Black", 0, 18)); // NOI18N
+        frase.setText("La forma más eficaz de organizar tu club.");
+        jPanel1.add(frase, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 380, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel1)))
-                .addGap(149, 149, 149)
-                .addComponent(jLabel3)
-                .addContainerGap(232, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(655, 655, 655))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clase2.jpg"))); // NOI18N
+        jPanel1.add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -252,6 +230,7 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem_AddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddAlumnoActionPerformed
+        panel_AddAlumnos.vaciarCampos();
         cambiarPanel(panel_AddAlumnos);
     }//GEN-LAST:event_jMenuItem_AddAlumnoActionPerformed
 
@@ -320,9 +299,9 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel Titulo;
+    private javax.swing.JLabel frase;
+    private javax.swing.JLabel imagen;
     private javax.swing.JMenu jMenuAlumnos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCalendario;

@@ -240,8 +240,6 @@ public class AddProfesores extends javax.swing.JPanel {
         if (frameInicio instanceof Inicio) {
             ((Inicio) frameInicio).cambiarPanel(new ListaProfesores());
         }
-        
-        
     }//GEN-LAST:event_btn_guardarProfesorActionPerformed
 
 

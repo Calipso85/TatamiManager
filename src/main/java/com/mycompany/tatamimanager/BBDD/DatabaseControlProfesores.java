@@ -4,7 +4,6 @@
  */
 package com.mycompany.tatamimanager.BBDD;
 
-import com.mycompany.tatamimanager.Inicio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import com.mycompany.tatamimanager.Profesores.*;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 
 /**

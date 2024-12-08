@@ -40,7 +40,6 @@ public class ListaProfesores extends javax.swing.JPanel {
      * Metodo para inicializar la tabla
      */
     public void iniTabla(){
-        
         cabecera = new Object [] {"id","Nombre", "Apellidos", "DNI", "Teléfono", "Correo electrónico", "Editar", "Eliminar"};
         
         modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
@@ -68,7 +67,7 @@ public class ListaProfesores extends javax.swing.JPanel {
 
             // Cargar los iconos desde el classpath
             ImageIcon iconEditar = new ImageIcon(ListaProfesores.class.getResource("/images/lapiz.png"));
-            ImageIcon iconEliminar = new ImageIcon(ListaProfesores.class.getResource("/images/basura.png"));
+            ImageIcon iconEliminar = new ImageIcon(ListaProfesores.class.getResource("/images/papelera.png"));
 
             while (resultado.next()) {
                 // Agregar una nueva fila con los datos y los iconos
@@ -180,7 +179,7 @@ public class ListaProfesores extends javax.swing.JPanel {
             idProfesor = (int) modelo.getValueAt(fila, 0);
 
             if (columna == 6) { //editar
-                //DatabaseControlProfesores.ObtenerIdProfesorSeleccionado(idProfesor);
+                //DatabaseControlProfesores.ObtenerIdProfesorSeleccionado(idProfesor);                  ---------------
                 try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
                     // Sentencia sql para obtener el id del profesor
                     PreparedStatement st = conn.prepareStatement(

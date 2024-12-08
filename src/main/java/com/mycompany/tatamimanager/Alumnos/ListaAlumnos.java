@@ -4,19 +4,107 @@
  */
 package com.mycompany.tatamimanager.Alumnos;
 
+import com.mycompany.tatamimanager.BBDD.DatabaseManager;
+import com.mycompany.tatamimanager.BBDD.DatabaseControlAlumnos;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author diana
  */
 public class ListaAlumnos extends javax.swing.JPanel {
 
+    Object[] cabecera;
+    DefaultTableModel modelo;
+    public int idAlumno;
+    
     /**
      * Creates new form ListaAlumnos
      */
     public ListaAlumnos() {
         initComponents();
+        iniTabla();
     }
+public void iniTabla(){
+        cabecera = new Object [] {"id","Nombre", "Apellidos", "Curso", "Cinturon", "Colegio", "Ver más", "Editar", "Eliminar"};
+        
+        modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                switch(columnIndex){
+                    case 6: return ImageIcon.class;
+                    case 7: return ImageIcon.class;
+                    case 8: return ImageIcon.class;
+                    default:return String.class;
+                }
+            }
+        };
+        tablaAlumnos.setModel(modelo);
+        
+        try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
+            modelo.setRowCount(0); // Limpiar las filas anteriores
+            
+            // Sentencia sql
+            modelo.setRowCount(0);
+            String query = "SELECT alumnos.id_alumno, alumnos.nombre, alumnos.apellidos, alumnos.curso, alumnos.cinturon, " +
+                "colegios.nombre AS nombre_colegio " +
+                "FROM alumnos " +
+                "JOIN colegios ON alumnos.id_colegio = colegios.id_colegio";
+            PreparedStatement st = conn.prepareStatement(query);
+            ResultSet resultado = st.executeQuery();
 
+            // Cargar los iconos desde el classpath
+            ImageIcon iconVer = new ImageIcon(ListaAlumnos.class.getResource("/images/ojo.png"));
+            ImageIcon iconEditar = new ImageIcon(ListaAlumnos.class.getResource("/images/lapiz.png"));
+            ImageIcon iconEliminar = new ImageIcon(ListaAlumnos.class.getResource("/images/papelera.png"));
+
+            while (resultado.next()) {
+                // Agregar una nueva fila con los datos y los iconos
+                modelo.addRow(new Object[] {
+                    resultado.getInt("id_alumno"),  // Columna oculta
+                    resultado.getString("nombre"), 
+                    resultado.getString("apellidos"),
+                    resultado.getString("curso"),
+                    resultado.getString("cinturon"),
+                    resultado.getString("nombre_colegio"),
+                    iconVer,  // Icono para la columna "Ver Más"
+                    iconEditar,  // Icono para la columna "Editar"
+                    iconEliminar // Icono para la columna "Eliminar"
+                });
+            }
+            
+            // Ocultar la columna id_profesor
+            tablaAlumnos.getColumnModel().getColumn(0).setMinWidth(0);
+            tablaAlumnos.getColumnModel().getColumn(0).setMaxWidth(0);
+            tablaAlumnos.getColumnModel().getColumn(0).setPreferredWidth(0);
+            
+            DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
+            
+        } catch (SQLException e) {
+            Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+        } catch (Exception e) {
+            Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error inesperado: " + e.getMessage());
+        }
+        /*
+        //ajustar tamaño columnas 
+        tablaAlumnos.getColumnModel().getColumn(1).setPreferredWidth(15);
+        tablaAlumnos.getColumnModel().getColumn(2).setPreferredWidth(60);
+        tablaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(20);
+        tablaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(60);*/
+        tablaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(100);/*
+        tablaAlumnos.getColumnModel().getColumn(6).setPreferredWidth(3);
+        tablaAlumnos.getColumnModel().getColumn(7).setPreferredWidth(3);
+        tablaAlumnos.getColumnModel().getColumn(8).setPreferredWidth(3); */
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,63 +116,122 @@ public class ListaAlumnos extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaAlumnos = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Listado de Alumnos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Nombre", "Apellidos", "Curso", "Cinturón", "Nombre tutor", "Teléfono", "Correo electrónico", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+            }
+        ));
+        tablaAlumnos.setEnabled(false);
+        tablaAlumnos.setRowSelectionAllowed(false);
+        tablaAlumnos.getTableHeader().setReorderingAllowed(false);
+        tablaAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAlumnosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaAlumnos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 801, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tablaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosMouseClicked
+        /*if (evt.getClickCount() == 1 || evt.getClickCount() == 2) {
+            // Obtener la fila y columna donde ocurrió el click
+            int fila = tablaProfesores.rowAtPoint(evt.getPoint());
+            int columna = tablaProfesores.columnAtPoint(evt.getPoint());
+            // Obtener el id_profesor desde la tabla (columna oculta)
+            idProfesor = (int) modelo.getValueAt(fila, 0);
+
+            if (columna == 6) { //editar
+                //DatabaseControlProfesores.ObtenerIdProfesorSeleccionado(idProfesor);                  ---------------
+                try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
+                    // Sentencia sql para obtener el id del profesor
+                    PreparedStatement st = conn.prepareStatement(
+                        "SELECT * FROM profesores WHERE id_profesor = ?"
+                    );
+                    st.setInt(1, idProfesor); // Establece el valor del parámetro
+                    ResultSet resultado = st.executeQuery();
+
+                    System.out.println("id_profesor ="+idProfesor);
+
+                    if (resultado.next()) {
+                        String nombreProfesor = resultado.getString("nombre");
+                        String apellProfesor = resultado.getString("apellidos");
+                        String dniProfesor = resultado.getString("dni");
+                        int telefonoProfesor = resultado.getInt("telefono");
+                        String correoProfesor = resultado.getString("correo");
+
+                        // Cambiar al panel AddColegios y pasarle los datos
+                        AddProfesores panelAddProfesores = new AddProfesores();
+                        panelAddProfesores.actualizarDatos(idProfesor, nombreProfesor, apellProfesor, dniProfesor, telefonoProfesor, correoProfesor);
+
+                        JFrame inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                        if (inicioFrame instanceof Inicio) {
+                            ((Inicio) inicioFrame).cambiarPanel(panelAddProfesores);
+                        }
+                        /*Inicio inicioFrame = new Inicio();
+                        inicioFrame.cambiarPanel(panelAddProfesores); 
+                    }
+
+                } catch (SQLException e) {
+                    Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+                    System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+                } catch (Exception e) {
+                    Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+                    System.out.println("Error inesperado: " + e.getMessage());
+                }
+            }else if(columna == 7) {  //eliminar
+                int confirm = JOptionPane.showConfirmDialog(null,
+                    "¿Estás seguro de que deseas eliminar este profesor?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    DatabaseControlProfesores.eliminaProfesor(idProfesor);
+                }
+                iniTabla();
+            }
+        } */
+    }//GEN-LAST:event_tablaAlumnosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaAlumnos;
     // End of variables declaration//GEN-END:variables
 }
