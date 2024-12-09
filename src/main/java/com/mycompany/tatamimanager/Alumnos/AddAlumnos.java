@@ -36,6 +36,7 @@ public class AddAlumnos extends javax.swing.JPanel {
     private int telf;
     private String correo;
     private String cinturon;
+    private int id; 
     public boolean isUpdate = false;
 
      /**
@@ -101,7 +102,9 @@ public class AddAlumnos extends javax.swing.JPanel {
     }
     
     public static void mostrarColegios(JComboBox comboBox_colegios){
-        //comboBox_colegios.removeAllItems();
+        comboBox_colegios.removeAllItems();
+        // Agregar un elemento especial como primer texto
+        comboBox_colegios.addItem(new ColegioItem(-1, "Selecciona un colegio"));
         String query = "SELECT id_colegio, nombre FROM colegios";
         
          try (Connection conn = DatabaseManager.getConnection();
@@ -147,13 +150,15 @@ public class AddAlumnos extends javax.swing.JPanel {
             return false;
         }else if(comboBox_colegios.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "Por favor, selecciona un colegio.", "Colegio sin seleccionar", JOptionPane.WARNING_MESSAGE);
+            return false;        
         } else {
             // Validar y asignar los valores
             nombreAlumno = txt_nombre.getText().trim();
             apellidos = txt_apell.getText().trim();
             curso = txt_curso.getText().trim();
+            nombreTutor = txt_tutor.getText().trim();
             cinturon = txt_cinturon.getText().trim();
-
+            
             // Validar que el año sea un número y tenga 4 dígitos
             String anyoTexto = txt_anyo.getText().trim(); 
             if ( !anyoTexto.matches("\\d{4}")) { 
@@ -162,7 +167,7 @@ public class AddAlumnos extends javax.swing.JPanel {
             }
             anyo = Integer.parseInt(anyoTexto); // asignar cp
             // Validar que el año esté en el rango permitido (entre 2010 y 2017)
-            if (anyo < 2010 || anyo > 2017) {
+            if (anyo < 2010 || anyo > 2021) {
                 JOptionPane.showMessageDialog(null, "El año es incorrecto, asegurese de introducir el año bien.", "Error en el Año", JOptionPane.ERROR_MESSAGE);
                 return false; // Salir del método si la validación falla
             }
@@ -174,12 +179,39 @@ public class AddAlumnos extends javax.swing.JPanel {
             } 
             telf = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
 
+            correo = txt_correo.getText().trim();        //-------------------------  COMPROBAR CORREO
             if(!isUpdate){
                 // Mensaje de éxito
                 JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         return true;
+    }
+    
+    public void actualizarDatos(int idAlumno, String nombreAlumno, String apellAlumno, String cursoAlumno, int anyoAlumno, String tutorAlumno,
+                                int telefonoAlumno, String correoAlumno, String cinturonAlumno, int coleAlumno){
+        isUpdate = true;
+        id = idAlumno;
+        txt_nombre.setText(nombreAlumno);
+        txt_apell.setText(apellAlumno);
+        txt_curso.setText(cursoAlumno);
+        txt_anyo.setText(Integer.toString(anyoAlumno));
+        txt_tutor.setText(tutorAlumno);
+        txt_telf.setText(Integer.toString(telefonoAlumno));
+        txt_correo.setText(correoAlumno);
+        txt_cinturon.setText(cinturonAlumno);
+        
+         // Buscar el ColegioItem por ID y seleccionarlo en el JComboBox
+        for (int i = 0; i < comboBox_colegios.getItemCount(); i++) {
+            ColegioItem item = (ColegioItem) comboBox_colegios.getItemAt(i);
+            if (item.getId() == coleAlumno) {
+                comboBox_colegios.setSelectedItem(item);
+                break;
+            }
+        }
+        
+        lb_titulo.setText("Modificar Alumno");
+        btn_GuardarAlumno.setText("Modificar Alumno");
     }
     
     /**
@@ -349,15 +381,15 @@ public class AddAlumnos extends javax.swing.JPanel {
             return; // Si alguna validación falla, detener la ejecución
         }
         
-        int idProfesor = obtenerIdColegioSeleccionado(comboBox_colegios);
+        int idColegio = obtenerIdColegioSeleccionado(comboBox_colegios);
         
         if(!isUpdate){ 
             //si estoy añadiendo colegio
-            DatabaseControlAlumnos.guardarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idProfesor);
+            DatabaseControlAlumnos.guardarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio);
             
         }else{  
             //si estoy modificando
-            //DatabaseControlAlumnos.editarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idProfesor, id);
+            DatabaseControlAlumnos.editarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio, id);
         }
         
         isUpdate = false; //volvemoa a establecer isUpdate como false
@@ -365,9 +397,11 @@ public class AddAlumnos extends javax.swing.JPanel {
         //cambiar panel a listaColegios
         JFrame frameInicio = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (frameInicio instanceof Inicio) {
-            ((Inicio) frameInicio).cambiarPanel(new ListaAlumnos());
+            ListaAlumnos nuevoPanel = new ListaAlumnos(); // Nueva instancia
+            nuevoPanel.iniTabla();
+            ((Inicio) frameInicio).cambiarPanel(nuevoPanel);
+            //((Inicio) frameInicio).cambiarPanel(new ListaAlumnos());
         }
-        
         
     }//GEN-LAST:event_btn_GuardarAlumnoActionPerformed
 

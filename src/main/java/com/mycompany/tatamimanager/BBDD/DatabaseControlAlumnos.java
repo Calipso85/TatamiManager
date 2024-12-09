@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class DatabaseControlAlumnos {
     
-   public static void guardarAlumno(String nombreAlumno, String apellidos, String curso, int anyo, String nombreTutor, int telf, String correo, 
+    public static void guardarAlumno(String nombreAlumno, String apellidos, String curso, int anyo, String nombreTutor, int telf, String correo, 
            String cinturon, int id_profesor){
        
        try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
@@ -53,39 +53,76 @@ public class DatabaseControlAlumnos {
             Logger.getLogger(AddAlumnos.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("Error inesperado: " + e.getMessage());
         }
-   }
+    }
     
     
-    public static void editarProfesor(String nombreAlumno, String apellidos, String curso, int anyo, String nombreTutor, int telf, String correo, 
-           String cinturon, int id_colegio, int id){ /*
+    public static void editarAlumno(String nombreAlumno, String apellidos, String curso, int anyo, String nombreTutor, int telf, 
+            String correo, String cinturon, int idColegio, int id){ 
         try (Connection conn = DatabaseManager.getConnection()) {
             String query = "UPDATE alumnos SET nombre = ?, apellidos = ?, curso = ?, anyo = ?, nombre_tutor = ?, telefono = ?, correo = ?,"
-                    + " cinturon = ?, id_colegio = ?, nombre_tutor = ? "
-                         + "WHERE id_alumno = ?";
+                    + " cinturon = ?, id_colegio = ?"
+                    + "WHERE id_alumno = ?";
             PreparedStatement st = conn.prepareStatement(query);
 
             // Asignar los valores de los campos de texto a la consulta
-            st.setString(1, nombreProfe);
+            st.setString(1, nombreAlumno);
             st.setString(2, apellidos);
-            st.setString(3, dni);
-            st.setInt(4, telefono);
-            st.setString(5, correo);
-            st.setInt(6, id); // id es el identificador del colegio que se está editando
+            st.setString(3, curso);
+            st.setInt(4, anyo);
+            st.setString(5, nombreTutor);
+            st.setInt(6, telf);
+            st.setString(7, correo);
+            st.setString(8, cinturon);
+            st.setInt(9, idColegio);
+            st.setInt(10, id); // id es el identificador del alumno que se está editando
 
             // Ejecutar la consulta
             int rowsUpdated = st.executeUpdate();
 
             // Verificar si se realizó el cambio
             if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(null , "El profesor ha sido actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null , "El alumno ha sido actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null , "No se pudo actualizar al alumno.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null , "Error al actualizar el alumno: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null , "Error al actualizar el alumno. ", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
         } catch (Exception ex) {
             Logger.getLogger(AddAlumnos.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+        } 
+    }
+    
+    
+    public static void eliminarAlumno(int idAlumno){
+        try (Connection conn = DatabaseManager.getConnection()) {
+            // Sentencia SQL para eliminar
+            PreparedStatement st = conn.prepareStatement(
+                "DELETE FROM alumnos WHERE id_alumno = ?"
+            );
+            st.setInt(1, idAlumno);
+            int filasEliminadas = st.executeUpdate();
+            System.out.println("id_alumno ="+idAlumno);
+
+            // Verificar si se eliminó algo
+            if (filasEliminadas > 0) {
+                JOptionPane.showMessageDialog(null,
+                    "El alumno ha sido eliminado correctamente.",
+                    "Eliminación exitosa",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                    "No se encontró alumno con ese ID. No se realizó ninguna eliminación.",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+        } catch (Exception e) {
+            Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println("Error inesperado: " + e.getMessage());
+        }
     }
     
 }

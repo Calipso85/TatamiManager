@@ -104,13 +104,13 @@ public class AddProfesores extends javax.swing.JPanel {
     public void actualizarDatos(int idProfe, String nombre, String apellidos, String dni, int telefono, String correo) {
         isUpdate = true;
         id = idProfe;
-        lb_titulo.setText("Modificar Profesor");
         txt_nombre.setText(nombre);
         txt_apellidos.setText(apellidos);
         txt_dni.setText(dni);
         txt_telf.setText(Integer.toString(telefono));
         txt_correo.setText(correo);
-        //btn_GuardarProfesor.setText("Modificar profesor");
+        lb_titulo.setText("Modificar Profesor");
+        btn_guardarProfesor.setText("Modificar profesor");
     }
     
     /**

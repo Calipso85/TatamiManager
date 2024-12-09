@@ -6,6 +6,8 @@ package com.mycompany.tatamimanager.Alumnos;
 
 import com.mycompany.tatamimanager.BBDD.DatabaseManager;
 import com.mycompany.tatamimanager.BBDD.DatabaseControlAlumnos;
+import com.mycompany.tatamimanager.Inicio;
+import java.net.IDN;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +15,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,7 +37,8 @@ public class ListaAlumnos extends javax.swing.JPanel {
         initComponents();
         iniTabla();
     }
-public void iniTabla(){
+    
+    public void iniTabla(){
         cabecera = new Object [] {"id","Nombre", "Apellidos", "Curso", "Cinturon", "Colegio", "Ver más", "Editar", "Eliminar"};
         
         modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
@@ -94,17 +100,18 @@ public void iniTabla(){
             Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("Error inesperado: " + e.getMessage());
         }
-        /*
+        
         //ajustar tamaño columnas 
         tablaAlumnos.getColumnModel().getColumn(1).setPreferredWidth(15);
         tablaAlumnos.getColumnModel().getColumn(2).setPreferredWidth(60);
         tablaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(20);
-        tablaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(60);*/
-        tablaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(100);/*
+        tablaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(60);
+        tablaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(100);
         tablaAlumnos.getColumnModel().getColumn(6).setPreferredWidth(3);
         tablaAlumnos.getColumnModel().getColumn(7).setPreferredWidth(3);
-        tablaAlumnos.getColumnModel().getColumn(8).setPreferredWidth(3); */
+        tablaAlumnos.getColumnModel().getColumn(8).setPreferredWidth(3); 
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,63 +176,68 @@ public void iniTabla(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosMouseClicked
-        /*if (evt.getClickCount() == 1 || evt.getClickCount() == 2) {
+        if (evt.getClickCount() == 1 || evt.getClickCount() == 2) {
             // Obtener la fila y columna donde ocurrió el click
-            int fila = tablaProfesores.rowAtPoint(evt.getPoint());
-            int columna = tablaProfesores.columnAtPoint(evt.getPoint());
-            // Obtener el id_profesor desde la tabla (columna oculta)
-            idProfesor = (int) modelo.getValueAt(fila, 0);
+            int fila = tablaAlumnos.rowAtPoint(evt.getPoint());
+            int columna = tablaAlumnos.columnAtPoint(evt.getPoint());
+            // Obtener el id_alumno desde la tabla (columna oculta)
+            idAlumno = (int) modelo.getValueAt(fila, 0);
 
-            if (columna == 6) { //editar
+            if (columna == 7) { //editar
                 //DatabaseControlProfesores.ObtenerIdProfesorSeleccionado(idProfesor);                  ---------------
                 try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
-                    // Sentencia sql para obtener el id del profesor
+                    // Sentencia sql para obtener el id del alumno
                     PreparedStatement st = conn.prepareStatement(
-                        "SELECT * FROM profesores WHERE id_profesor = ?"
+                        "SELECT nombre, apellidos, curso, anyo, nombre_tutor, telefono, correo, cinturon, id_colegio FROM alumnos WHERE id_alumno = ?"
                     );
-                    st.setInt(1, idProfesor); // Establece el valor del parámetro
+                    st.setInt(1, idAlumno); // Establece el valor del parámetro
                     ResultSet resultado = st.executeQuery();
 
-                    System.out.println("id_profesor ="+idProfesor);
+                    System.out.println("id_alumno ="+idAlumno);
 
                     if (resultado.next()) {
-                        String nombreProfesor = resultado.getString("nombre");
-                        String apellProfesor = resultado.getString("apellidos");
-                        String dniProfesor = resultado.getString("dni");
-                        int telefonoProfesor = resultado.getInt("telefono");
-                        String correoProfesor = resultado.getString("correo");
+                        String nombreAlumno = resultado.getString("nombre");
+                        String apellAlumno = resultado.getString("apellidos");
+                        String cursoAlumno = resultado.getString("curso");
+                        int anyoAlumno = resultado.getInt("anyo");
+                        String tutorAlumno = resultado.getString("nombre_tutor");
+                        int telefonoAlumno = resultado.getInt("telefono");
+                        String correoAlumno = resultado.getString("correo");
+                        String cinturonAlumno = resultado.getString("cinturon");
+                        int coleAlumno = resultado.getInt("id_colegio");
 
                         // Cambiar al panel AddColegios y pasarle los datos
-                        AddProfesores panelAddProfesores = new AddProfesores();
-                        panelAddProfesores.actualizarDatos(idProfesor, nombreProfesor, apellProfesor, dniProfesor, telefonoProfesor, correoProfesor);
+                        AddAlumnos panelAddAlumnos = new AddAlumnos();
+                        panelAddAlumnos.actualizarDatos(idAlumno, nombreAlumno, apellAlumno, cursoAlumno, anyoAlumno, tutorAlumno,
+                                telefonoAlumno, correoAlumno, cinturonAlumno, coleAlumno);
 
                         JFrame inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         if (inicioFrame instanceof Inicio) {
-                            ((Inicio) inicioFrame).cambiarPanel(panelAddProfesores);
+                            ((Inicio) inicioFrame).cambiarPanel(panelAddAlumnos);
                         }
                         /*Inicio inicioFrame = new Inicio();
-                        inicioFrame.cambiarPanel(panelAddProfesores); 
+                        inicioFrame.cambiarPanel(panelAddProfesores); */
                     }
 
                 } catch (SQLException e) {
-                    Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
                     System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
                 } catch (Exception e) {
-                    Logger.getLogger(ListaProfesores.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
                     System.out.println("Error inesperado: " + e.getMessage());
                 }
-            }else if(columna == 7) {  //eliminar
+            }else if(columna == 8) {  //eliminar
                 int confirm = JOptionPane.showConfirmDialog(null,
                     "¿Estás seguro de que deseas eliminar este profesor?",
                     "Confirmar eliminación",
                     JOptionPane.YES_NO_OPTION);
 
                 if (confirm == JOptionPane.YES_OPTION) {
-                    DatabaseControlProfesores.eliminaProfesor(idProfesor);
+                    //DatabaseControlAlumnos.eliminaAlumno(idAlumno);
                 }
                 iniTabla();
             }
-        } */
+        } 
     }//GEN-LAST:event_tablaAlumnosMouseClicked
 
 

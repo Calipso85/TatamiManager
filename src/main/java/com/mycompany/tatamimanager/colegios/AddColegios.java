@@ -83,12 +83,12 @@ public class AddColegios extends javax.swing.JPanel {
     public void actualizarDatos(int idColegio, String nombre, String direccion, int telefono, String barrio, int codpostal) {
         isUpdate = true;
         id = idColegio;
-        lb_titulo.setText("Modificar Colegio");
         txt_nombre.setText(nombre);
         txt_direccion.setText(direccion);
         txt_telf.setText(Integer.toString(telefono));
         txt_barrio.setText(barrio);
         txt_cp.setText(Integer.toString(codpostal));
+        lb_titulo.setText("Modificar Colegio");
         btn_GuardarColegio.setText("Modificar Colegio");
     }
     
