@@ -4,9 +4,11 @@
  */
 package com.mycompany.tatamimanager;
 
+import com.mycompany.tatamimanager.Colegios.ListaColegios;
+import com.mycompany.tatamimanager.Colegios.AddColegios;
 import com.mycompany.tatamimanager.Alumnos.*;
 import com.mycompany.tatamimanager.Profesores.*;
-import com.mycompany.tatamimanager.colegios.*;
+import com.mycompany.tatamimanager.Clases.*;
 import com.mycompany.tatamimanager.Calendario.VerCalendario;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
@@ -24,6 +26,7 @@ public class Inicio extends javax.swing.JFrame {
     AddProfesores panel_AddProfesores;
     ListaProfesores panel_ListaProfesores;
     VerCalendario panel_Calendar;
+    AddClase panel_addClase;
     
     /**
      * Creates new form Inicio
@@ -31,8 +34,7 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
         initComponents();
          
-        setIconImage(new ImageIcon(getClass().getResource("/images/Logo_1.png")).getImage());
-        //setIconImage(new ImageIcon(getClass().getResource("/images/16 x16.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/images/dibujo_cinturon.png")).getImage());
         
         panel_AddAlumnos = new AddAlumnos();
         panel_listaAlumnos = new ListaAlumnos();
@@ -40,8 +42,8 @@ public class Inicio extends javax.swing.JFrame {
         panel_listaColegios = new ListaColegios();
         panel_AddProfesores = new AddProfesores();
         panel_ListaProfesores = new ListaProfesores();
-        
-        
+        panel_Calendar = new VerCalendario();
+        panel_addClase = new AddClase();
     }
     
     // Método para cambiar panel
@@ -97,14 +99,14 @@ public class Inicio extends javax.swing.JFrame {
 
         Titulo.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         Titulo.setText("Tatami Manager");
-        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 410, 60));
+        jPanel1.add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 410, 60));
 
         frase.setFont(new java.awt.Font("Source Sans Pro Black", 0, 18)); // NOI18N
         frase.setText("La forma más eficaz de organizar tu club.");
-        jPanel1.add(frase, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 380, -1));
+        jPanel1.add(frase, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 350, -1));
 
         imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clase2.jpg"))); // NOI18N
-        jPanel1.add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, -1, 550));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -180,9 +182,19 @@ public class Inicio extends javax.swing.JFrame {
         jMenuClases.setText("Clases");
 
         jMenuItem_VerClases.setText("Ver clases");
+        jMenuItem_VerClases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_VerClasesActionPerformed(evt);
+            }
+        });
         jMenuClases.add(jMenuItem_VerClases);
 
         jMenuItem_AddClase.setText("Añadir clase");
+        jMenuItem_AddClase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AddClaseActionPerformed(evt);
+            }
+        });
         jMenuClases.add(jMenuItem_AddClase);
         jMenuClases.add(jSeparator1);
 
@@ -235,6 +247,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_AddAlumnoActionPerformed
 
     private void jMenuItem_VerAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerAlumnosActionPerformed
+        panel_listaAlumnos.iniTabla();
         cambiarPanel(panel_listaAlumnos);
     }//GEN-LAST:event_jMenuItem_VerAlumnosActionPerformed
 
@@ -261,6 +274,15 @@ public class Inicio extends javax.swing.JFrame {
     private void jMenuItem_VerCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerCalendarioActionPerformed
         cambiarPanel(panel_Calendar);
     }//GEN-LAST:event_jMenuItem_VerCalendarioActionPerformed
+
+    private void jMenuItem_AddClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddClaseActionPerformed
+        cambiarPanel(panel_addClase);
+    }//GEN-LAST:event_jMenuItem_AddClaseActionPerformed
+
+    private void jMenuItem_VerClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerClasesActionPerformed
+        //panel_ListaClase.iniTabla();
+        //cambiarPanel(panel_ListaClase);
+    }//GEN-LAST:event_jMenuItem_VerClasesActionPerformed
 
     /**
      * @param args the command line arguments

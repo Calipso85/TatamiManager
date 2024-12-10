@@ -4,15 +4,10 @@
  */
 package com.mycompany.tatamimanager.Alumnos;
 
+import com.mycompany.tatamimanager.Componentes_ComboBox.metodos_ComboBox;
+import com.mycompany.tatamimanager.Componentes_ComboBox.ComboBox_Item;
 import com.mycompany.tatamimanager.BBDD.DatabaseControlAlumnos;
-import com.mycompany.tatamimanager.BBDD.DatabaseManager;
 import com.mycompany.tatamimanager.Inicio;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -31,7 +26,7 @@ public class AddAlumnos extends javax.swing.JPanel {
     private String curso; 
     private int anyo; 
     private String colegio;
-    private JComboBox<ColegioItem> comboBox_colegios;
+    private JComboBox<ComboBox_Item> comboBox_colegios;
     private String nombreTutor;
     private int telf;
     private String correo;
@@ -46,7 +41,7 @@ public class AddAlumnos extends javax.swing.JPanel {
         return btn_GuardarAlumno;
     }
 
-    public JComboBox<ColegioItem> getComboBox_colegios() {
+    public JComboBox<ComboBox_Item> getComboBox_colegios() {
         return comboBox_colegios;
     }
 
@@ -86,8 +81,8 @@ public class AddAlumnos extends javax.swing.JPanel {
         initComponents();
         comboBox_colegios = new JComboBox<>();
         this.add(comboBox_colegios);
-        comboBox_colegios.setBounds(348, 233, 210, 25);
-        mostrarColegios(comboBox_colegios);
+        comboBox_colegios.setBounds(345, 233, 210, 25);
+        metodos_ComboBox.mostrarColegios(comboBox_colegios, "id_colegio", "colegio", "colegios");
     }
 
     public void vaciarCampos(){
@@ -101,42 +96,6 @@ public class AddAlumnos extends javax.swing.JPanel {
         txt_cinturon.setText("");
     }
     
-    public static void mostrarColegios(JComboBox comboBox_colegios){
-        comboBox_colegios.removeAllItems();
-        // Agregar un elemento especial como primer texto
-        comboBox_colegios.addItem(new ColegioItem(-1, "Selecciona un colegio"));
-        String query = "SELECT id_colegio, nombre FROM colegios";
-        
-         try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
-             
-            while (rs.next()) {
-                int id = rs.getInt("id_colegio");
-                String nombre = rs.getString("nombre");
-
-                // Crear un objeto de ColegioItem y añadirlo al combo box
-                ColegioItem item = new ColegioItem(id, nombre);
-                comboBox_colegios.addItem(item);
-            }
-             
-         } catch (SQLException ex) {
-            ex.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(null, "Error al cargar los colegios en el comboBox: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            Logger.getLogger(AddAlumnos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public static int obtenerIdColegioSeleccionado(JComboBox<ColegioItem> comboBox_colegios) {
-        ColegioItem seleccionado = (ColegioItem) comboBox_colegios.getSelectedItem();
-        if (seleccionado != null) {
-            return seleccionado.getId();
-        } else {
-            throw new IllegalStateException("No hay colegio seleccionado.");
-        }
-    }
-
     public boolean validarDatos(){
             // Verificar si los campos están vacíos
         if (txt_nombre.getText().trim().isEmpty() || txt_apell.getText().trim().isEmpty() 
@@ -201,9 +160,9 @@ public class AddAlumnos extends javax.swing.JPanel {
         txt_correo.setText(correoAlumno);
         txt_cinturon.setText(cinturonAlumno);
         
-         // Buscar el ColegioItem por ID y seleccionarlo en el JComboBox
+         // Buscar el ComboBox_Item por ID y seleccionarlo en el JComboBox
         for (int i = 0; i < comboBox_colegios.getItemCount(); i++) {
-            ColegioItem item = (ColegioItem) comboBox_colegios.getItemAt(i);
+            ComboBox_Item item = (ComboBox_Item) comboBox_colegios.getItemAt(i);
             if (item.getId() == coleAlumno) {
                 comboBox_colegios.setSelectedItem(item);
                 break;
@@ -240,7 +199,6 @@ public class AddAlumnos extends javax.swing.JPanel {
         btn_GuardarAlumno = new javax.swing.JButton();
         lb_correo = new javax.swing.JLabel();
         txt_telf = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         txt_cinturon = new javax.swing.JTextField();
         lb_cinturon = new javax.swing.JLabel();
 
@@ -275,8 +233,6 @@ public class AddAlumnos extends javax.swing.JPanel {
 
         lb_correo.setText("Correo electrónico:");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo_1.png"))); // NOI18N
-
         lb_cinturon.setText("Cinturón:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -284,59 +240,53 @@ public class AddAlumnos extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(215, 215, 215)
-                .addComponent(lb_titulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lb_anyo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_anyo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lb_apell, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lb_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lb_curso, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_nombre)
-                                    .addComponent(txt_apell)
-                                    .addComponent(txt_curso, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(176, 176, 176)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(lb_anyo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_anyo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lb_apell, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lb_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lb_curso, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txt_nombre)
+                                        .addComponent(txt_apell)
+                                        .addComponent(txt_curso, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lb_cole)
+                                        .addComponent(lb_tutor)
+                                        .addComponent(lb_telf)
+                                        .addComponent(lb_correo)
+                                        .addComponent(lb_cinturon))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txt_cinturon)
+                                        .addComponent(txt_tutor)
+                                        .addComponent(txt_telf)
+                                        .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lb_cole)
-                                    .addComponent(lb_tutor)
-                                    .addComponent(lb_telf)
-                                    .addComponent(lb_correo)
-                                    .addComponent(lb_cinturon))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_cinturon)
-                                    .addComponent(txt_tutor)
-                                    .addComponent(txt_telf)
-                                    .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(65, 65, 65)
+                                .addComponent(lb_titulo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(264, 264, 264)
+                        .addGap(283, 283, 283)
                         .addComponent(btn_GuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(lb_titulo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(37, 37, 37)
+                .addComponent(lb_titulo)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_nombre))
@@ -370,9 +320,9 @@ public class AddAlumnos extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_cinturon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lb_cinturon))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(btn_GuardarAlumno)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -381,10 +331,10 @@ public class AddAlumnos extends javax.swing.JPanel {
             return; // Si alguna validación falla, detener la ejecución
         }
         
-        int idColegio = obtenerIdColegioSeleccionado(comboBox_colegios);
+        int idColegio = metodos_ComboBox.obtenerIdColegioSeleccionado(comboBox_colegios);
         
         if(!isUpdate){ 
-            //si estoy añadiendo colegio
+            //si estoy añadiendo
             DatabaseControlAlumnos.guardarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio);
             
         }else{  
@@ -408,7 +358,6 @@ public class AddAlumnos extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_GuardarAlumno;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lb_anyo;
     private javax.swing.JLabel lb_apell;
     private javax.swing.JLabel lb_cinturon;

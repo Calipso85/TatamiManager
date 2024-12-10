@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.tatamimanager.Alumnos;
+package com.mycompany.tatamimanager.Componentes_ComboBox;
 
 /**
  *
  * @author diana
  */
-public class ColegioItem {
+public class ComboBox_Item {
     
     private int id;
     private String nombre;
 
-    public ColegioItem(int id, String nombre) {
+    public ComboBox_Item(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -28,6 +28,6 @@ public class ColegioItem {
 
     @Override
     public String toString() {
-        return nombre; // Esto es lo que se mostrará en el combo box
+        return nombre; // Esto es lo que se mostrará en el comboBox
     }
 }
