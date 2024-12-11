@@ -331,7 +331,7 @@ public class AddAlumnos extends javax.swing.JPanel {
             return; // Si alguna validación falla, detener la ejecución
         }
         
-        int idColegio = metodos_ComboBox.obtenerIdColegioSeleccionado(comboBox_colegios);
+        int idColegio = metodos_ComboBox.obtenerIdItemSeleccionado(comboBox_colegios);
         
         if(!isUpdate){ 
             //si estoy añadiendo

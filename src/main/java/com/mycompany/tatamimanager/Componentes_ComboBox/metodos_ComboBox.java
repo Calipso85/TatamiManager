@@ -44,7 +44,7 @@ public class metodos_ComboBox {
         }
     }
     
-    public static int obtenerIdColegioSeleccionado(JComboBox<ComboBox_Item> combo) {
+    public static int obtenerIdItemSeleccionado(JComboBox<ComboBox_Item> combo) {
         ComboBox_Item seleccionado = (ComboBox_Item) combo.getSelectedItem();
         if (seleccionado != null) {
             return seleccionado.getId();

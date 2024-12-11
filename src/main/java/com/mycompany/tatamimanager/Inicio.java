@@ -27,6 +27,7 @@ public class Inicio extends javax.swing.JFrame {
     ListaProfesores panel_ListaProfesores;
     VerCalendario panel_Calendar;
     AddClase panel_addClase;
+    ListaClases panel_ListaClases;
     
     /**
      * Creates new form Inicio
@@ -44,6 +45,7 @@ public class Inicio extends javax.swing.JFrame {
         panel_ListaProfesores = new ListaProfesores();
         panel_Calendar = new VerCalendario();
         panel_addClase = new AddClase();
+        panel_ListaClases = new ListaClases();
     }
     
     // Método para cambiar panel
@@ -106,7 +108,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.add(frase, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 350, -1));
 
         imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clase2.jpg"))); // NOI18N
-        jPanel1.add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, -1, 550));
+        jPanel1.add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 910, 530));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -280,8 +282,8 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_AddClaseActionPerformed
 
     private void jMenuItem_VerClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerClasesActionPerformed
-        //panel_ListaClase.iniTabla();
-        //cambiarPanel(panel_ListaClase);
+        //panel_ListaClases.iniTabla();
+        cambiarPanel(panel_ListaClases);
     }//GEN-LAST:event_jMenuItem_VerClasesActionPerformed
 
     /**

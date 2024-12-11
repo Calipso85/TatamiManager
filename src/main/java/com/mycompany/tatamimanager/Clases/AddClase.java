@@ -6,8 +6,12 @@ package com.mycompany.tatamimanager.Clases;
 
 import com.mycompany.tatamimanager.Componentes_ComboBox.metodos_ComboBox;
 import com.mycompany.tatamimanager.Componentes_ComboBox.ComboBox_Item;
+import com.mycompany.tatamimanager.BBDD.DatabaseControlClases;
+import java.awt.Component;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  *
  * @author diana
@@ -16,10 +20,13 @@ public class AddClase extends javax.swing.JPanel {
     
     private JComboBox<ComboBox_Item> comboBox_colegios;
     private JComboBox<ComboBox_Item> comboBox_profesores;
+    private int idClase;
     private String nombre;
     private String horaInicio;
-    private String horafin; 
-    private String dias; 
+    private String horaFin; 
+    private String horario; 
+    private String diasSeleccionados; 
+    public boolean isUpdate = false; 
 
     /**
      * Creates new form AddClase
@@ -55,54 +62,66 @@ public class AddClase extends javax.swing.JPanel {
         }else if(comboBox_profesores.getSelectedIndex()==0){
             JOptionPane.showMessageDialog(null, "Por favor, selecciona un profesor.", "Profesor sin seleccionar", JOptionPane.WARNING_MESSAGE);
             return false;        
-        }else {
+        }else if (!algunDiaMarcado(panel_Semana)) {
+            JOptionPane.showMessageDialog(null, "Por favor, marque la casilla de al menos un día.", "Día sin seleccionar", JOptionPane.WARNING_MESSAGE);
+            return false;        
+        }else{
             // Validar y asignar los valores
             nombre = txt_nombre.getText().trim();
             horaInicio = txt_horaInicio.getText().trim();
-            horafin = txt_horaFin.getText().trim();
-             /*
-            // Validar que el año sea un número y tenga 4 dígitos
-            String anyoTexto = txt_anyo.getText().trim(); 
-            if ( !anyoTexto.matches("\\d{4}")) { 
-                JOptionPane.showMessageDialog(null, "El año de nacimiento debe ser un número de 4 dígitos.", "Error en el Año", JOptionPane.ERROR_MESSAGE);
-                return false; // Salir del método si la validación falla
-            }
-            anyo = Integer.parseInt(anyoTexto); // asignar cp
-            // Validar que el año esté en el rango permitido (entre 2010 y 2017)
-            if (anyo < 2010 || anyo > 2021) {
-                JOptionPane.showMessageDialog(null, "El año es incorrecto, asegurese de introducir el año bien.", "Error en el Año", JOptionPane.ERROR_MESSAGE);
-                return false; // Salir del método si la validación falla
-            }
-            // Validar que el telefono sea un número y tenga 9 dígitos
-            String telefono = txt_telf.getText().trim();
-            if (!telefono.matches("\\d{9}")) {
-                JOptionPane.showMessageDialog(null, "El teléfono debe ser un número de 9 dígitos", "Error en el Teléfono", JOptionPane.ERROR_MESSAGE);
-                return false; // Salir del método si la validación falla
-            } 
-            telf = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
-
-            correo = txt_correo.getText().trim();        //-------------------------  COMPROBAR CORREO
+            horaFin = txt_horaFin.getText().trim();
+            horario = horaInicio + " - " + horaFin; //horas unidas
+            diasSeleccionados = obtenerDiasSeleccionados(panel_Semana);
+            
             if(!isUpdate){
                 // Mensaje de éxito
                 JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            }*/
+            }
         }
         return true;
     }
     
+    // Método para verificar si al menos un JCheckBox está marcado en panel_semana
+    private boolean algunDiaMarcado(JPanel panel) {
+        for (Component component : panel.getComponents()) {
+            if (component instanceof JCheckBox) {
+                JCheckBox checkbox = (JCheckBox) component;
+                if (checkbox.isSelected()) {
+                    return true; // Retorna true si al menos uno está marcado
+                }
+            }
+        }
+        return false; // Retorna false si ninguno está marcado
+    }
+    
+    // Método para verificar si al menos un JCheckBox está marcado y construir un String dinámico con los días seleccionados
+    private String obtenerDiasSeleccionados(JPanel panel) {
+        StringBuilder diasSeleccionados = new StringBuilder();
+
+        for (Component component : panel.getComponents()) {
+            if (component instanceof JCheckBox) {
+                JCheckBox checkbox = (JCheckBox) component;
+                if (checkbox.isSelected()) {
+                    // Agregar el texto del JCheckBox al StringBuilder
+                    if (diasSeleccionados.length() > 0) {
+                        diasSeleccionados.append(", "); // Agregar coma y espacio si no es el primero
+                    }
+                    diasSeleccionados.append(checkbox.getText());
+                }
+            }
+        }
+
+        // Retorna los días seleccionados como String
+        return diasSeleccionados.toString();
+    }
     /*
-    public void actualizarDatos(int idAlumno, String nombreAlumno, String apellAlumno, String cursoAlumno, int anyoAlumno, String tutorAlumno,
-                                int telefonoAlumno, String correoAlumno, String cinturonAlumno, int coleAlumno){
+    public void actualizarDatos(int idClase, String nombre, String horaInicio, String horaFin, String dias, int idColegio, int idProfesor){
         isUpdate = true;
-        id = idAlumno;
-        txt_nombre.setText(nombreAlumno);
-        txt_apell.setText(apellAlumno);
-        txt_curso.setText(cursoAlumno);
-        txt_anyo.setText(Integer.toString(anyoAlumno));
-        txt_tutor.setText(tutorAlumno);
-        txt_telf.setText(Integer.toString(telefonoAlumno));
-        txt_correo.setText(correoAlumno);
-        txt_cinturon.setText(cinturonAlumno);
+        id = idClase;
+        txt_nombre.setText(nombre);
+        txt_horaInicio.setText(horaInicio);
+        txt_horaFin.setText(horaFin);
+        txt_curso.setText(dias);
         
          // Buscar el ComboBox_Item por ID y seleccionarlo en el JComboBox
         for (int i = 0; i < comboBox_colegios.getItemCount(); i++) {
@@ -129,15 +148,15 @@ public class AddClase extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         lb_titulo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lb_coles = new javax.swing.JLabel();
         btn_GuardarClase = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lb_nombre = new javax.swing.JLabel();
         txt_horaFin = new javax.swing.JTextField();
         lb_profesor = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lb_hora = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
         txt_horaInicio = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lb_hora2 = new javax.swing.JLabel();
         panel_Semana = new javax.swing.JPanel();
         cb_Lunes = new javax.swing.JCheckBox();
         cb_Martes = new javax.swing.JCheckBox();
@@ -150,7 +169,7 @@ public class AddClase extends javax.swing.JPanel {
         lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lb_titulo.setText("Añadir nueva clase ");
 
-        jLabel1.setText("Colegio:");
+        lb_coles.setText("Colegio:");
 
         btn_GuardarClase.setBackground(new java.awt.Color(0, 102, 204));
         btn_GuardarClase.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,13 +180,13 @@ public class AddClase extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("Nombre de la clase:");
+        lb_nombre.setText("Nombre de la clase:");
 
         lb_profesor.setText("Profesor:");
 
-        jLabel3.setText("Hora de inicio:");
+        lb_hora.setText("Hora de inicio:");
 
-        jLabel4.setText("Hora de fin:");
+        lb_hora2.setText("Hora de fin:");
 
         panel_Semana.setBackground(new java.awt.Color(204, 255, 255));
         panel_Semana.setBorder(javax.swing.BorderFactory.createTitledBorder("Días de la semana que tiene lugar la clase:"));
@@ -175,12 +194,16 @@ public class AddClase extends javax.swing.JPanel {
         buttonGroup1.add(cb_Lunes);
         cb_Lunes.setText("Lunes");
 
+        buttonGroup1.add(cb_Martes);
         cb_Martes.setText("Martes");
 
+        buttonGroup1.add(cb_Miercoles);
         cb_Miercoles.setText("Miércoles");
 
+        buttonGroup1.add(cb_Jueves);
         cb_Jueves.setText("Jueves");
 
+        buttonGroup1.add(cb_Viernes);
         cb_Viernes.setText("Viernes");
 
         javax.swing.GroupLayout panel_SemanaLayout = new javax.swing.GroupLayout(panel_Semana);
@@ -225,13 +248,13 @@ public class AddClase extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
                                 .addComponent(lb_titulo))
-                            .addComponent(jLabel2)
+                            .addComponent(lb_nombre)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lb_profesor)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel1))
+                                    .addComponent(lb_hora)
+                                    .addComponent(lb_hora2)
+                                    .addComponent(lb_coles))
                                 .addGap(98, 98, 98)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txt_nombre)
@@ -251,21 +274,21 @@ public class AddClase extends javax.swing.JPanel {
                 .addGap(54, 54, 54)
                 .addComponent(lb_titulo)
                 .addGap(31, 31, 31)
-                .addComponent(jLabel1)
+                .addComponent(lb_coles)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lb_nombre)
                     .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_profesor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_horaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(lb_hora))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_horaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(lb_hora2))
                 .addGap(29, 29, 29)
                 .addComponent(panel_Semana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
@@ -275,23 +298,23 @@ public class AddClase extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_GuardarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarClaseActionPerformed
-        /*if (!validarDatos()) {
+        if (!validarDatos()) {
             return; // Si alguna validación falla, detener la ejecución
         }
 
-        int idColegio = metodos_ComboBox.obtenerIdColegioSeleccionado(comboBox_colegios);
+        int idColegio = metodos_ComboBox.obtenerIdItemSeleccionado(comboBox_colegios);
+        int idProfesor = metodos_ComboBox.obtenerIdItemSeleccionado(comboBox_profesores);
 
         if(!isUpdate){
             //si estoy añadiendo colegio
-            DatabaseControlAlumnos.guardarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio);
-
+            DatabaseControlClases.guardarClase(nombre, horario, diasSeleccionados, idClase, idProfesor);
         }else{
             //si estoy modificando
-            DatabaseControlAlumnos.editarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio, id);
+            //DatabaseControlAlumnos.editarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio, id);
         }
 
         isUpdate = false; //volvemoa a establecer isUpdate como false
-
+/*
         //cambiar panel a listaColegios
         JFrame frameInicio = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (frameInicio instanceof Inicio) {
@@ -312,10 +335,10 @@ public class AddClase extends javax.swing.JPanel {
     private javax.swing.JCheckBox cb_Martes;
     private javax.swing.JCheckBox cb_Miercoles;
     private javax.swing.JCheckBox cb_Viernes;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lb_coles;
+    private javax.swing.JLabel lb_hora;
+    private javax.swing.JLabel lb_hora2;
+    private javax.swing.JLabel lb_nombre;
     private javax.swing.JLabel lb_profesor;
     private javax.swing.JLabel lb_titulo;
     private javax.swing.JPanel panel_Semana;
