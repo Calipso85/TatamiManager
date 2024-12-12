@@ -104,12 +104,12 @@ public class ListaAlumnos extends javax.swing.JPanel {
         tablaAlumnos.getColumnModel().getColumn(1).setPreferredWidth(15);
         tablaAlumnos.getColumnModel().getColumn(2).setPreferredWidth(60);
         tablaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(20);
-        tablaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(60);
-        tablaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(100);
+        tablaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(45);
+        tablaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(120);
         tablaAlumnos.getColumnModel().getColumn(6).setPreferredWidth(3);
         tablaAlumnos.getColumnModel().getColumn(7).setPreferredWidth(3);
         tablaAlumnos.getColumnModel().getColumn(8).setPreferredWidth(3); 
-            System.out.println("Se actualiza la tabla.");
+            System.out.println("Se actualiza la tabla Alumnos.");
     }
     
     /**
@@ -191,7 +191,6 @@ public class ListaAlumnos extends javax.swing.JPanel {
                 case 7:
                     //editar
                     try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
-                        // Sentencia sql para obtener el id del alumno
                         PreparedStatement st = conn.prepareStatement(
                                 "SELECT nombre, apellidos, curso, anyo, nombre_tutor, telefono, correo, cinturon, id_colegio FROM alumnos WHERE id_alumno = ?"
                         );
@@ -228,7 +227,8 @@ public class ListaAlumnos extends javax.swing.JPanel {
                     } catch (Exception e) {
                         Logger.getLogger(ListaAlumnos.class.getName()).log(Level.SEVERE, null, e);
                         System.out.println("Error inesperado: " + e.getMessage());
-                    }   break;
+                    }   
+                    break;
                 case 8:
                     //eliminar
                     int confirm = JOptionPane.showConfirmDialog(null,

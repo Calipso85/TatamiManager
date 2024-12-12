@@ -52,4 +52,50 @@ public class metodos_ComboBox {
             throw new IllegalStateException("No hay colegio seleccionado.");
         }
     }
+    
+    public static void mostrarClasesPorColegio(JComboBox<ComboBox_Item> combo, int idColegio) { 
+        combo.removeAllItems(); 
+        combo.addItem(new ComboBox_Item(-1, "Selecciona una clase")); 
+        String query = "SELECT id_clase, nombre FROM clases WHERE id_colegio = ?"; 
+        try (Connection conn = DatabaseManager.getConnection(); 
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idColegio); 
+            ResultSet rs = ps.executeQuery(); 
+            
+            while (rs.next()) { 
+                int id = rs.getInt("id_clase"); 
+                String nombre = rs.getString("nombre"); 
+                ComboBox_Item item = new ComboBox_Item(id, nombre); 
+                combo.addItem(item); 
+            } 
+        } catch (SQLException ex) {
+            ex.printStackTrace(); 
+            System.out.println("Error al cargar las clases en el comboBox: " + ex.getMessage()); 
+        } catch (Exception ex) { 
+        } 
+    }
+
+    /*
+    public static int obtenerIdColegioPorClase(int idClase) {
+        String query = "SELECT id_colegio FROM clases WHERE id_clase = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idClase);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_colegio");
+            } else {
+                throw new IllegalStateException("No se encontró el colegio para la clase con id: " + idClase);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, e);
+            throw new RuntimeException("Error al obtener el id del colegio para la clase con id: " + idClase, e);
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Error inesperado al obtener el id del colegio para la clase con id: " + idClase, ex);
+        }
+    }
+
+    */
+    
 }

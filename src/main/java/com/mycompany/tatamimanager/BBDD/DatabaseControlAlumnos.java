@@ -59,7 +59,6 @@ public class DatabaseControlAlumnos {
         }
     }
     
-    
     public static void editarAlumno(String nombreAlumno, String apellidos, String curso, int anyo, String nombreTutor, int telf, 
             String correo, String cinturon, int idColegio, int id){ 
         try (Connection conn = DatabaseManager.getConnection()) {
@@ -119,7 +118,7 @@ public class DatabaseControlAlumnos {
                     JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null,
-                    "No se encontró alumno con ese ID. No se realizó ninguna eliminación.",
+                    "No se realizó ninguna eliminación.",
                     "Error",
                     JOptionPane.WARNING_MESSAGE);
             }

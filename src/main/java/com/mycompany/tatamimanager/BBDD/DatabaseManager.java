@@ -22,9 +22,10 @@ public class DatabaseManager {
     public static Connection getConnection() throws Exception {
         if (conn == null || conn.isClosed()) {
             // Cargar la base de datos desde el classpath
+            //La bbdd está en TatamiManager\target\classes\database\club_judo.db
             URL resourceUrl = DatabaseManager.class.getClassLoader().getResource("database/club_judo.db");
             if (resourceUrl == null) {
-                throw new IllegalStateException("No se encontró la base de datos en src/main/resources/database/club_judo.db");
+                throw new IllegalStateException("No se encontró la base de datos");
             }
             String dbPath = Paths.get(resourceUrl.toURI()).toAbsolutePath().toString();
             String url = "jdbc:sqlite:" + dbPath;

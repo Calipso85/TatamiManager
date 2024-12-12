@@ -222,7 +222,7 @@ public class AddAlumnos extends javax.swing.JPanel {
 
         lb_curso.setText("Curso:");
 
-        btn_GuardarAlumno.setBackground(new java.awt.Color(0, 102, 204));
+        btn_GuardarAlumno.setBackground(new java.awt.Color(0, 102, 153));
         btn_GuardarAlumno.setForeground(new java.awt.Color(255, 255, 255));
         btn_GuardarAlumno.setText("Guardar Alumno");
         btn_GuardarAlumno.addActionListener(new java.awt.event.ActionListener() {

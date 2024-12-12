@@ -106,20 +106,28 @@
             <Property name="text" type="java.lang.String" value="Clases"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_VerClases">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_ListaClases">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver clases"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_VerClasesActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_ListaClasesActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_AddClase">
               <Properties>
-                <Property name="text" type="java.lang.String" value="A&#xf1;adir clase"/>
+                <Property name="text" type="java.lang.String" value="A&#xf1;adir clase nueva"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_AddClaseActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_VerClases">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Vista de grupos hechos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_VerClasesActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
@@ -128,6 +136,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Asignar Alumnos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_AsignarAlumnosActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -28,6 +28,7 @@ public class Inicio extends javax.swing.JFrame {
     VerCalendario panel_Calendar;
     AddClase panel_addClase;
     ListaClases panel_ListaClases;
+    AsignarAlumnos panel_AsignarAlumnos;
     
     /**
      * Creates new form Inicio
@@ -46,6 +47,7 @@ public class Inicio extends javax.swing.JFrame {
         panel_Calendar = new VerCalendario();
         panel_addClase = new AddClase();
         panel_ListaClases = new ListaClases();
+        panel_AsignarAlumnos = new AsignarAlumnos();
     }
     
     // Método para cambiar panel
@@ -82,8 +84,9 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem_VerAlumnos = new javax.swing.JMenuItem();
         jMenuItem_AddAlumno = new javax.swing.JMenuItem();
         jMenuClases = new javax.swing.JMenu();
-        jMenuItem_VerClases = new javax.swing.JMenuItem();
+        jMenuItem_ListaClases = new javax.swing.JMenuItem();
         jMenuItem_AddClase = new javax.swing.JMenuItem();
+        jMenuItem_VerClases = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem_AsignarAlumnos = new javax.swing.JMenuItem();
         jMenuEventos = new javax.swing.JMenu();
@@ -183,24 +186,37 @@ public class Inicio extends javax.swing.JFrame {
         jMenuClases.setBackground(new java.awt.Color(0, 102, 255));
         jMenuClases.setText("Clases");
 
-        jMenuItem_VerClases.setText("Ver clases");
-        jMenuItem_VerClases.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem_ListaClases.setText("Ver clases");
+        jMenuItem_ListaClases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_VerClasesActionPerformed(evt);
+                jMenuItem_ListaClasesActionPerformed(evt);
             }
         });
-        jMenuClases.add(jMenuItem_VerClases);
+        jMenuClases.add(jMenuItem_ListaClases);
 
-        jMenuItem_AddClase.setText("Añadir clase");
+        jMenuItem_AddClase.setText("Añadir clase nueva");
         jMenuItem_AddClase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_AddClaseActionPerformed(evt);
             }
         });
         jMenuClases.add(jMenuItem_AddClase);
+
+        jMenuItem_VerClases.setText("Vista de grupos hechos");
+        jMenuItem_VerClases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_VerClasesActionPerformed(evt);
+            }
+        });
+        jMenuClases.add(jMenuItem_VerClases);
         jMenuClases.add(jSeparator1);
 
         jMenuItem_AsignarAlumnos.setText("Asignar Alumnos");
+        jMenuItem_AsignarAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_AsignarAlumnosActionPerformed(evt);
+            }
+        });
         jMenuClases.add(jMenuItem_AsignarAlumnos);
 
         jMenuBar1.add(jMenuClases);
@@ -282,9 +298,18 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_AddClaseActionPerformed
 
     private void jMenuItem_VerClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerClasesActionPerformed
-        //panel_ListaClases.iniTabla();
-        cambiarPanel(panel_ListaClases);
+        
     }//GEN-LAST:event_jMenuItem_VerClasesActionPerformed
+
+    private void jMenuItem_ListaClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ListaClasesActionPerformed
+        panel_ListaClases.iniTabla();
+        cambiarPanel(panel_ListaClases);
+    }//GEN-LAST:event_jMenuItem_ListaClasesActionPerformed
+
+    private void jMenuItem_AsignarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AsignarAlumnosActionPerformed
+        //panel_AsignarAlumnos.iniTabla();
+        cambiarPanel(panel_AsignarAlumnos);
+    }//GEN-LAST:event_jMenuItem_AsignarAlumnosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,6 +363,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_AddEvento;
     private javax.swing.JMenuItem jMenuItem_AddProfes;
     private javax.swing.JMenuItem jMenuItem_AsignarAlumnos;
+    private javax.swing.JMenuItem jMenuItem_ListaClases;
     private javax.swing.JMenuItem jMenuItem_VerAlumnos;
     private javax.swing.JMenuItem jMenuItem_VerCalendario;
     private javax.swing.JMenuItem jMenuItem_VerClases;
