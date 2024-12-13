@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VistaClasesFormadas extends javax.swing.JPanel {
 
-    
     private JComboBox<ComboBox_Item> comboBox_colegios;
     private JComboBox<ComboBox_Item> comboBox_clases;
     Object[] cabecera;

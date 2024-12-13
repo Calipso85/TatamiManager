@@ -261,7 +261,6 @@ public class ListaClases extends javax.swing.JPanel {
         } 
     }//GEN-LAST:event_tablaClasesMouseClicked
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

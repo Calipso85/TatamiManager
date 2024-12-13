@@ -329,7 +329,6 @@ public class AddAlumnos extends javax.swing.JPanel {
         if (!validarDatos()) {
             return; // Si alguna validación falla, detener la ejecución
         }
-        
         int idColegio = metodos_ComboBox.obtenerIdItemSeleccionado(comboBox_colegios);
         
         if(!isUpdate){ 
@@ -351,7 +350,6 @@ public class AddAlumnos extends javax.swing.JPanel {
             ((Inicio) frameInicio).cambiarPanel(nuevoPanel);
             //((Inicio) frameInicio).cambiarPanel(new ListaAlumnos());
         }
-        
     }//GEN-LAST:event_btn_GuardarAlumnoActionPerformed
 
 

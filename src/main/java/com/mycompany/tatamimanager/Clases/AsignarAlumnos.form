@@ -118,9 +118,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Generar listado de Alumnos por Clase"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Generar listado de Alumnos por Clase"/>
-      </AccessibilityProperties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

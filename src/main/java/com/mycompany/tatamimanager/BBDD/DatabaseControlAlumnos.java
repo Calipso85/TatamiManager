@@ -99,7 +99,6 @@ public class DatabaseControlAlumnos {
         } 
     }
     
-    
     public static void eliminarAlumno(int idAlumno){
         try (Connection conn = DatabaseManager.getConnection()) {
             // Sentencia SQL para eliminar
@@ -150,18 +149,17 @@ public class DatabaseControlAlumnos {
                 StringBuilder infoAlumno = new StringBuilder();
                 
                 // Añadir solo los campos que no sean nulos
-            agregarTexto(infoAlumno, "Nombre", rs.getString("nombre"));
-            agregarTexto(infoAlumno, "Apellidos", rs.getString("apellidos"));
-            agregarTexto(infoAlumno, "Curso", rs.getString("curso"));
-            agregarTexto(infoAlumno, "Año de nacimiento", rs.getInt("anyo") == 0 ? null : String.valueOf(rs.getInt("anyo")));
-            agregarTexto(infoAlumno, "Nombre del padre/madre/tutor", rs.getString("nombre_tutor"));
-            agregarTexto(infoAlumno, "Teléfono de los padres", rs.getInt("telefono") == 0 ? null : String.valueOf(rs.getInt("telefono")));
-            agregarTexto(infoAlumno, "Correo electrónico de los padres", rs.getString("correo"));
-            agregarTexto(infoAlumno, "Cinturón", rs.getString("cinturon"));
-            agregarTexto(infoAlumno, "Clase", rs.getString("clase_nombre"));
-            agregarTexto(infoAlumno, "Colegio", rs.getString("colegio_nombre"));
-            agregarTexto(infoAlumno, "Profesor", rs.getString("profesor_nombre"));
-
+                agregarTexto(infoAlumno, "Nombre", rs.getString("nombre"));
+                agregarTexto(infoAlumno, "Apellidos", rs.getString("apellidos"));
+                agregarTexto(infoAlumno, "Curso", rs.getString("curso"));
+                agregarTexto(infoAlumno, "Año de nacimiento", rs.getInt("anyo") == 0 ? null : String.valueOf(rs.getInt("anyo")));
+                agregarTexto(infoAlumno, "Nombre del padre/madre/tutor", rs.getString("nombre_tutor"));
+                agregarTexto(infoAlumno, "Teléfono de los padres", rs.getInt("telefono") == 0 ? null : String.valueOf(rs.getInt("telefono")));
+                agregarTexto(infoAlumno, "Correo electrónico de los padres", rs.getString("correo"));
+                agregarTexto(infoAlumno, "Cinturón", rs.getString("cinturon"));
+                agregarTexto(infoAlumno, "Clase", rs.getString("clase_nombre"));
+                agregarTexto(infoAlumno, "Colegio", rs.getString("colegio_nombre"));
+                agregarTexto(infoAlumno, "Profesor", rs.getString("profesor_nombre"));
 
                 // Crear el JFrame con JTextArea
                 JFrame frame = new JFrame("Información del Alumno");

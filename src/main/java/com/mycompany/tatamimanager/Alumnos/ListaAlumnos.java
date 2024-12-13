@@ -258,7 +258,6 @@ public class ListaAlumnos extends javax.swing.JPanel {
         } 
     }//GEN-LAST:event_tablaAlumnosMouseClicked
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_titulo;
