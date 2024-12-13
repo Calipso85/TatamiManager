@@ -41,13 +41,13 @@ public class AddClase extends javax.swing.JPanel {
         comboBox_colegios = new JComboBox<>();
         this.add(comboBox_colegios);
         comboBox_colegios.setBounds(378, 92, 210, 25);
-        metodos_ComboBox.mostrarColegios(comboBox_colegios, "id_colegio", "colegio", "colegios");
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
         
         //ComboBox profesores
         comboBox_profesores = new JComboBox<>();
         this.add(comboBox_profesores);
         comboBox_profesores.setBounds(378, 128, 210, 25);
-        metodos_ComboBox.mostrarColegios(comboBox_profesores, "id_profesor", "profesor", "profesores");
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_profesores, "id_profesor", "profesor", "profesores");
     }
 
     
@@ -58,6 +58,9 @@ public class AddClase extends javax.swing.JPanel {
         comboBox_colegios.setSelectedIndex(0);
         comboBox_profesores.setSelectedIndex(0);
         //desmarcar checkbox
+        if(algunDiaMarcado(panel_Semana)){
+            desmarcarTodosLosDias(panel_Semana);
+        }
     }
     
     public boolean validarDatos(){
@@ -105,7 +108,7 @@ public class AddClase extends javax.swing.JPanel {
         return false; // Retorna false si ninguno está marcado
     }
     
-    // Método para verificar si al menos un JCheckBox está marcado y construir un String dinámico con los días seleccionados
+    // Método para obtener un String dinámico con los días seleccionados
     private String obtenerDiasSeleccionados(JPanel panel) {
         StringBuilder diasSeleccionados = new StringBuilder();
 
@@ -125,6 +128,7 @@ public class AddClase extends javax.swing.JPanel {
         return diasSeleccionados.toString();
     }
     
+    //Método para marcar los checkbox de los días correspondientes
     private void seleccionarDias(String diasMarcados, JPanel panel) {
         // Dividir el String en días individuales
         String[] dias = diasMarcados.split(", ");
@@ -144,6 +148,15 @@ public class AddClase extends javax.swing.JPanel {
         }
     }
 
+    // Método para desmarcar todos los JCheckBox en panel_semana 
+    private void desmarcarTodosLosDias(JPanel panel) { 
+        for (Component component : panel.getComponents()) { 
+            if (component instanceof JCheckBox) { 
+                JCheckBox checkbox = (JCheckBox) component;
+                checkbox.setSelected(false); // Desmarcar el JCheckBox 
+            } 
+        } 
+    }   
     
     public void actualizarDatos(int idClase, String nombreClase, String horaInicio, String horaFin, String dias, int idColegio, int idProfesor){
         isUpdate = true;

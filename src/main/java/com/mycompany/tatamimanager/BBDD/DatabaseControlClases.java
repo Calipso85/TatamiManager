@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.mycompany.tatamimanager.Clases.*;
+import com.mycompany.tatamimanager.Componentes_ComboBox.ComboBox_Item;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
@@ -116,4 +118,69 @@ public class DatabaseControlClases {
         }
     }
     
+    //Método para mostrar las clases que hay en un colegio concreto
+    public static void mostrarClasesPorColegio(JComboBox<ComboBox_Item> combo, int idColegio) {
+        combo.removeAllItems();
+        combo.addItem(new ComboBox_Item(-1, "Selecciona una clase"));
+        String query = "SELECT id_clase, nombre FROM clases WHERE id_colegio = ?";
+        try (Connection conn = DatabaseManager.getConnection();PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idColegio);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id_clase");
+                String nombre = rs.getString("nombre");
+                ComboBox_Item item = new ComboBox_Item(id, nombre);
+                combo.addItem(item);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Error al cargar las clases en el comboBox: " + ex.getMessage());
+        } catch (Exception ex) {
+        }
+    }
+    
+    /*
+    public static int obtenerIdColegioPorClase(int idClase) {
+        String query = "SELECT id_colegio FROM clases WHERE id_clase = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idClase);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_colegio");
+            } else {
+                throw new IllegalStateException("No se encontró el colegio para la clase con id: " + idClase);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, e);
+            throw new RuntimeException("Error al obtener el id del colegio para la clase con id: " + idClase, e);
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Error inesperado al obtener el id del colegio para la clase con id: " + idClase, ex);
+        }
+    }
+
+    */
+
+    // Método para actualizar la clase del alumno en la base de datos
+    public static void actualizarClaseAlumno(int idAlumno, int idClase) {
+        String query = "UPDATE alumnos SET id_clase = ? WHERE id_alumno = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement st = conn.prepareStatement(query)) {
+            st.setInt(1, idClase);
+            st.setInt(2, idAlumno);
+            int filasActualizadas = st.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println("Alumno con id " + idAlumno + " asignado a la clase con id " + idClase);
+            } else {
+                System.out.println("No se pudo asignar el alumno con id " + idAlumno + " a la clase con id " + idClase);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar la clase del alumno en la base de datos.");
+            e.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseControlClases.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

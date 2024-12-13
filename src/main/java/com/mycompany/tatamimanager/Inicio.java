@@ -33,6 +33,7 @@ public class Inicio extends javax.swing.JFrame {
     ListaClases panel_ListaClases;
     AsignarAlumnos panel_AsignarAlumnos;
     AddEventos panel_addEvento;
+    VistaClasesFormadas panel_vistaClases;
 
     /**
      * Getters form Inicio
@@ -74,7 +75,7 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     public JMenuItem getjMenuItem_VerClases() {
-        return jMenuItem_VerClases;
+        return jMenuItem_VerClasesFormadas;
     }
 
     public JMenuItem getjMenuItem_VerColes() {
@@ -108,6 +109,7 @@ public class Inicio extends javax.swing.JFrame {
         panel_ListaClases = new ListaClases();
         panel_AsignarAlumnos = new AsignarAlumnos();
         panel_addEvento= new AddEventos();
+        panel_vistaClases= new VistaClasesFormadas();
     }
     
     // Método para cambiar panel
@@ -134,6 +136,7 @@ public class Inicio extends javax.swing.JFrame {
         imagen = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_icono = new javax.swing.JMenu();
+        jMenuCerrarSesion = new javax.swing.JMenuItem();
         jMenuColegios = new javax.swing.JMenu();
         jMenuItem_VerColes = new javax.swing.JMenuItem();
         jMenuItem_AddCole = new javax.swing.JMenuItem();
@@ -146,7 +149,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenuClases = new javax.swing.JMenu();
         jMenuItem_ListaClases = new javax.swing.JMenuItem();
         jMenuItem_AddClase = new javax.swing.JMenuItem();
-        jMenuItem_VerClases = new javax.swing.JMenuItem();
+        jMenuItem_VerClasesFormadas = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem_AsignarAlumnos = new javax.swing.JMenuItem();
         jMenuEventos = new javax.swing.JMenu();
@@ -177,6 +180,16 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenu_icono.setBackground(new java.awt.Color(0, 102, 255));
         jMenu_icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/retrato.png"))); // NOI18N
+
+        jMenuCerrarSesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuCerrarSesion.setLabel("Cerrar sesión");
+        jMenuCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCerrarSesionActionPerformed(evt);
+            }
+        });
+        jMenu_icono.add(jMenuCerrarSesion);
+
         jMenuBar1.add(jMenu_icono);
 
         jMenuColegios.setBackground(new java.awt.Color(0, 102, 255));
@@ -262,13 +275,13 @@ public class Inicio extends javax.swing.JFrame {
         });
         jMenuClases.add(jMenuItem_AddClase);
 
-        jMenuItem_VerClases.setText("Vista de grupos hechos");
-        jMenuItem_VerClases.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem_VerClasesFormadas.setText("Vista de grupos formados");
+        jMenuItem_VerClasesFormadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_VerClasesActionPerformed(evt);
+                jMenuItem_VerClasesFormadasActionPerformed(evt);
             }
         });
-        jMenuClases.add(jMenuItem_VerClases);
+        jMenuClases.add(jMenuItem_VerClasesFormadas);
         jMenuClases.add(jSeparator1);
 
         jMenuItem_AsignarAlumnos.setText("Asignar Alumnos");
@@ -359,12 +372,13 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_VerCalendarioActionPerformed
 
     private void jMenuItem_AddClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddClaseActionPerformed
+        panel_addClase.vaciarCampos();
         cambiarPanel(panel_addClase);
     }//GEN-LAST:event_jMenuItem_AddClaseActionPerformed
 
-    private void jMenuItem_VerClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerClasesActionPerformed
-        
-    }//GEN-LAST:event_jMenuItem_VerClasesActionPerformed
+    private void jMenuItem_VerClasesFormadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerClasesFormadasActionPerformed
+        cambiarPanel(panel_vistaClases);
+    }//GEN-LAST:event_jMenuItem_VerClasesFormadasActionPerformed
 
     private void jMenuItem_ListaClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ListaClasesActionPerformed
         panel_ListaClases.iniTabla();
@@ -376,19 +390,25 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_AsignarAlumnosActionPerformed
 
     private void jMenuItem_AddEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddEventoActionPerformed
+        //panel_addEvento.vaciarCampos();
         cambiarPanel(panel_addEvento);
     }//GEN-LAST:event_jMenuItem_AddEventoActionPerformed
 
+    private void jMenuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCerrarSesionActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jMenuCerrarSesionActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+   /* public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+     /*   try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -408,12 +428,12 @@ public class Inicio extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+     /*   java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Inicio().setVisible(true);
             }
         });
-    }
+    } */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Titulo;
@@ -422,6 +442,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuAlumnos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCalendario;
+    private javax.swing.JMenuItem jMenuCerrarSesion;
     private javax.swing.JMenu jMenuClases;
     private javax.swing.JMenu jMenuColegios;
     private javax.swing.JMenu jMenuEventos;
@@ -434,7 +455,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_ListaClases;
     private javax.swing.JMenuItem jMenuItem_VerAlumnos;
     private javax.swing.JMenuItem jMenuItem_VerCalendario;
-    private javax.swing.JMenuItem jMenuItem_VerClases;
+    private javax.swing.JMenuItem jMenuItem_VerClasesFormadas;
     private javax.swing.JMenuItem jMenuItem_VerColes;
     private javax.swing.JMenuItem jMenuItem_VerProfes;
     private javax.swing.JMenu jMenuProfesores;

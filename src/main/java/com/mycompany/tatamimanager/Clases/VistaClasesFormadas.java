@@ -6,8 +6,8 @@ package com.mycompany.tatamimanager.Clases;
 
 import com.mycompany.tatamimanager.BBDD.DatabaseControlClases;
 import com.mycompany.tatamimanager.BBDD.DatabaseManager;
-import com.mycompany.tatamimanager.Componentes_ComboBox.*;
-import com.mycompany.tatamimanager.Inicio;
+import com.mycompany.tatamimanager.Componentes_ComboBox.ComboBox_Item;
+import com.mycompany.tatamimanager.Componentes_ComboBox.metodos_ComboBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -15,56 +15,69 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author diana
  */
-public class AsignarAlumnos extends javax.swing.JPanel {
+public class VistaClasesFormadas extends javax.swing.JPanel {
 
+    
     private JComboBox<ComboBox_Item> comboBox_colegios;
     private JComboBox<ComboBox_Item> comboBox_clases;
     Object[] cabecera;
     DefaultTableModel modelo;
     public int idAlumno;
+    public int idClase;
     
     /**
-     * Creates new form ListaAlumnosEnClases
+     * Creates new form VistaClasesFormadas
      */
-    public AsignarAlumnos() {
+    public VistaClasesFormadas(){
+        initComponents();
+        crearComboBox();
+    }
+    public VistaClasesFormadas(int idClase) {
         initComponents();
         
-        //Crear ComboBox colegios
-        comboBox_colegios = new JComboBox<>();
-        this.add(comboBox_colegios);
-        comboBox_colegios.setBounds(110, 65, 210, 25);
-        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
+        crearComboBox();
         
+        this.idClase = idClase; //inicializar id
+        
+        //Seleccionar ambos comboBox con los valores recibidos
+        seleccionarComboBoxPorId(comboBox_clases, idClase);
+    }
+    
+    public void crearComboBox(){
         //Crear ComboBox clases
         comboBox_clases = new JComboBox<>();
         this.add(comboBox_clases);
-        comboBox_clases.setBounds(430, 65, 210, 25);
+        comboBox_clases.setBounds(130, 75, 210, 25);
         metodos_ComboBox.mostrarDatos_ComboBox(comboBox_clases, "id_clase", "clase", "clases");
         
-        // Modificar el ComboBox clases segun el colegio elegido--- no?
-        comboBox_colegios.addActionListener(new ActionListener() { 
+        comboBox_clases.addActionListener(new ActionListener() { 
             @Override 
             public void actionPerformed(ActionEvent e) { 
                 
-                ComboBox_Item colegioSeleccionado = (ComboBox_Item) comboBox_colegios.getSelectedItem(); 
-                int index = comboBox_colegios.getSelectedIndex();
+                ComboBox_Item claseSeleccionada = (ComboBox_Item) comboBox_clases.getSelectedItem(); 
+                int index = comboBox_clases.getSelectedIndex();
                 
-                //System.out.println("id colegio: "+colegioSeleccionado.getId());
                 if(index != 0){
-                    DatabaseControlClases.mostrarClasesPorColegio(comboBox_clases, colegioSeleccionado.getId());  
-                    iniTabla(colegioSeleccionado.getId()); // Llamar al método iniTabla con el id del colegio seleccionado 
+                    iniTabla(claseSeleccionada.getId()); // Llamar al método iniTabla con el id del colegio seleccionado 
                 }
             }
         }); 
+    }
+
+    private void seleccionarComboBoxPorId(JComboBox<ComboBox_Item> comboBox, int id) { 
+        for (int i = 0; i < comboBox.getItemCount(); i++) { 
+            ComboBox_Item item = comboBox.getItemAt(i); 
+            if (item.getId() == id) { 
+                comboBox.setSelectedIndex(i); break; 
+            } 
+        } 
     }
     
     public boolean validarDatos(){
@@ -78,8 +91,8 @@ public class AsignarAlumnos extends javax.swing.JPanel {
         return true;
     }
     
-    public void iniTabla(int idColegio){
-        cabecera = new Object [] {"id","Nombre", "Apellidos", "Curso", "Cinturon", "Colegio", ""};
+    public void iniTabla(int idClase){
+        cabecera = new Object [] {"id","Nombre", "Apellidos", "Curso", "Cinturon", "Clase", ""};
         
         modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
             @Override
@@ -98,12 +111,12 @@ public class AsignarAlumnos extends javax.swing.JPanel {
             // Sentencia sql
             modelo.setRowCount(0);
             String query = "SELECT alumnos.id_alumno, alumnos.nombre, alumnos.apellidos, alumnos.curso, alumnos.cinturon, " +
-                "colegios.nombre AS nombre_colegio " +
+                "clases.nombre AS nombre_clase " +
                 "FROM alumnos " +
-                "JOIN colegios ON alumnos.id_colegio = colegios.id_colegio " + 
-                "WHERE alumnos.id_colegio = ?";
+                "JOIN clases ON alumnos.id_clase = clases.id_clase " + 
+                "WHERE alumnos.id_clase = ?";
             PreparedStatement st = conn.prepareStatement(query);
-            st.setInt(1, idColegio); // Asignar el id del colegio seleccionado
+            st.setInt(1, idClase); // Asignar el id del colegio seleccionado
             ResultSet resultado = st.executeQuery();
 
             while (resultado.next()) {
@@ -114,7 +127,7 @@ public class AsignarAlumnos extends javax.swing.JPanel {
                     resultado.getString("apellidos"),
                     resultado.getString("curso"),
                     resultado.getString("cinturon"),
-                    resultado.getString("nombre_colegio"),
+                    resultado.getString("nombre_clase"),
                 });
             }
             
@@ -149,19 +162,12 @@ public class AsignarAlumnos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaListaAlumnos = new javax.swing.JTable();
-        lb_coles = new javax.swing.JLabel();
         lb_profesor = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 255, 255));
-        setForeground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Selecciona los alumnos que estarán en esta clase:");
 
         tablaListaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,21 +182,10 @@ public class AsignarAlumnos extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaListaAlumnos);
 
-        lb_coles.setText("Colegio:");
-
         lb_profesor.setText("Clase:");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Generar listado de Alumnos por Clase");
-
-        jButton1.setBackground(new java.awt.Color(0, 102, 153));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Guardar Listado");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Listado de Clases Formadas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -199,77 +194,33 @@ public class AsignarAlumnos extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(lb_coles)
-                        .addGap(277, 277, 277)
-                        .addComponent(lb_profesor))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
+                        .addGap(189, 189, 189)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(322, 322, 322)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addGap(89, 89, 89)
+                        .addComponent(lb_profesor))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 854, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_coles)
-                    .addComponent(lb_profesor))
                 .addGap(27, 27, 27)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(lb_profesor)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
-
-        jLabel2.getAccessibleContext().setAccessibleName("Generar listado de Alumnos por Clase");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (!validarDatos()) {
-            return; // Si alguna validación falla, detener la ejecución
-        }
-        
-        //id de la clase seleccionada
-        int idClase = metodos_ComboBox.obtenerIdItemSeleccionado(comboBox_clases);
-        int idColegio = metodos_ComboBox.obtenerIdItemSeleccionado(comboBox_clases);
-        
-        // Recorrer las filas de la tabla y actualizar la base de datos 
-        for (int i = 0; i < tablaListaAlumnos.getRowCount(); i++) { 
-            Boolean isSelected = (Boolean) tablaListaAlumnos.getValueAt(i, 6);
-            if (isSelected != null && isSelected) { 
-                int idAlumno = (int) tablaListaAlumnos.getValueAt(i, 0);
-                DatabaseControlClases.actualizarClaseAlumno(idAlumno, idClase); // Asignar a la clase seleccionada 
-            }
-        } 
-        //cambiar panel a listaClases
-        JFrame frameInicio = (JFrame) SwingUtilities.getWindowAncestor(this);
-        if (frameInicio instanceof Inicio) {
-            ((Inicio) frameInicio).cambiarPanel(new VistaClasesFormadas(idClase));
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lb_coles;
     private javax.swing.JLabel lb_profesor;
     private javax.swing.JTable tablaListaAlumnos;
     // End of variables declaration//GEN-END:variables

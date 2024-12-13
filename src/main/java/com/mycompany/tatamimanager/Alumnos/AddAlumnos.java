@@ -81,7 +81,7 @@ public class AddAlumnos extends javax.swing.JPanel {
         comboBox_colegios = new JComboBox<>();
         this.add(comboBox_colegios);
         comboBox_colegios.setBounds(345, 233, 210, 25);
-        metodos_ComboBox.mostrarColegios(comboBox_colegios, "id_colegio", "colegio", "colegios");
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
     }
 
     public void vaciarCampos(){

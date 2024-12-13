@@ -119,7 +119,7 @@ public class VerCalendario extends javax.swing.JPanel  implements IDateEvaluator
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         //comprobar todas las fechas del mes con las que tienen eventos
         for (Date fechaEvento : fechasEventos) {  
-            System.out.println("Fecha cargada: " + sdf.format(fechaEvento));
+            //System.out.println("Fecha cargada: " + sdf.format(fechaEvento));
             cal1.setTime(fechaEvento);
             cal2.setTime(date);
             

@@ -28,6 +28,7 @@ public class ListaClases extends javax.swing.JPanel {
     Object[] cabecera;
     DefaultTableModel modelo;
     public int idClase;
+    JFrame inicioFrame;
     
     /**
      * Creates new form ListaClases
@@ -192,8 +193,14 @@ public class ListaClases extends javax.swing.JPanel {
             
             switch (columna) {
                 case 6:
-                    //Mostrar todos los datos del alumno
-                    //DatabaseControlClases.vistaClases(idClase);
+                    //Cambiar de panel para ver la lista de alumnos de esa clase
+                    VistaClasesFormadas vistaClases= new VistaClasesFormadas(idClase);
+
+                    inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                    if (inicioFrame instanceof Inicio) {
+                        ((Inicio) inicioFrame).cambiarPanel(vistaClases);
+                    }
+                    
                     break;
                 case 7:
                     //editar
@@ -223,7 +230,7 @@ public class ListaClases extends javax.swing.JPanel {
                             AddClase panelAddClase = new AddClase();
                             panelAddClase.actualizarDatos(idClase, nombreClase, horaInicio, horaFin, dias, cole, profe);
                             
-                            JFrame inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                            inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
                             if (inicioFrame instanceof Inicio) {
                                 ((Inicio) inicioFrame).cambiarPanel(panelAddClase);
                             }

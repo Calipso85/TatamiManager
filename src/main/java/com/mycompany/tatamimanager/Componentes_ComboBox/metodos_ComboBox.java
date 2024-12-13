@@ -17,8 +17,9 @@ import javax.swing.JComboBox;
  */
 public class metodos_ComboBox {
     
+    //Metodo para mostrar en el comboBox los nombres de la tabla correspondiente
     @SuppressWarnings("unchecked")
-    public static void mostrarColegios(JComboBox<ComboBox_Item> combo, String nombre_id, String texto, String tabla){
+    public static void mostrarDatos_ComboBox(JComboBox<ComboBox_Item> combo, String nombre_id, String texto, String tabla){
         combo.removeAllItems();
         // Agregar un elemento especial como primer texto
         combo.addItem(new ComboBox_Item(-1, "Selecciona un "+texto));
@@ -44,6 +45,7 @@ public class metodos_ComboBox {
         }
     }
     
+    //Método para obtener el Id del item seleccionado del comboBox
     public static int obtenerIdItemSeleccionado(JComboBox<ComboBox_Item> combo) {
         ComboBox_Item seleccionado = (ComboBox_Item) combo.getSelectedItem();
         if (seleccionado != null) {
@@ -53,49 +55,6 @@ public class metodos_ComboBox {
         }
     }
     
-    public static void mostrarClasesPorColegio(JComboBox<ComboBox_Item> combo, int idColegio) { 
-        combo.removeAllItems(); 
-        combo.addItem(new ComboBox_Item(-1, "Selecciona una clase")); 
-        String query = "SELECT id_clase, nombre FROM clases WHERE id_colegio = ?"; 
-        try (Connection conn = DatabaseManager.getConnection(); 
-            PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, idColegio); 
-            ResultSet rs = ps.executeQuery(); 
-            
-            while (rs.next()) { 
-                int id = rs.getInt("id_clase"); 
-                String nombre = rs.getString("nombre"); 
-                ComboBox_Item item = new ComboBox_Item(id, nombre); 
-                combo.addItem(item); 
-            } 
-        } catch (SQLException ex) {
-            ex.printStackTrace(); 
-            System.out.println("Error al cargar las clases en el comboBox: " + ex.getMessage()); 
-        } catch (Exception ex) { 
-        } 
-    }
 
-    /*
-    public static int obtenerIdColegioPorClase(int idClase) {
-        String query = "SELECT id_colegio FROM clases WHERE id_clase = ?";
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, idClase);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("id_colegio");
-            } else {
-                throw new IllegalStateException("No se encontró el colegio para la clase con id: " + idClase);
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, e);
-            throw new RuntimeException("Error al obtener el id del colegio para la clase con id: " + idClase, e);
-        } catch (Exception ex) {
-            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException("Error inesperado al obtener el id del colegio para la clase con id: " + idClase, ex);
-        }
-    }
-
-    */
     
 }
