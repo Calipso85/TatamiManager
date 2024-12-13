@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VistaClasesFormadas extends javax.swing.JPanel {
 
+    
     private JComboBox<ComboBox_Item> comboBox_colegios;
     private JComboBox<ComboBox_Item> comboBox_clases;
     Object[] cabecera;
@@ -91,13 +92,12 @@ public class VistaClasesFormadas extends javax.swing.JPanel {
     }
     
     public void iniTabla(int idClase){
-        cabecera = new Object [] {"id","Nombre", "Apellidos", "Curso", "Cinturon", "Clase", ""};
+        cabecera = new Object [] {"id","Nombre", "Apellidos", "Curso", "Cinturon", "Colegio"};
         
         modelo = new DefaultTableModel(cabecera, 0){ //0-> La tabla al principio no tiene columnas
             @Override
             public Class getColumnClass(int columnIndex) {
                 switch(columnIndex){
-                    case 6: return Boolean.class;
                     default:return String.class;
                 }
             }
@@ -108,14 +108,12 @@ public class VistaClasesFormadas extends javax.swing.JPanel {
             modelo.setRowCount(0); // Limpiar las filas anteriores
             
             // Sentencia sql
-            modelo.setRowCount(0);
-            String query = "SELECT alumnos.id_alumno, alumnos.nombre, alumnos.apellidos, alumnos.curso, alumnos.cinturon, " +
-                "clases.nombre AS nombre_clase " +
+            String query = "SELECT alumnos.id_alumno, alumnos.nombre, alumnos.apellidos, alumnos.curso, alumnos.cinturon, colegios.nombre AS nombre_colegio " +
                 "FROM alumnos " +
-                "JOIN clases ON alumnos.id_clase = clases.id_clase " + 
+                "JOIN colegios ON alumnos.id_colegio = colegios.id_colegio " + 
                 "WHERE alumnos.id_clase = ?";
             PreparedStatement st = conn.prepareStatement(query);
-            st.setInt(1, idClase); // Asignar el id del colegio seleccionado
+            st.setInt(1, idClase); // Asignar el id de la clase seleccionada
             ResultSet resultado = st.executeQuery();
 
             while (resultado.next()) {
@@ -126,7 +124,7 @@ public class VistaClasesFormadas extends javax.swing.JPanel {
                     resultado.getString("apellidos"),
                     resultado.getString("curso"),
                     resultado.getString("cinturon"),
-                    resultado.getString("nombre_clase"),
+                    resultado.getString("nombre_colegio"),
                 });
             }
             
@@ -138,7 +136,7 @@ public class VistaClasesFormadas extends javax.swing.JPanel {
             DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
             
         } catch (SQLException e) {
-            System.out.println("Error al conectar o ejecutar consulta a la base de datos.");
+            System.out.println("Error al conectar o ejecutar consulta a la base de datos: "+ e.getMessage());
         } catch (Exception e) {
             System.out.println("Error inesperado: " + e.getMessage());
         }
@@ -149,7 +147,6 @@ public class VistaClasesFormadas extends javax.swing.JPanel {
         tablaListaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(20);
         tablaListaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(45);
         tablaListaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(120);
-        tablaListaAlumnos.getColumnModel().getColumn(6).setPreferredWidth(3);
     }
     
     /**

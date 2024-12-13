@@ -23,11 +23,13 @@ import javax.swing.JTextArea;
  */
 public class DatabaseControlAlumnos {
     
-    public static void guardarAlumno(String nombreAlumno, String apellidos, String curso, int anyo, String nombreTutor, int telf, String correo, 
+    public static void guardarAlumno(String nombreAlumno, String apellidos, String curso, int anyo, 
+            String nombreTutor, int telf, String correo, 
            String cinturon, int idColegio){
        
        try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
-            String query = "INSERT INTO alumnos (nombre, apellidos, curso, anyo, nombre_tutor, telefono, correo, cinturon, id_colegio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO alumnos (nombre, apellidos, curso, anyo, nombre_tutor, telefono, correo, "
+                    + "cinturon, id_colegio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement st = conn.prepareStatement(query)) {
                 st.setString(1, nombreAlumno);
                 st.setString(2, apellidos);
@@ -37,19 +39,19 @@ public class DatabaseControlAlumnos {
                 st.setInt(6, telf);
                 st.setString(7, correo);
                 st.setString(8, cinturon);
-                st.setInt(6, idColegio);
+                st.setInt(9, idColegio);
 
                 // Ejecutar el INSERT
                 int filasInsertadas = st.executeUpdate();
                 if (filasInsertadas > 0) {
-                    Logger.getLogger(AddAlumnos.class.getName()).log(Level.INFO, "Datos guardados correctamente en la tabla alumnos");
+                    Logger.getLogger(AddAlumnos.class.getName()).log(Level.INFO, 
+                            "Datos guardados correctamente en la tabla alumnos");
                 } else {
-                    Logger.getLogger(AddAlumnos.class.getName()).log(Level.WARNING, "No se pudieron guardar los datos en la tabla alumnos.");
+                    Logger.getLogger(AddAlumnos.class.getName()).log(Level.WARNING, 
+                            "No se pudieron guardar los datos en la tabla alumnos.");
                 }
             }
-
             DatabaseManager.closeConnection();  //cierre de la conexión a la bbdd
-
         } catch (SQLException e) {
             Logger.getLogger(AddAlumnos.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("Error al conectar o ejecutar consulta a la base de datos.");

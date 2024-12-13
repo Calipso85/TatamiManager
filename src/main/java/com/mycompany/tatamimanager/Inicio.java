@@ -338,6 +338,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jMenuItem_AddAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddAlumnoActionPerformed
         panel_AddAlumnos.vaciarCampos();
+        panel_AddAlumnos.cargarDatosComboBox(); // Cargar datos actualizados en los ComboBox
         cambiarPanel(panel_AddAlumnos);
     }//GEN-LAST:event_jMenuItem_AddAlumnoActionPerformed
 
@@ -372,10 +373,12 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jMenuItem_AddClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddClaseActionPerformed
         panel_addClase.vaciarCampos();
+        panel_addClase.cargarDatosComboBox(); // Cargar datos actualizados en los ComboBox
         cambiarPanel(panel_addClase);
     }//GEN-LAST:event_jMenuItem_AddClaseActionPerformed
 
     private void jMenuItem_VerClasesFormadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VerClasesFormadasActionPerformed
+        // Cargar datos actualizados en los ComboBox
         cambiarPanel(panel_vistaClases);
     }//GEN-LAST:event_jMenuItem_VerClasesFormadasActionPerformed
 
@@ -385,6 +388,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem_ListaClasesActionPerformed
 
     private void jMenuItem_AsignarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AsignarAlumnosActionPerformed
+        panel_AsignarAlumnos.cargarDatosComboBox(); // Cargar datos actualizados en los ComboBox
         cambiarPanel(panel_AsignarAlumnos);
     }//GEN-LAST:event_jMenuItem_AsignarAlumnosActionPerformed
 

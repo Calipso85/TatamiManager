@@ -41,26 +41,28 @@ public class AddClase extends javax.swing.JPanel {
         comboBox_colegios = new JComboBox<>();
         this.add(comboBox_colegios);
         comboBox_colegios.setBounds(378, 92, 210, 25);
-        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
+        //metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
         
         //ComboBox profesores
         comboBox_profesores = new JComboBox<>();
         this.add(comboBox_profesores);
         comboBox_profesores.setBounds(378, 128, 210, 25);
-        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_profesores, "id_profesor", "profesor", "profesores");
     }
 
+    public void cargarDatosComboBox() {
+        // Vaciar los ComboBox antes de cargar nuevos datos
+        comboBox_colegios.removeAllItems();
+        comboBox_profesores.removeAllItems();
+
+        // Cargar los datos en los ComboBox
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_profesores, "id_profesor", "profesor", "profesores");
+    }
     
     public void vaciarCampos(){
         txt_nombre.setText("");
         txt_horaInicio.setText("");
         txt_horaFin.setText("");
-        comboBox_colegios.setSelectedIndex(0);
-        comboBox_profesores.setSelectedIndex(0);
-        //desmarcar checkbox
-        if(algunDiaMarcado(panel_Semana)){
-            desmarcarTodosLosDias(panel_Semana);
-        }
     }
     
     public boolean validarDatos(){

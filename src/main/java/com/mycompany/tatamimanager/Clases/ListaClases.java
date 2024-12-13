@@ -7,7 +7,6 @@ package com.mycompany.tatamimanager.Clases;
 import com.mycompany.tatamimanager.BBDD.DatabaseManager;
 import com.mycompany.tatamimanager.BBDD.DatabaseControlClases;
 import com.mycompany.tatamimanager.Inicio;
-import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

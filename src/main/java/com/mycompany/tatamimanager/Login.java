@@ -65,6 +65,7 @@ public class Login extends javax.swing.JFrame {
         imagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Iniciar Sesión");
         setLocation(new java.awt.Point(500, 700));
         setResizable(false);
 
@@ -116,13 +117,14 @@ public class Login extends javax.swing.JFrame {
         usuario = txt_user.getText();
         contrasenya = new String(txt_pass.getPassword());
         
-        getMD5(contrasenya); //El password le pasamos en texto plano
-        System.out.println(getMD5(contrasenya));
+        getMD5(contrasenya); //La contraseña la pasamos en texto plano
+        System.out.println("Contraseña encriptada: "+getMD5(contrasenya));
         
         if (DatabaseControlLogin.validarCredenciales(usuario, getMD5(contrasenya))) { 
             new Inicio().setVisible(true);
             dispose(); // Cierra el frame de login 
-        } else { JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE); }
+        } else { JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", 
+                JOptionPane.ERROR_MESSAGE); }
     }//GEN-LAST:event_btn_AccesoActionPerformed
 
     /**

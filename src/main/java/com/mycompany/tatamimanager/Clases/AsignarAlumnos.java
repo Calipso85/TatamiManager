@@ -42,13 +42,11 @@ public class AsignarAlumnos extends javax.swing.JPanel {
         comboBox_colegios = new JComboBox<>();
         this.add(comboBox_colegios);
         comboBox_colegios.setBounds(110, 65, 210, 25);
-        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
         
         //Crear ComboBox clases
         comboBox_clases = new JComboBox<>();
         this.add(comboBox_clases);
         comboBox_clases.setBounds(430, 65, 210, 25);
-        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_clases, "id_clase", "clase", "clases");
         
         // Modificar el ComboBox clases segun el colegio elegido--- no?
         comboBox_colegios.addActionListener(new ActionListener() { 
@@ -65,6 +63,16 @@ public class AsignarAlumnos extends javax.swing.JPanel {
                 }
             }
         }); 
+    }
+    
+    public void cargarDatosComboBox() {
+        // Vaciar los ComboBox antes de cargar nuevos datos
+        comboBox_colegios.removeAllItems();
+        comboBox_clases.removeAllItems();
+
+        // Cargar los datos en los ComboBox
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_clases, "id_clase", "clase", "clases");
     }
     
     public boolean validarDatos(){

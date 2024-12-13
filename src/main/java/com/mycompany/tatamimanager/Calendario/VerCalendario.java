@@ -39,7 +39,7 @@ public class VerCalendario extends javax.swing.JPanel  implements IDateEvaluator
 
         // Cargar fechas desde la base de datos
         fechasEventos = DatabaseControlEventos.obtenerFechas_Eventos();
-        System.out.println(fechasEventos);
+        //System.out.println(fechasEventos);
 
         // Añadir este evaluador al calendario
         calendar.getDayChooser().addDateEvaluator(this);

@@ -81,9 +81,16 @@ public class AddAlumnos extends javax.swing.JPanel {
         comboBox_colegios = new JComboBox<>();
         this.add(comboBox_colegios);
         comboBox_colegios.setBounds(345, 233, 210, 25);
-        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
     }
 
+    public void cargarDatosComboBox() {
+        // Vaciar el ComboBox antes de cargar nuevos datos
+        comboBox_colegios.removeAllItems();
+
+        // Cargar los datos en el ComboBox
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
+    }
+    
     public void vaciarCampos(){
         txt_nombre.setText("");
         txt_apell.setText("");
@@ -333,11 +340,13 @@ public class AddAlumnos extends javax.swing.JPanel {
         
         if(!isUpdate){ 
             //si estoy añadiendo
-            DatabaseControlAlumnos.guardarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio);
+            DatabaseControlAlumnos.guardarAlumno(nombreAlumno, apellidos, curso, anyo, 
+                    nombreTutor, telf, correo, cinturon, idColegio);
             
         }else{  
             //si estoy modificando
-            DatabaseControlAlumnos.editarAlumno(nombreAlumno, apellidos, curso, anyo, nombreTutor, telf, correo, cinturon, idColegio, id);
+            DatabaseControlAlumnos.editarAlumno(nombreAlumno, apellidos, curso, anyo, 
+                    nombreTutor, telf, correo, cinturon, idColegio, id);
         }
         
         isUpdate = false; //volvemoa a establecer isUpdate como false
@@ -348,7 +357,6 @@ public class AddAlumnos extends javax.swing.JPanel {
             ListaAlumnos nuevoPanel = new ListaAlumnos(); // Nueva instancia
             nuevoPanel.iniTabla();
             ((Inicio) frameInicio).cambiarPanel(nuevoPanel);
-            //((Inicio) frameInicio).cambiarPanel(new ListaAlumnos());
         }
     }//GEN-LAST:event_btn_GuardarAlumnoActionPerformed
 
