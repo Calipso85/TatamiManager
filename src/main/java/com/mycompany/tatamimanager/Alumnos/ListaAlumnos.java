@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,6 +30,17 @@ public class ListaAlumnos extends javax.swing.JPanel {
     Object[] cabecera;
     DefaultTableModel modelo;
     public int idAlumno;
+    
+    /**
+     * Getters form ListaAlumnos
+     */
+    public JLabel getLb_titulo() {
+        return lb_titulo;
+    }
+
+    public JTable getTablaAlumnos() {
+        return tablaAlumnos;
+    }
     
     /**
      * Creates new form ListaAlumnos
@@ -121,14 +134,14 @@ public class ListaAlumnos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lb_titulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAlumnos = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Listado de Alumnos");
+        lb_titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lb_titulo.setText("Listado de Alumnos");
 
         tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -161,14 +174,14 @@ public class ListaAlumnos extends javax.swing.JPanel {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(175, 175, 175)
-                .addComponent(jLabel1)
+                .addComponent(lb_titulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jLabel1)
+                .addComponent(lb_titulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(85, Short.MAX_VALUE))
@@ -247,8 +260,8 @@ public class ListaAlumnos extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_titulo;
     private javax.swing.JTable tablaAlumnos;
     // End of variables declaration//GEN-END:variables
 }

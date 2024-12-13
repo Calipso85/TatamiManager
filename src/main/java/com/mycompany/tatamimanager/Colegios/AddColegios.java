@@ -6,8 +6,10 @@ package com.mycompany.tatamimanager.Colegios;
 
 import com.mycompany.tatamimanager.BBDD.DataBaseControlColegios;
 import com.mycompany.tatamimanager.Inicio;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 /**
@@ -23,6 +25,33 @@ public class AddColegios extends javax.swing.JPanel {
     private int cpCole; 
     private int id; 
     public boolean isUpdate = false;
+
+    /**
+     * Getters form Panel_AddColegios
+     */
+    public JButton getBtn_GuardarColegio() {
+        return btn_GuardarColegio;
+    }
+
+    public JTextField getTxt_barrio() {
+        return txt_barrio;
+    }
+
+    public JTextField getTxt_cp() {
+        return txt_cp;
+    }
+
+    public JTextField getTxt_direccion() {
+        return txt_direccion;
+    }
+
+    public JTextField getTxt_nombre() {
+        return txt_nombre;
+    }
+
+    public JTextField getTxt_telf() {
+        return txt_telf;
+    }
         
     /**
      * Creates new form AddColegio

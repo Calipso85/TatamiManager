@@ -238,9 +238,6 @@ public class AsignarAlumnos extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(298, 298, 298)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(320, 320, 320)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -254,7 +251,10 @@ public class AsignarAlumnos extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel1))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addComponent(jLabel2)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

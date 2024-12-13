@@ -34,13 +34,12 @@ public class AddAlumnos extends javax.swing.JPanel {
     private int id; 
     public boolean isUpdate = false;
 
-     /**
-     * Creates new form Panel_AddAlumnos
+    /**
+     * Getters form Panel_AddAlumnos
      */
     public JButton getBtn_GuardarAlumno() {
         return btn_GuardarAlumno;
     }
-
     public JComboBox<ComboBox_Item> getComboBox_colegios() {
         return comboBox_colegios;
     }

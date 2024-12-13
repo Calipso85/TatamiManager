@@ -44,7 +44,7 @@ public class DatabaseControlProfesores {
         try (Connection conn = DatabaseManager.getConnection()) { // Obtiene la conexión
             String validadDniQuery = "SELECT COUNT(*) FROM profesores WHERE correo = ?";
             try (PreparedStatement checkStmt = conn.prepareStatement(validadDniQuery)) {
-                checkStmt.setString(1, correo);
+                checkStmt.setString(1, correo);  
                 ResultSet rs = checkStmt.executeQuery();
 
                 if (rs.next() && rs.getInt(1) > 0) { 

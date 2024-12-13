@@ -7,8 +7,10 @@ package com.mycompany.tatamimanager.Profesores;
 
 import com.mycompany.tatamimanager.BBDD.DatabaseControlProfesores;
 import com.mycompany.tatamimanager.Inicio;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 
@@ -25,6 +27,33 @@ public class AddProfesores extends javax.swing.JPanel {
     private String correo;
     private int id; 
     public boolean isUpdate = false;
+
+    /**
+     * Geters new form AddProfesores
+     */
+    public JButton getBtn_guardarProfesor() {
+        return btn_guardarProfesor;
+    }
+
+    public JTextField getTxt_apellidos() {
+        return txt_apellidos;
+    }
+
+    public JTextField getTxt_correo() {
+        return txt_correo;
+    }
+
+    public JTextField getTxt_dni() {
+        return txt_dni;
+    }
+
+    public JTextField getTxt_nombre() {
+        return txt_nombre;
+    }
+
+    public JTextField getTxt_telf() {
+        return txt_telf;
+    }
     
     /**
      * Creates new form AddProfesores

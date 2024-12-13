@@ -32,7 +32,7 @@ public class DatabaseManager {
 
             // Crear la conexión
             conn = DriverManager.getConnection(url);
-            System.out.println("Connection created successfully");
+            //System.out.println("Connection created successfully");
         }
         return conn;
     }
@@ -42,7 +42,7 @@ public class DatabaseManager {
         if (conn != null) {
             try {
                 conn.close();
-                System.out.println("Connection closed successfully");
+                //System.out.println("Connection closed successfully");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

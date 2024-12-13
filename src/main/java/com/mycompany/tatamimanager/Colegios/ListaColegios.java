@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,6 +31,21 @@ public class ListaColegios extends javax.swing.JPanel {
     Object[] cabecera;
     DefaultTableModel modelo;
     int idColegio;
+
+    /**
+     * Getters form ListaColegios
+     */
+    public JLabel getLb_titulo() {
+        return lb_titulo;
+    }
+
+    public JTable getTablaColegios() {
+        return tablaColegios;
+    }
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
 
     /**
      * Creates new form ListaColegios
