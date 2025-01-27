@@ -47,6 +47,10 @@ public class AddClase extends javax.swing.JPanel {
         comboBox_profesores = new JComboBox<>();
         this.add(comboBox_profesores);
         comboBox_profesores.setBounds(378, 128, 210, 25);
+        
+        // Cargar los datos en los ComboBox
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_colegios, "id_colegio", "colegio", "colegios");
+        metodos_ComboBox.mostrarDatos_ComboBox(comboBox_profesores, "id_profesor", "profesor", "profesores");
     }
 
     public void cargarDatosComboBox() {

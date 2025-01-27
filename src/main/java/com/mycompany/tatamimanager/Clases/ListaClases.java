@@ -211,7 +211,7 @@ public class ListaClases extends javax.swing.JPanel {
                         st.setInt(1, idClase); // Establece el valor del parámetro
                         ResultSet resultado = st.executeQuery();
                         
-                        System.out.println("id_alumno ="+idClase);
+                        System.out.println("id_alumno: "+idClase);
                         
                         if (resultado.next()) {
                             String nombreClase = resultado.getString("nombre");
@@ -227,6 +227,7 @@ public class ListaClases extends javax.swing.JPanel {
                             
                             // Cambiar al panel AddClases y pasarle los datos
                             AddClase panelAddClase = new AddClase();
+                            panelAddClase.cargarDatosComboBox(); 
                             panelAddClase.actualizarDatos(idClase, nombreClase, horaInicio, horaFin, dias, cole, profe);
                             
                             inicioFrame = (JFrame) SwingUtilities.getWindowAncestor(this);

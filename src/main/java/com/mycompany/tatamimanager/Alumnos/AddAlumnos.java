@@ -144,7 +144,7 @@ public class AddAlumnos extends javax.swing.JPanel {
             } 
             telf = Integer.parseInt(txt_telf.getText().trim()); //asignat telf
 
-            correo = txt_correo.getText().trim();        //-------------------------  COMPROBAR CORREO
+            correo = txt_correo.getText().trim();      
             if(!isUpdate){
                 // Mensaje de éxito
                 JOptionPane.showMessageDialog(null, "Todos los datos han sido ingresados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);

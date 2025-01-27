@@ -210,7 +210,7 @@ public class ListaAlumnos extends javax.swing.JPanel {
                         st.setInt(1, idAlumno); // Establece el valor del parámetro
                         ResultSet resultado = st.executeQuery();
                         
-                        System.out.println("id_alumno ="+idAlumno);
+                        System.out.println("id_alumno: "+idAlumno);
                         
                         if (resultado.next()) {
                             String nombreAlumno = resultado.getString("nombre");
@@ -223,8 +223,11 @@ public class ListaAlumnos extends javax.swing.JPanel {
                             String cinturonAlumno = resultado.getString("cinturon");
                             int coleAlumno = resultado.getInt("id_colegio");
                             
+                        System.out.println("id_colegio: "+coleAlumno);
+                        
                             // Cambiar al panel AddColegios y pasarle los datos
                             AddAlumnos panelAddAlumnos = new AddAlumnos();
+                            panelAddAlumnos.cargarDatosComboBox(); 
                             panelAddAlumnos.actualizarDatos(idAlumno, nombreAlumno, apellAlumno, cursoAlumno, anyoAlumno, tutorAlumno,
                                     telefonoAlumno, correoAlumno, cinturonAlumno, coleAlumno);
                             
